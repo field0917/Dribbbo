@@ -1,0 +1,27 @@
+package com.jiuzhang.yeyuan.dribbbo.shot_detail;
+
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.jiuzhang.yeyuan.dribbbo.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class ShotActionViewHolder extends RecyclerView.ViewHolder {
+
+    @BindView(R.id.shot_detail_view_count) TextView viewCount;
+    @BindView(R.id.shot_detail_like_count) TextView likeCount;
+    @BindView(R.id.shot_detail_save_count) TextView saveCount;
+    @BindView(R.id.action_like) ImageButton likeButton;
+    @BindView(R.id.action_save) ImageButton saveButton;
+    @BindView(R.id.action_share) TextView shareButton;
+
+    public ShotActionViewHolder(View itemView) {
+        super(itemView);
+        ButterKnife.bind(this, itemView);
+    }
+}

@@ -1,0 +1,31 @@
+package com.jiuzhang.yeyuan.dribbbo.shot_detail;
+
+import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+import com.google.gson.reflect.TypeToken;
+import com.jiuzhang.yeyuan.dribbbo.R;
+import com.jiuzhang.yeyuan.dribbbo.base.BaseActivity;
+import com.jiuzhang.yeyuan.dribbbo.model.Shot;
+import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListAdapter;
+import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
+
+public class ShotDetailActivity extends BaseActivity {
+
+    @Override
+    protected Fragment newFragment() {
+        Intent intent = getIntent();
+        Bundle extra = intent.getExtras();
+        ShotDetailFragment fragment = ShotDetailFragment.newInstance(extra);
+
+        return fragment;
+    }
+
+    @Override
+    protected String getActivityTitle() {
+        Intent intent = getIntent();
+        return intent.getStringExtra(ShotListAdapter.KEY_SHOT_TITLE);
+    }
+}
