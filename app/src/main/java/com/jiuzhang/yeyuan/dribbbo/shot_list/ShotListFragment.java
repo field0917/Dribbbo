@@ -1,5 +1,6 @@
 package com.jiuzhang.yeyuan.dribbbo.shot_list;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,7 +33,7 @@ import butterknife.ButterKnife;
 public class ShotListFragment extends Fragment {
 
     private static final int VERTICAL_SPACE_HEIGHT = 20;
-    private static final int COUNT_PER_PAGE = 20;
+    private static final int COUNT_PER_PAGE = 12;
 
 //    private static final String MODEL_KEY_SHOT = "model key shot";
 //    private static final String MODEL_KEY_LIKED_SHOT = "model key liked shot";
@@ -73,7 +74,7 @@ public class ShotListFragment extends Fragment {
                     @Override
                     public void run() {
                         try {
-                            Thread.sleep(2000);
+                            Thread.sleep(1000);
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -90,20 +91,31 @@ public class ShotListFragment extends Fragment {
                 }).start();
             }
         });
+    //TODO: 第七章小视频 2.Pull to refresh
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                Toast.makeText(getContext(), "Loading 12 new shots", Toast.LENGTH_SHORT).show();
+//                swipeRefreshLayout.setRefreshing(true);
+//            }
+//        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_SPACE_HEIGHT));
 
         recyclerView.setAdapter(adapter);
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Toast.makeText(getContext(), "refreshing", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
+
+//    private class LoadShotsTask extends AsyncTask<Void, Void, List<Shot>> {
+//
+//        @Override
+//        protected List<Shot> doInBackground(Void... voids) {
+//            List<Shot> moreShots = fakeData(adapter.getDataSetCount() / COUNT_PER_PAGE);
+//            adapter.append(moreShots);
+//            adapter.setShowLoading(moreShots.size() >= COUNT_PER_PAGE);
+//        }
+//    }
 
     private List<Shot> fakeData(int page) {
         shotList = new ArrayList<>();

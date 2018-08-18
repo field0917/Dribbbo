@@ -27,6 +27,7 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public static final String KEY_SHOT_TITLE = "shot title";
 
     private boolean showLoading;
+//    private boolean isRefreshing;
 
     private List<Shot> shotList;
     private LoadMoreListener loadMoreListener;
@@ -35,6 +36,7 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.shotList = shotList;
         this.loadMoreListener = loadMoreListener;
         this.showLoading = true;
+//        this.isRefreshing = false;
     }
 
 
@@ -111,6 +113,11 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.showLoading = showLoading;
         notifyDataSetChanged();
     }
+
+//    public void setRefreshing(boolean isRefreshing) {
+//        this.isRefreshing = isRefreshing;
+//        notifyDataSetChanged();
+//    }
 
     public interface LoadMoreListener {
         void onLoadMore();
