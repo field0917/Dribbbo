@@ -3,6 +3,7 @@
     <dimen name="spacing_small">8dp</dimen>
     <dimen name="nav_header_height">192dp</dimen>
     <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_medium">16dp</dimen>
     <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="recycler_view_padding">20dp</dimen>
     <dimen name="card_view_elevation">4dp</dimen>
@@ -14,4 +15,5 @@
     <dimen name="progress_bar_size">24dp</dimen>
     <dimen name="loading_item_size">36dp</dimen>
     <dimen name="loading_web_page_progress_bar_height">2dp</dimen>
+    <dimen name="user_image_size">56dp</dimen>
 </resources>

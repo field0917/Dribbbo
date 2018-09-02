@@ -62,7 +62,7 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 break;
             case VIEW_TYPE_SHOT_INFO:
                 ShotInfoViewHolder shotInfoViewHolder = (ShotInfoViewHolder) holder;
-                shotInfoViewHolder.shotAuther.setText(shot.authorName);
+                shotInfoViewHolder.shotAuthor.setText(shot.user.name);
                 shotInfoViewHolder.shotTitle.setText(shot.shotTitle);
                 shotInfoViewHolder.shotInfo.setText(shot.shotInfo);
                 break;

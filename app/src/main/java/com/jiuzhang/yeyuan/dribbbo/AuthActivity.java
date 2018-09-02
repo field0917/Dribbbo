@@ -3,7 +3,6 @@ package com.jiuzhang.yeyuan.dribbbo;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,18 +13,12 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.jiuzhang.yeyuan.dribbbo.base.BaseActivity;
-
-import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AuthActivity extends AppCompatActivity {
 
-    public static final String REDIRECT_URL = "http://www.google.com";
     public static final String KEY_CODE = "code";
 
     @BindView(R.id.web_view) WebView webView;
@@ -38,25 +31,43 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth);
         ButterKnife.bind(this);
 
+        toolbar.setTitle("Log into Dribbble");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("Log into Dribbble");
+//        setTitle("Log into Dribbble");
 
         progressBar.setMax(100);
 
         webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//
+//                if (url.startsWith(REDIRECT_URL)) {
+//                    Uri uri = Uri.parse(url);
+//                    Intent resultIntent = new Intent();
+//                    resultIntent.putExtra(KEY_CODE, uri.getQueryParameter(KEY_CODE));
+//                    setResult(RESULT_OK, resultIntent);
+//                    finish();
+//                }
+//
+//                return super.shouldOverrideUrlLoading(view, url);
+//            }
 
-                if (url.startsWith(REDIRECT_URL)) {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                String url = request.getUrl().toString();
+
+                if (url.startsWith(Auth.REDIRECT_URL)) {
                     Uri uri = Uri.parse(url);
+                    String code = uri.getQueryParameter(KEY_CODE);
                     Intent resultIntent = new Intent();
-                    resultIntent.putExtra(KEY_CODE, uri.getQueryParameter(KEY_CODE));
+                    resultIntent.putExtra(KEY_CODE, code);
                     setResult(RESULT_OK, resultIntent);
                     finish();
                 }
 
-                return super.shouldOverrideUrlLoading(view, url);
+                return super.shouldOverrideUrlLoading(view, request);
             }
 
             @Override
@@ -80,7 +91,7 @@ public class AuthActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        String url = intent.getStringExtra(LoginActivity.KEY_URL);
+        String url = intent.getStringExtra(Auth.KEY_URL);
         webView.loadUrl(url);
 
     }

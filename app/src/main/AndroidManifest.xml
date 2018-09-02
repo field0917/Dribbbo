@@ -21,7 +21,7 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme"></activity>
-        <activity android:name=".base.BaseActivity" />
+        <!--<activity android:name=".base.BaseActivity" />-->
         <activity android:name=".shot_detail.ShotDetailActivity" />
         <activity android:name=".AuthActivity"></activity>
     </application>

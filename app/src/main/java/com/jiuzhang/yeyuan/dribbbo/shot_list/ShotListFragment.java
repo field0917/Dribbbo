@@ -19,6 +19,7 @@ import android.widget.Toolbar;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
+import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 import com.jiuzhang.yeyuan.dribbbo.utils.VerticalSpaceItemDecoration;
 
@@ -125,13 +126,15 @@ public class ShotListFragment extends Fragment {
 
         for (int i = 0; i < count; i++) {
             Shot shot = new Shot();
+            User user = new User();
+            shot.user = user;
             shot.likeCount = random.nextInt(400);
             shot.viewCount = random.nextInt(5000);
             shot.saveCount = random.nextInt(300);
 
             shot.shotTitle = "shot " + i;
             shot.shotInfo = makeDescription();
-            shot.authorName = "author " + i;
+            shot.user.name = "author " + i;
 
             shotList.add(shot);
         }

@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".AuthActivity"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include layout="@layout/toolbar"/>
 
@@ -20,7 +21,6 @@
         android:layout_height="@dimen/loading_web_page_progress_bar_height"
         android:id="@+id/progress_bar"
         android:layout_below="@+id/toolbar"
-        android:visibility="invisible"
         style="?android:attr/progressBarStyleHorizontal"/>
 
 </RelativeLayout>
