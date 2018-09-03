@@ -13,13 +13,14 @@
     <style name="AppTheme.TextView.Clickable">
         <item name="android:background">?android:attr/selectableItemBackground</item>
         <item name="android:padding">@dimen/spacing_small</item>
-        <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textStyle">bold</item>
+
     </style>
 
     <style name="AppTheme.TextView.Clickable.1" parent="AppTheme.TextView.Clickable">
         <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="AppTheme.TextVIew.Clickable.1.White" parent="AppTheme.TextView.Clickable.1">

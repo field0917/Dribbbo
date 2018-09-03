@@ -11,14 +11,15 @@
     android:paddingBottom="@dimen/spacing_medium"
     android:paddingRight="@dimen/spacing_medium">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/nav_header_user_img"
         android:layout_width="@dimen/user_image_size"
         android:layout_height="@dimen/user_image_size"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/user_picture_placeholder"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="5dp"/>
 
     <TextView
         android:id="@+id/nav_header_user_name"

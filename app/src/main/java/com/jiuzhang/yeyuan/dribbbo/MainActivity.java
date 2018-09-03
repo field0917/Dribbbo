@@ -2,6 +2,9 @@ package com.jiuzhang.yeyuan.dribbbo;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -21,6 +24,12 @@ import android.widget.TextView;
 import com.jiuzhang.yeyuan.dribbbo.dribbble.Dribbble;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment;
 import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,9 +103,14 @@ public class MainActivity extends AppCompatActivity {
         ImageView userImage = headerLayout.findViewById(R.id.nav_header_user_img);
         TextView userName = headerLayout.findViewById(R.id.nav_header_user_name);
         TextView logout = headerLayout.findViewById(R.id.nav_header_log_out);
-        
+
+//        new LoadImageTask(userImage).execute(Dribbble.getCurrentUser().avatar_url);
+        Picasso.with(this)
+                .load(Dribbble.getCurrentUser().avatar_url)
+                .placeholder(R.drawable.user_picture_placeholder)
+                .into(userImage);
+
         userName.setText(Dribbble.getCurrentUser().name);
-        //Log.i("User name: ", Dribbble.getCurrentUser().name);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,5 +164,34 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+}
+
+class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
+    private ImageView imageView;
+
+    protected LoadImageTask (ImageView view) {
+        imageView = view;
+    }
+
+    @Override
+    protected Bitmap doInBackground(String... urls) {
+        String url = urls[0];
+        Bitmap bitmap = null;
+
+        try {
+            InputStream in = new java.net.URL(url).openStream();
+            bitmap = BitmapFactory.decodeStream(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
+    }
+
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {
+        super.onPostExecute(bitmap);
+        imageView.setImageBitmap(bitmap);
     }
 }
