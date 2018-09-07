@@ -20,8 +20,9 @@
             android:id="@+id/shot_image_view"
             android:layout_width="match_parent"
             android:layout_height="240dp"
-            android:background="@color/colorSecondaryText"
-            android:contentDescription="This is an image"/>
+            tools:src="@drawable/shot_image_placeholder"
+            android:contentDescription="This is an image"
+            android:scaleType="fitXY"/>
 
         <LinearLayout
             android:layout_width="match_parent"

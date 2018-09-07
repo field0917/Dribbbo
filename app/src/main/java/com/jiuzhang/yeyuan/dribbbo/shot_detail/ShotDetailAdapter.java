@@ -1,5 +1,6 @@
 package com.jiuzhang.yeyuan.dribbbo.shot_detail;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 
 import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
+import com.squareup.picasso.Picasso;
 
 public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -50,9 +52,13 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         int viewType = getItemViewType(position);
-
+        Context context = holder.itemView.getContext();
         switch (viewType) {
             case VIEW_TYPE_SHOT_IMAGE:
+                ShotImageViewHolder shotImageViewHolder = (ShotImageViewHolder) holder;
+                Picasso.with(context)
+                        .load(shot.coverImageURL)
+                        .into(shotImageViewHolder.imageView);
                 break;
             case VIEW_TYPE_SHOT_ACTION:
                 ShotActionViewHolder shotActionViewHolder = (ShotActionViewHolder) holder;

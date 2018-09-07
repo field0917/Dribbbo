@@ -48,11 +48,15 @@ public class Dribbble {
     }
 
     public static void logout (Context context) {
-        storeAccessToken(context, null);
-        storeUser(context, null);
+//        storeAccessToken(context, null);
+//        storeUser(context, null);
 
         accessToken = null;
         user = null;
+
+        SharedPreferences sp = context.getApplicationContext().getSharedPreferences(SP_AUTH, Context.MODE_PRIVATE);
+        sp.edit().remove(KEY_ACCESS_TOKEN).apply();
+        sp.edit().remove(KEY_USER).apply();
     }
 
     private static void storeAccessToken (Context context, String token) {

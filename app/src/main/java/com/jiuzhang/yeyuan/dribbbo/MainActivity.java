@@ -167,31 +167,31 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
-    private ImageView imageView;
-
-    protected LoadImageTask (ImageView view) {
-        imageView = view;
-    }
-
-    @Override
-    protected Bitmap doInBackground(String... urls) {
-        String url = urls[0];
-        Bitmap bitmap = null;
-
-        try {
-            InputStream in = new java.net.URL(url).openStream();
-            bitmap = BitmapFactory.decodeStream(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return bitmap;
-    }
-
-    @Override
-    protected void onPostExecute(Bitmap bitmap) {
-        super.onPostExecute(bitmap);
-        imageView.setImageBitmap(bitmap);
-    }
-}
+//class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
+//    private ImageView imageView;
+//
+//    protected LoadImageTask (ImageView view) {
+//        imageView = view;
+//    }
+//
+//    @Override
+//    protected Bitmap doInBackground(String... urls) {
+//        String url = urls[0];
+//        Bitmap bitmap = null;
+//
+//        try {
+//            InputStream in = new java.net.URL(url).openStream();
+//            bitmap = BitmapFactory.decodeStream(in);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return bitmap;
+//    }
+//
+//    @Override
+//    protected void onPostExecute(Bitmap bitmap) {
+//        super.onPostExecute(bitmap);
+//        imageView.setImageBitmap(bitmap);
+//    }
+//}

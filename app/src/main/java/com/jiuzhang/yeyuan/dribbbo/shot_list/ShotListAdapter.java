@@ -2,6 +2,7 @@ package com.jiuzhang.yeyuan.dribbbo.shot_list;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailActivity;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -65,13 +67,17 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (viewType == VIEW_TYPE_SHOT) {
 
             final Shot shot = shotList.get(position);
+            final Context context = holder.itemView.getContext();
+
             ShotListViewHolder shotListViewHolder = (ShotListViewHolder) holder;
 
             shotListViewHolder.shotCountTextView.setText(String.valueOf(shot.viewCount));
             shotListViewHolder.shotLikeTextView.setText(String.valueOf(shot.likeCount));
             shotListViewHolder.shotSaveTextView.setText(String.valueOf(shot.saveCount));
 
-            final Context context = holder.itemView.getContext();
+            Picasso.with(context)
+                    .load(Uri.parse(shot.coverImageURL))
+                    .into(shotListViewHolder.shotImageView);
 
             shotListViewHolder.shotCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
