@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.squareup.picasso.Picasso;
@@ -56,8 +57,14 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         switch (viewType) {
             case VIEW_TYPE_SHOT_IMAGE:
                 ShotImageViewHolder shotImageViewHolder = (ShotImageViewHolder) holder;
-                Picasso.with(context)
+//                Picasso.with(context)
+//                        .load(shot.coverImageURL)
+//                        .into(shotImageViewHolder.imageView);
+
+                Glide.with(context)
                         .load(shot.coverImageURL)
+                        .placeholder(R.drawable.shot_image_placeholder)
+                        .thumbnail(0.1f)
                         .into(shotImageViewHolder.imageView);
                 break;
             case VIEW_TYPE_SHOT_ACTION:

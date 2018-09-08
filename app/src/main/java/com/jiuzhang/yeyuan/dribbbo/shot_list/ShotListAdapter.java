@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
@@ -75,8 +76,15 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             shotListViewHolder.shotLikeTextView.setText(String.valueOf(shot.likeCount));
             shotListViewHolder.shotSaveTextView.setText(String.valueOf(shot.saveCount));
 
-            Picasso.with(context)
-                    .load(Uri.parse(shot.coverImageURL))
+//            Picasso.with(context)
+//                    .load(Uri.parse(shot.coverImageURL))
+//                    .into(shotListViewHolder.shotImageView);
+
+            Glide.with(context)
+                    .load(shot.coverImageURL)
+                    .placeholder(R.drawable.shot_image_placeholder)
+                    .thumbnail(0.1f)//Load a thumbnail at 1/10th the size of your view and then load the full image on top
+                                    //This will reduce the time your user has to see image loading spinners without sacrificing quality
                     .into(shotListViewHolder.shotImageView);
 
             shotListViewHolder.shotCardView.setOnClickListener(new View.OnClickListener() {
