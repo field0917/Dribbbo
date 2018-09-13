@@ -5,10 +5,13 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
+import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -16,17 +19,24 @@ import okhttp3.Response;
 
 public class Dribbble {
 
+    public static final int COUNT_PER_PAGE = 10;
+    private static final String KEY_PER_PAGE = "per_page";
+
     private static final String KEY_ACCESS_TOKEN = "access_token";
     private static final String KEY_USER = "user";
     private static final String SP_AUTH = "sp_auth";
 
-    private static final String API_URL = "https://api.dribbble.com/v2/";
-    private static final String USER_END_POINT = API_URL + "user";
-    private static final TypeToken<User> USER_TYPE = new TypeToken<User>(){};
+    private static final String API_URL = "https://api.unsplash.com/";
+    private static final String USER_END_POINT = API_URL + "me";
+    private static final String SHOTS_END_POINT = API_URL + "photos";
+
+    public static final TypeToken<User> USER_TYPE = new TypeToken<User>(){};
+    private static final TypeToken<List<Shot>> SHOT_LIST_TYPE = new TypeToken<List<Shot>>(){};
 
 
     private static String accessToken;
     private static User user;
+    private static OkHttpClient client = new OkHttpClient();
 
     public static void init (Context context) {
         accessToken = loadAccessToken(context);
@@ -69,16 +79,27 @@ public class Dribbble {
     }
 
     private static User getUser () throws IOException {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .addHeader("Authorization", "Bearer " + accessToken)
-                .url(USER_END_POINT)
-                .build();
-        Response response = client.newCall(request).execute();
+        return parseResponse(makeGetRequest(USER_END_POINT), USER_TYPE);
+    }
 
-        // Parse response
+    private static <T> T parseResponse (Response response, TypeToken<T> typeToken) throws IOException {
         String responseString = response.body().string();
-        return ModelUtils.toObject(responseString, USER_TYPE);
+        return ModelUtils.toObject(responseString, typeToken);
+    }
+
+    private static Request.Builder authRequestBuilder (String url) {
+        return new Request.Builder()
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .url(url);
+    }
+
+    private static Response makeGetRequest (String url) throws IOException {
+        Request request = authRequestBuilder(url).build();
+        return getResponseFromRequest(request);
+    }
+
+    private static Response getResponseFromRequest (Request request) throws IOException {
+        return client.newCall(request).execute();
     }
 
     public static User getCurrentUser () {
@@ -92,6 +113,15 @@ public class Dribbble {
 
     private static User loadUser (Context context) {
         return ModelUtils.read(context, KEY_USER, USER_TYPE);
+    }
+
+    public static List<Shot> getShots(int page) throws IOException {
+        String url = SHOTS_END_POINT + "?page=" + page;
+        Response response = makeGetRequest(url);
+
+        List<Shot> result = parseResponse(response, SHOT_LIST_TYPE);
+        Log.i("Here", result.toString());
+        return result;
     }
 
 }

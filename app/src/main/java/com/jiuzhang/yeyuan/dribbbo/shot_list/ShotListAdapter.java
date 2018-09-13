@@ -72,17 +72,18 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             ShotListViewHolder shotListViewHolder = (ShotListViewHolder) holder;
 
-            shotListViewHolder.shotCountTextView.setText(String.valueOf(shot.viewCount));
-            shotListViewHolder.shotLikeTextView.setText(String.valueOf(shot.likeCount));
-            shotListViewHolder.shotSaveTextView.setText(String.valueOf(shot.saveCount));
+            shotListViewHolder.shotCountTextView.setText(String.valueOf(shot.views));
+            shotListViewHolder.shotLikeTextView.setText(String.valueOf(shot.likes));
+            shotListViewHolder.shotSaveTextView.setText(String.valueOf(shot.downloads));
 
 //            Picasso.with(context)
-//                    .load(Uri.parse(shot.coverImageURL))
+//                    .load(Uri.parse(shot.imageURL))
 //                    .into(shotListViewHolder.shotImageView);
 
             Glide.with(context)
-                    .load(shot.coverImageURL)
+                    .load(shot.getImageUrl())
                     .placeholder(R.drawable.shot_image_placeholder)
+                    .error(R.drawable.error_image_not_found)
                     .thumbnail(0.1f)//Load a thumbnail at 1/10th the size of your view and then load the full image on top
                                     //This will reduce the time your user has to see image loading spinners without sacrificing quality
                     .into(shotListViewHolder.shotImageView);
@@ -94,7 +95,7 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     Intent intent = new Intent(context, ShotDetailActivity.class);
                     String s = ModelUtils.toString(shot, new TypeToken<Shot>(){});
                     intent.putExtra(ShotDetailFragment.KEY_SHOT, s);
-                    intent.putExtra(KEY_SHOT_TITLE, shot.shotTitle);
+                    intent.putExtra(KEY_SHOT_TITLE, shot.id);
                     context.startActivity(intent);
 
                 }

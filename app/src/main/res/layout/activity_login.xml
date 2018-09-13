@@ -11,10 +11,10 @@
 
     <Button
         android:id="@+id/login_button"
-        android:layout_width="240dp"
+        android:layout_width="260dp"
         android:layout_height="60dp"
         android:background="@drawable/button_bg_rounded_corners"
-        android:text="Log into Dribbbo"
+        android:text="Log into PinkUnicorn"
         android:textSize="20sp"
         android:textColor="@color/colorAccent" />
 

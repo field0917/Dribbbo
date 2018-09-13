@@ -25,23 +25,33 @@ public class Auth {
     public static final String KEY_URL = "auth URL";
     private static final String KEY_CLIENT_ID = "client_id";
     private static final String KEY_CLIENT_SECRET = "client_secret";
-    private static final String KEY_REDIRECT_URL = "redirect_url";
+    private static final String KEY_REDIRECT_URL = "redirect_uri";
+    private static final String KEY_RESPONSE_TYPE = "response_type";
     private static final String KEY_SCOPE = "scope";
     private static final String KEY_CODE = "code";
     private static final String KEY_ACCESS_TOKEN = "access_token";
+    private static final String KEY_GRANT_TYPE = "grant_type";
 
-    private static final String URI_AUTHORIZE = "https://dribbble.com/oauth/authorize";
-    private static final String URI_TOKEN = "https://dribbble.com/oauth/token";
+    private static final String URI_AUTHORIZE = "https://unsplash.com/oauth/authorize";
+    private static final String URI_TOKEN = "https://unsplash.com/oauth/token";
 
-    private static final String CLIENT_ID = "401963981b138f18f81c37d543f3f9f716d247c6fba156e063e6756dd2d20cbe";
-    private static final String CLIENT_SECRET = "20583200f57f721db73aa082fccb2b56befe1162b7e18225727f049f6b228266";
-    private static final String SCOPE = "public+write";
+    private static final String CLIENT_ID = "3557d42a211f301f0748ce528a3e44c3c6146d8fe460404fbdc9eee5519eff2d";
+    private static final String CLIENT_SECRET = "812c6de60c3f06a0b2a881f543220763d070a5c40b8b086c25f69ad4b785bac5";
+    private static final String SCOPE = "public+read_user+write_user+read_photos+read_collections";
 
     public static final String REDIRECT_URL = "http://www.google.com";
+    private static final String RESPONSE_TYPE = "code";
+    private static final String GRANT_TYPE = "authorization_code";
 
-//https://dribbble.com/oauth/authorize?client_id=401963981b138f18f81c37d543f3f9f716d247c6fba156e063e6756dd2d20cbe&scope=public+write
-//code=f41b5de1eb828a0cd2b1d288f12a491164ea4db18d9e3bc0235332a2dc74b3e1
-    //token=6f2ff496fd3f8231ac8162608e83474c99cadb8c9757b2bb466511118609c860
+//https://unsplash.com/oauth/authorize?client_id=3557d42a211f301f0748ce528a3e44c3c6146d8fe460404fbdc9eee5519eff2d&redirect_uri=http://www.google.com&response_type=code&scope=public+read_user+write_user+read_photos+read_collections
+//https://unsplash.com/oauth/token?client_id=3557d42a211f301f0748ce528a3e44c3c6146d8fe460404fbdc9eee5519eff2d&client_secret=812c6de60c3f06a0b2a881f543220763d070a5c40b8b086c25f69ad4b785bac5&redirect_uri=http://www.google.com&code=649418c571be7a8412b0716bb5dabfc1f415ec9846130500512a70c0b2099473&grant_type=authorization_code
+//{
+//    "access_token": "90fbb59b8facf6e8146fb66686c62edb3c8188361b95b6d4d18b1d8ca91c325c",
+//    "token_type": "bearer",
+//    "refresh_token": "727ead34171c659aec730bc1a59fdb2bfc0f50295ee216d69fe3637c61b3116b",
+//    "scope": "public read_user write_user read_photos read_collections",
+//    "created_at": 1536697832
+//}
     public static void openAuthActivity(Activity activity) {
         Intent intent = new Intent(activity, AuthActivity.class);
         String url = getAuthorizeURL();
@@ -56,7 +66,8 @@ public class Auth {
                 .build()
                 .toString();
 
-        //url += "&" + KEY_REDIRECT_URL + "=" + REDIRECT_URL;
+        url += "&" + KEY_REDIRECT_URL + "=" + REDIRECT_URL;
+        url += "&" + KEY_RESPONSE_TYPE + "=" + RESPONSE_TYPE;
         url += "&" + KEY_SCOPE + "=" + SCOPE;
 
         return url;
@@ -69,8 +80,9 @@ public class Auth {
         RequestBody postBody = new FormBody.Builder()
                 .add(KEY_CLIENT_ID, CLIENT_ID)
                 .add(KEY_CLIENT_SECRET, CLIENT_SECRET)
-                .add(KEY_CODE, code)
                 .add(KEY_REDIRECT_URL, REDIRECT_URL)
+                .add(KEY_CODE, code)
+                .add(KEY_GRANT_TYPE, GRANT_TYPE)
                 .build();
 
         Request request = new Request.Builder()

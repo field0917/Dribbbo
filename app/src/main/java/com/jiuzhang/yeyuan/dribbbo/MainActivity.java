@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 //        new LoadImageTask(userImage).execute(Dribbble.getCurrentUser().avatar_url);
 
         Picasso.with(this)
-                .load(Dribbble.getCurrentUser().avatar_url)
+                .load(Dribbble.getCurrentUser().getProfileImageURL())
                 .placeholder(R.drawable.user_picture_placeholder)
                 .into(userImage);
 

@@ -62,22 +62,29 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //                        .into(shotImageViewHolder.imageView);
 
                 Glide.with(context)
-                        .load(shot.coverImageURL)
+                        .load(shot.getImageUrl())
                         .placeholder(R.drawable.shot_image_placeholder)
+                        .error(R.drawable.error_image_not_found)
                         .thumbnail(0.1f)
                         .into(shotImageViewHolder.imageView);
                 break;
             case VIEW_TYPE_SHOT_ACTION:
                 ShotActionViewHolder shotActionViewHolder = (ShotActionViewHolder) holder;
-                shotActionViewHolder.viewCount.setText(String.valueOf(shot.viewCount));
-                shotActionViewHolder.likeCount.setText(String.valueOf(shot.likeCount));
-                shotActionViewHolder.saveCount.setText(String.valueOf(shot.saveCount));
+                shotActionViewHolder.viewCount.setText(String.valueOf(shot.views));
+                shotActionViewHolder.likeCount.setText(String.valueOf(shot.likes));
+                shotActionViewHolder.saveCount.setText(String.valueOf(shot.downloads));
                 break;
             case VIEW_TYPE_SHOT_INFO:
                 ShotInfoViewHolder shotInfoViewHolder = (ShotInfoViewHolder) holder;
+
+                Glide.with(context)
+                        .load(shot.user.getProfileImageURL())
+                        .placeholder(R.drawable.user_picture_placeholder)
+                        .thumbnail(0.1f)
+                        .into(shotInfoViewHolder.shotAuthorImage);
                 shotInfoViewHolder.shotAuthor.setText(shot.user.name);
-                shotInfoViewHolder.shotTitle.setText(shot.shotTitle);
-                shotInfoViewHolder.shotInfo.setText(shot.shotInfo);
+                shotInfoViewHolder.shotTitle.setText(shot.id);
+                shotInfoViewHolder.shotInfo.setText(shot.description);
                 break;
         }
     }
