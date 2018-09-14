@@ -4,17 +4,18 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:padding="@dimen/recycler_view_padding">
+    android:paddingLeft="18dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="15dp">
+        android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/shot_author_image"
-            android:layout_width="@dimen/user_image_size"
-            android:layout_height="@dimen/user_image_size"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             tools:src="@drawable/user_picture_placeholder"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -22,31 +23,33 @@
             android:layout_marginRight="20dp"
             android:contentDescription="shot author image"/>
 
-        <TextView
-            android:id="@+id/shot_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="New Teblksmith.com"
-            android:textSize="18sp"
-            android:textColor="#000000"
-            android:layout_toRightOf="@+id/shot_author_image"
-            android:layout_toEndOf="@+id/shot_author_image"/>
+        <!--<TextView-->
+            <!--android:id="@+id/shot_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:text="New Teblksmith.com"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textColor="#000000"-->
+            <!--android:layout_toRightOf="@+id/shot_author_image"-->
+            <!--android:layout_toEndOf="@+id/shot_author_image"/>-->
 
         <TextView
             android:id="@+id/shot_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="David M. Smith"
-            android:layout_below="@+id/shot_title"
+            android:textColor="#000000"
+            android:textSize="18dp"
             android:layout_toRightOf="@+id/shot_author_image"
-            android:layout_toEndOf="@+id/shot_author_image"/>
+            android:layout_toEndOf="@+id/shot_author_image"
+            />
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/shot_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
+    <!--<TextView-->
+        <!--android:id="@+id/shot_info"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>-->
 
 </LinearLayout>

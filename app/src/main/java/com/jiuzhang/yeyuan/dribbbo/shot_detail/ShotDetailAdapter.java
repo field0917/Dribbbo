@@ -83,8 +83,8 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         .thumbnail(0.1f)
                         .into(shotInfoViewHolder.shotAuthorImage);
                 shotInfoViewHolder.shotAuthor.setText(shot.user.name);
-                shotInfoViewHolder.shotTitle.setText(shot.id);
-                shotInfoViewHolder.shotInfo.setText(shot.description);
+                //shotInfoViewHolder.shotTitle.setText(shot.title);
+                //shotInfoViewHolder.shotInfo.setText(shot.description);
                 break;
         }
     }
@@ -98,11 +98,11 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public int getItemViewType(int position) {
         super.getItemViewType(position);
         if (position == 0) {
-            return VIEW_TYPE_SHOT_IMAGE;
-        } else if (position == 1) {
-            return VIEW_TYPE_SHOT_ACTION;
-        } else if (position == 2){
             return VIEW_TYPE_SHOT_INFO;
+        } else if (position == 1) {
+            return VIEW_TYPE_SHOT_IMAGE;
+        } else if (position == 2){
+            return VIEW_TYPE_SHOT_ACTION;
         } else {
             return -1;
         }

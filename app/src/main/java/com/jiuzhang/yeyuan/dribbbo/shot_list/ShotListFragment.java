@@ -77,14 +77,20 @@ public class ShotListFragment extends Fragment {
                 task.execute();
             }
         });
-    //TODO: 第七章小视频 2.Pull to refresh
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                Toast.makeText(getContext(), "Loading 12 new shots", Toast.LENGTH_SHORT).show();
-//                swipeRefreshLayout.setRefreshing(true);
-//            }
-//        });
+
+        swipeRefreshLayout.setEnabled(false); // During the first loading, disable swipe to refresh
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                LoadShotsTask task = new LoadShotsTask(true);
+                task.execute();
+                //adapter.setIsRefreshing(true);
+                swipeRefreshLayout.setRefreshing(true); // Enable the refresh icon
+
+            }
+        });
+
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -96,15 +102,20 @@ public class ShotListFragment extends Fragment {
     private class LoadShotsTask extends AsyncTask<Void, Void, List<Shot>> {
 
         int page;
+        boolean refresh;
 
         public LoadShotsTask (int page) {
             this.page = page;
         }
 
+        public LoadShotsTask (boolean refresh) {
+            this.refresh = refresh;
+        }
+
         @Override
         protected List<Shot> doInBackground(Void... voids) {
             try {
-                return Dribbble.getShots(page);
+                return refresh ? Dribbble.getShots(1) : Dribbble.getShots(page);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -117,8 +128,15 @@ public class ShotListFragment extends Fragment {
         protected void onPostExecute(List<Shot> shots) {
             super.onPostExecute(shots);
             if (shots != null) {
-                adapter.append(shots);
+                if (refresh) {
+                    adapter.setData(shots);
+                    swipeRefreshLayout.setRefreshing(false);
+                } else {
+                    adapter.append(shots);
+                }
                 adapter.setShowLoading(shots.size() == Dribbble.COUNT_PER_PAGE);
+                //adapter.setIsRefreshing(false);
+                swipeRefreshLayout.setEnabled(true);
             }
         }
     }

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public static final String KEY_SHOT_TITLE = "shot title";
 
     private boolean showLoading;
-//    private boolean isRefreshing;
+    //public boolean isRefreshing;
 
     private List<Shot> shotList;
     private LoadMoreListener loadMoreListener;
@@ -39,7 +40,7 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.shotList = shotList;
         this.loadMoreListener = loadMoreListener;
         this.showLoading = true;
-//        this.isRefreshing = false;
+        //this.isRefreshing = true;
     }
 
 
@@ -119,8 +120,14 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return position < shotList.size() ? VIEW_TYPE_SHOT : VIEW_TYPE_LOADING;
     }
 
-    public void append(List<Shot> moreShots) {
+    public void append(@NonNull List<Shot> moreShots) {
         shotList.addAll(moreShots);
+        notifyDataSetChanged();
+    }
+
+    public void setData(@NonNull List<Shot> data) {
+        shotList.clear();
+        shotList.addAll(data);
         notifyDataSetChanged();
     }
 
@@ -129,7 +136,7 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
-//    public void setRefreshing(boolean isRefreshing) {
+//    public void setIsRefreshing(boolean isRefreshing) {
 //        this.isRefreshing = isRefreshing;
 //        notifyDataSetChanged();
 //    }

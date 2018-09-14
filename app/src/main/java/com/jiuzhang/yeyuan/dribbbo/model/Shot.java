@@ -16,7 +16,7 @@ public class Shot {
 
     public String id;
     public String description;
-//    public String title;
+    public String title;
 
     public int width;
     public int height;
@@ -32,12 +32,16 @@ public class Shot {
 
 //    public String imageURL;
 
-    public String getImageUrl() {
+    public String getImageUrl () {
         if (urls == null) {
             return "";
         }
         String url = urls.get(IMAGE_RAW) == null ?
                 urls.get(IMAGE_FULL) : urls.get(IMAGE_RAW);
         return url == null ? urls.get(IMAGE_REGULAR) : url;
+    }
+
+    public String getImageThumb () {
+        return urls.get("IMAGE_THUMB");
     }
 }

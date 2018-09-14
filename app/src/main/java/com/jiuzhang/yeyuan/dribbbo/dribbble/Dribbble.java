@@ -120,7 +120,6 @@ public class Dribbble {
         Response response = makeGetRequest(url);
 
         List<Shot> result = parseResponse(response, SHOT_LIST_TYPE);
-        Log.i("Here", result.toString());
         return result;
     }
 

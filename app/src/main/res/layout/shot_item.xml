@@ -22,7 +22,7 @@
             android:layout_height="240dp"
             tools:src="@drawable/shot_image_placeholder"
             android:contentDescription="This is an image"
-            android:scaleType="fitXY"/>
+            android:scaleType="centerCrop"/>
 
         <LinearLayout
             android:layout_width="match_parent"
