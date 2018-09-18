@@ -3,6 +3,8 @@ package com.jiuzhang.yeyuan.dribbbo.model;
 import java.util.Map;
 
 public class User {
+
+    public String username;
     public String name;
     public Map<String, String> profile_image;
 

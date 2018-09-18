@@ -2,6 +2,7 @@ package com.jiuzhang.yeyuan.dribbbo.bucket_list;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,37 +12,85 @@ import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
 
 import java.util.List;
 
-public class BucketListAdapter extends RecyclerView.Adapter<BucketListViewHolder> {
+public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    List<Bucket> bucketList;
+    private static final int VIEW_TYPE_BUCKET_LIST = 0;
+    private static final int VIEW_TYPE_LOAD_MORE = 1;
 
-    public BucketListAdapter (List<Bucket> bucketList) {
+    private List<Bucket> bucketList;
+    private LoadMoreListener loadMoreListener;
+    private boolean showLoading;
+
+    public BucketListAdapter (List<Bucket> bucketList, LoadMoreListener loadMoreListener) {
         this.bucketList = bucketList;
+        this.loadMoreListener = loadMoreListener;
+        this.showLoading = true;
     }
 
     @NonNull
     @Override
-    public BucketListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.bucket_item, parent, false);
-        return new BucketListViewHolder(view);
-    }
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+        switch (viewType) {
+            case VIEW_TYPE_BUCKET_LIST:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.bucket_item, parent, false);
+                return new BucketListViewHolder(view);
+            case VIEW_TYPE_LOAD_MORE:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.loading_item_activity, parent, false);
+                return new RecyclerView.ViewHolder(view) {};
 
-    @Override
-    public void onBindViewHolder(@NonNull BucketListViewHolder holder, int position) {
-        Bucket bucket = bucketList.get(position);
-        holder.bucketNumberTextView.setText("Bucket " + bucket.bucketNumber);
-
-        if (bucket.storeShotNumber <= 1) {
-            holder.shotNumberTextView.setText(bucket.storeShotNumber + " shot");
-        } else {
-            holder.shotNumberTextView.setText(bucket.storeShotNumber + " shots");
         }
-        holder.checkBox.setChecked(bucket.isChecked);
+        return null;
     }
 
     @Override
-    public int getItemCount() {
+    public void onBindViewHolder (@NonNull RecyclerView.ViewHolder holder, int position) {
+        int viewType = getItemViewType(position);
+
+        if (viewType == VIEW_TYPE_BUCKET_LIST) {
+            Bucket bucket = bucketList.get(position);
+            BucketListViewHolder bucketListViewHolder = (BucketListViewHolder) holder;
+            bucketListViewHolder.bucketTitleTextView.setText(bucket.title);
+
+            if (bucket.total_photos <= 1) {
+                bucketListViewHolder.shotNumberTextView.setText(bucket.total_photos + " shot");
+            } else {
+                bucketListViewHolder.shotNumberTextView.setText(bucket.total_photos + " shots");
+            }
+            //bucketListViewHolder.checkBox.setChecked(bucket.isChecked);
+        } else if (viewType == VIEW_TYPE_LOAD_MORE) {
+            loadMoreListener.onLoadMore();
+        }
+
+    }
+
+    @Override
+    public int getItemCount () {
+        return showLoading ? bucketList.size() + 1 : bucketList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position < bucketList.size() ? VIEW_TYPE_BUCKET_LIST : VIEW_TYPE_LOAD_MORE;
+    }
+
+    public int getDataCount () {
         return bucketList.size();
+    }
+
+    public void append(List<Bucket> buckets) {
+        bucketList.addAll(buckets);
+        notifyDataSetChanged();
+    }
+
+    public void setShowLoading (boolean showLoading) {
+        this.showLoading = showLoading;
+        notifyDataSetChanged();
+    }
+
+    public interface LoadMoreListener {
+        void onLoadMore();
     }
 }

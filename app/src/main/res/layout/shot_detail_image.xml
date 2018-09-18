@@ -2,7 +2,7 @@
 <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:maxHeight="400dp"
+    android:maxHeight="300dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/shot_detail_image_view"
     tools:src="@drawable/shot_image_placeholder"

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
+import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
@@ -32,6 +33,7 @@ public class Dribbble {
 
     public static final TypeToken<User> USER_TYPE = new TypeToken<User>(){};
     private static final TypeToken<List<Shot>> SHOT_LIST_TYPE = new TypeToken<List<Shot>>(){};
+    private static final TypeToken<List<Bucket>> BUCKET_LIST_TYPE = new TypeToken<List<Bucket>>(){};
 
 
     private static String accessToken;
@@ -115,12 +117,21 @@ public class Dribbble {
         return ModelUtils.read(context, KEY_USER, USER_TYPE);
     }
 
-    public static List<Shot> getShots(int page) throws IOException {
+    public static List<Shot> getShots (int page) throws IOException {
         String url = SHOTS_END_POINT + "?page=" + page;
-        Response response = makeGetRequest(url);
+        return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
+    }
 
-        List<Shot> result = parseResponse(response, SHOT_LIST_TYPE);
-        return result;
+    public static List<Bucket> getBuckets () throws IOException {
+        String url = getCollectionsEndPoint ();
+        return parseResponse(makeGetRequest(url), BUCKET_LIST_TYPE);
+    }
+
+    private static String getCollectionsEndPoint() {
+        String url = API_URL + "users/";
+        url += getCurrentUser().username;
+        url += "/collections";
+        return url;
     }
 
 }
