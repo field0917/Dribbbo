@@ -1,6 +1,7 @@
 package com.jiuzhang.yeyuan.dribbbo.bucket_list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +31,14 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.app.Activity.RESULT_OK;
+
 public class BucketListFragment extends Fragment {
 
     private static final int VERTICAL_SPACE_HEIGHT = 20;
     private static final int COUNT_PER_PAGE = 7;
+
+    public static final int REQ_NEW_BUCKET = 106;
 
     @BindView(R.id.bucket_list_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.bucket_fab) FloatingActionButton fab;
@@ -52,34 +58,12 @@ public class BucketListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //bucketList = fakeData(1);
-
-        //final Handler handler = new Handler();
         adapter = new BucketListAdapter(bucketList, new BucketListAdapter.LoadMoreListener() {
 
             @Override
             public void onLoadMore() {
                 LoadBucketTask task = new LoadBucketTask();
                 task.execute();
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        try {
-//                            Thread.sleep(1000);
-//                            final List<Bucket> moreData = fakeData(adapter.getDataCount() / COUNT_PER_PAGE);
-//
-//                            handler.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    adapter.append(moreData);
-//                                    adapter.setShowLoading(moreData.size() >= COUNT_PER_PAGE);
-//                                }
-//                            });
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }).start();
 
             }
         });
@@ -105,10 +89,21 @@ public class BucketListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Fab clicked!", Toast.LENGTH_SHORT).show();
+                NewBucketDialogFragment dialogFragment = NewBucketDialogFragment.newInstance();
+                dialogFragment.setTargetFragment(BucketListFragment.this, REQ_NEW_BUCKET);
+                dialogFragment.show(getFragmentManager(), NewBucketDialogFragment.TAG);
             }
         });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQ_NEW_BUCKET && resultCode == RESULT_OK) {
+            String bucketName = data.getStringExtra(NewBucketDialogFragment.KEY_NEW_BUCKET_NAME);
+            String bucketDes = data.getStringExtra(NewBucketDialogFragment.KEY_NEW_BUCKET_DESCRIPTION);
+            Toast.makeText(getActivity(), bucketName + "\n" + bucketDes, Toast.LENGTH_LONG).show();
+        }
     }
 
     private class LoadBucketTask extends AsyncTask<Void, Void, List<Bucket>> {
@@ -133,22 +128,4 @@ public class BucketListFragment extends Fragment {
         }
     }
 
-//    private List<Bucket> fakeData(int page) {
-//
-//        List<Bucket> buckets = new ArrayList<>();
-//
-//        Random random = new Random();
-//
-//        int count = page < 2 ? COUNT_PER_PAGE : 3;
-//
-//
-//        for (int i = 0; i < count; i++) {
-//            Bucket bucket = new Bucket();
-//            bucket.bucketNumber = i;
-//            bucket.storeShotNumber = random.nextInt(30);
-//            buckets.add(bucket);
-//        }
-//
-//        return buckets;
-//    }
 }

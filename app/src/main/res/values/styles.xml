@@ -8,12 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.TextView" />
+    <style name="AppTheme.TextView">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+    </style>
 
     <style name="AppTheme.TextView.Clickable">
         <item name="android:background">?android:attr/selectableItemBackground</item>
         <item name="android:padding">@dimen/spacing_small</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+
 
     </style>
 
@@ -24,7 +26,7 @@
     </style>
 
     <style name="AppTheme.TextVIew.Clickable.1.White" parent="AppTheme.TextView.Clickable.1">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
 
     <style name="AppTheme.TextView.Clickable.2" parent="AppTheme.TextView.Clickable">
@@ -32,7 +34,7 @@
     </style>
 
     <style name="AppTheme.TextView.Clickable.2.White" parent="AppTheme.TextView.Clickable.2">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
 
 </resources>

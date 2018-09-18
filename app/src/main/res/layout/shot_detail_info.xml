@@ -4,9 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:paddingLeft="18dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="8dp">
+    android:padding="@dimen/spacing_small">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +19,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="20dp"
-            android:contentDescription="shot author image"/>
+            android:contentDescription="shot author image"
+            android:layout_centerVertical="true"/>
 
         <!--<TextView-->
             <!--android:id="@+id/shot_title"-->
@@ -42,7 +41,7 @@
             android:textSize="18dp"
             android:layout_toRightOf="@+id/shot_author_image"
             android:layout_toEndOf="@+id/shot_author_image"
-            />
+            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
 

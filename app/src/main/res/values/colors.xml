@@ -6,13 +6,13 @@
 <!--</resources>-->
 
 <resources>
-    <color name="colorPrimary">#FFC107</color>
-    <color name="colorPrimaryDark">#FFA000</color>
-    <color name="colorPrimaryLight">#FFECB3</color>
+    <color name="colorPrimary">#FEDBD0</color>
+    <color name="colorPrimaryDark">#FECDAF</color>
+    <color name="colorPrimaryLight">#FEEAE6</color>
     <color name="colorAccent">#009688</color>
-    <color name="colorPrimaryText">#212121</color>
+    <color name="colorPrimaryText">#442C2E</color>
     <color name="colorSecondaryText">#757575</color>
-    <color name="colorIcons">#212121</color>
+    <color name="colorIcons">#442C2E</color>
     <color name="colorDivider">#BDBDBD</color>
 
     <color name="place_holder_bg">#33000000</color>
