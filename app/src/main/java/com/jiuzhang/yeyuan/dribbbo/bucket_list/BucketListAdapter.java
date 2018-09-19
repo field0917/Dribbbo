@@ -81,8 +81,14 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public void append(List<Bucket> buckets) {
+        //bucketList.clear();
         bucketList.addAll(buckets);
         notifyDataSetChanged();
+    }
+
+    public void append (Bucket bucket) {
+        bucketList.add(0, bucket);
+        notifyItemInserted(0); //item reflected at position 0 has been newly inserted. The item previously at position is now at position position + 1
     }
 
     public void setShowLoading (boolean showLoading) {

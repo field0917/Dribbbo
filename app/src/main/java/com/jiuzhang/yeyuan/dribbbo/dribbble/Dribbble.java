@@ -14,8 +14,10 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Dribbble {
@@ -25,15 +27,19 @@ public class Dribbble {
 
     private static final String KEY_ACCESS_TOKEN = "access_token";
     private static final String KEY_USER = "user";
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_DESCRIPTION = "description";
     private static final String SP_AUTH = "sp_auth";
 
     private static final String API_URL = "https://api.unsplash.com/";
     private static final String USER_END_POINT = API_URL + "me";
     private static final String SHOTS_END_POINT = API_URL + "photos";
+    private static final String BUCKET_CREATE_END_POINT = API_URL + "collections";
 
     public static final TypeToken<User> USER_TYPE = new TypeToken<User>(){};
     private static final TypeToken<List<Shot>> SHOT_LIST_TYPE = new TypeToken<List<Shot>>(){};
     private static final TypeToken<List<Bucket>> BUCKET_LIST_TYPE = new TypeToken<List<Bucket>>(){};
+    private static final TypeToken<Bucket> BUCKET_TYPE = new TypeToken<Bucket>(){};
 
 
     private static String accessToken;
@@ -100,6 +106,15 @@ public class Dribbble {
         return getResponseFromRequest(request);
     }
 
+    private static Response makePostRequest (String url, RequestBody requestBody) throws IOException {
+
+        Request request = authRequestBuilder(url)
+                .post(requestBody)
+                .build();
+
+        return getResponseFromRequest(request);
+    }
+
     private static Response getResponseFromRequest (Request request) throws IOException {
         return client.newCall(request).execute();
     }
@@ -127,11 +142,20 @@ public class Dribbble {
         return parseResponse(makeGetRequest(url), BUCKET_LIST_TYPE);
     }
 
-    private static String getCollectionsEndPoint() {
+    private static String getCollectionsEndPoint () {
         String url = API_URL + "users/";
         url += getCurrentUser().username;
         url += "/collections";
         return url;
+    }
+
+    public static Bucket createNewBucket (String title, String description) throws IOException {
+        RequestBody requestBody = new FormBody.Builder()
+                .add(KEY_TITLE, title)
+                .add(KEY_DESCRIPTION, description)
+                .build();
+        Response response = makePostRequest(BUCKET_CREATE_END_POINT, requestBody);
+        return parseResponse(response, BUCKET_TYPE);
     }
 
 }

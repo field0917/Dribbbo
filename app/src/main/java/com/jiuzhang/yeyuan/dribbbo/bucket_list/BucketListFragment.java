@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,7 +103,12 @@ public class BucketListFragment extends Fragment {
         if (requestCode == REQ_NEW_BUCKET && resultCode == RESULT_OK) {
             String bucketName = data.getStringExtra(NewBucketDialogFragment.KEY_NEW_BUCKET_NAME);
             String bucketDes = data.getStringExtra(NewBucketDialogFragment.KEY_NEW_BUCKET_DESCRIPTION);
-            Toast.makeText(getActivity(), bucketName + "\n" + bucketDes, Toast.LENGTH_LONG).show();
+
+            if (!TextUtils.isEmpty(bucketName)) {
+                CreateNewBucketTask task = new CreateNewBucketTask(bucketName, bucketDes);
+                task.execute();
+            }
+
         }
     }
 
@@ -125,6 +131,32 @@ public class BucketListFragment extends Fragment {
                 adapter.setShowLoading(buckets.size() >= COUNT_PER_PAGE);
             }
 
+        }
+    }
+
+    private class CreateNewBucketTask extends AsyncTask<Void, Void, Bucket> {
+
+        String bucketName;
+        String bucketDes;
+
+        public CreateNewBucketTask (String bucketName, String bucketDes) {
+            this.bucketName = bucketName;
+            this.bucketDes = bucketDes;
+        }
+
+        @Override
+        protected Bucket doInBackground(Void... voids) {
+            try {
+                return Dribbble.createNewBucket(bucketName, bucketDes);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bucket bucket) {
+            adapter.append(bucket);
         }
     }
 

@@ -37,14 +37,14 @@ public class Auth {
 
     private static final String CLIENT_ID = "3557d42a211f301f0748ce528a3e44c3c6146d8fe460404fbdc9eee5519eff2d";
     private static final String CLIENT_SECRET = "812c6de60c3f06a0b2a881f543220763d070a5c40b8b086c25f69ad4b785bac5";
-    private static final String SCOPE = "public+read_user+write_user+read_photos+read_collections";
+    private static final String SCOPE = "public+read_user+write_user+read_photos+write_photos+write_followers+read_collections+write_collections+write_likes";
 
     public static final String REDIRECT_URL = "http://www.google.com";
     private static final String RESPONSE_TYPE = "code";
     private static final String GRANT_TYPE = "authorization_code";
 
-//https://unsplash.com/oauth/authorize?client_id=3557d42a211f301f0748ce528a3e44c3c6146d8fe460404fbdc9eee5519eff2d&redirect_uri=http://www.google.com&response_type=code&scope=public+read_user+write_user+read_photos+read_collections
-//https://unsplash.com/oauth/token?client_id=3557d42a211f301f0748ce528a3e44c3c6146d8fe460404fbdc9eee5519eff2d&client_secret=812c6de60c3f06a0b2a881f543220763d070a5c40b8b086c25f69ad4b785bac5&redirect_uri=http://www.google.com&code=649418c571be7a8412b0716bb5dabfc1f415ec9846130500512a70c0b2099473&grant_type=authorization_code
+//https://unsplash.com/oauth/authorize?client_id=3557d42a211f301f0748ce528a3e44c3c6146d8fe460404fbdc9eee5519eff2d&redirect_uri=http://www.google.com&response_type=code&scope=public+read_user+write_user+read_photos+write_photos+write_followers+read_collections+write_collections+write_likes
+//https://unsplash.com/oauth/token?client_id=3557d42a211f301f0748ce528a3e44c3c6146d8fe460404fbdc9eee5519eff2d&client_secret=812c6de60c3f06a0b2a881f543220763d070a5c40b8b086c25f69ad4b785bac5&redirect_uri=http://www.google.com&code=18bc4c9078e73ba29307c5a69ef998af3a0ffeaa82b1071cbbf622456cfd89d4&grant_type=authorization_code
 //{
 //    "access_token": "90fbb59b8facf6e8146fb66686c62edb3c8188361b95b6d4d18b1d8ca91c325c",
 //    "token_type": "bearer",
