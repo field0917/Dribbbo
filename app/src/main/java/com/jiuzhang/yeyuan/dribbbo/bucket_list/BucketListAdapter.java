@@ -20,11 +20,15 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private List<Bucket> bucketList;
     private LoadMoreListener loadMoreListener;
     private boolean showLoading;
+    private boolean isEditMode;
 
-    public BucketListAdapter (List<Bucket> bucketList, LoadMoreListener loadMoreListener) {
+    public BucketListAdapter (List<Bucket> bucketList,
+                              LoadMoreListener loadMoreListener,
+                              boolean isEditMode) {
         this.bucketList = bucketList;
         this.loadMoreListener = loadMoreListener;
         this.showLoading = true;
+        this.isEditMode = isEditMode;
     }
 
     @NonNull
@@ -59,7 +63,13 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } else {
                 bucketListViewHolder.shotNumberTextView.setText(bucket.total_photos + " shots");
             }
-            //bucketListViewHolder.checkBox.setChecked(bucket.isChecked);
+
+            if (isEditMode) {
+                bucketListViewHolder.checkBox.setVisibility(View.VISIBLE);
+            } else {
+                bucketListViewHolder.checkBox.setVisibility(View.GONE);
+            }
+
         } else if (viewType == VIEW_TYPE_LOAD_MORE) {
             loadMoreListener.onLoadMore();
         }
@@ -86,7 +96,7 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyDataSetChanged();
     }
 
-    public void append (Bucket bucket) {
+    public void prepend (Bucket bucket) {
         bucketList.add(0, bucket);
         notifyItemInserted(0); //item reflected at position 0 has been newly inserted. The item previously at position is now at position position + 1
     }

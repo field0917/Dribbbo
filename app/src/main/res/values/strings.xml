@@ -14,4 +14,5 @@
     <string name="new_bucket">New Bucket</string>
     <string name="new_bucket_create">Create</string>
     <string name="new_bucket_cancel">Cancel</string>
+    <string name="edit_bucket_menu_save">Save</string>
 </resources>

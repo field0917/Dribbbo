@@ -9,12 +9,16 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -41,24 +45,36 @@ public class BucketListFragment extends Fragment {
 
     public static final int REQ_NEW_BUCKET = 106;
 
+    private static final String KEY_EDIT_MODE = "edit mode";
+    private static final String KEY_CHOSEN_BUCKET_ID_LIST = "id list";
+
     @BindView(R.id.bucket_list_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.bucket_fab) FloatingActionButton fab;
 
     private BucketListAdapter adapter;
     private List<Bucket> bucketList = new ArrayList<>();
 
+    public boolean isEditMode;
+    public List<Integer> chosenBucketIds;
+
     public BucketListFragment() {
         // Required empty public constructor
     }
 
-    public static BucketListFragment newInstance() {
+    public static BucketListFragment newInstance(boolean isEditMode, ArrayList<Integer> chosenBucketIds) {
+        Bundle args = new Bundle();
+        args.putBoolean(KEY_EDIT_MODE, isEditMode);
+        args.putIntegerArrayList(KEY_CHOSEN_BUCKET_ID_LIST, chosenBucketIds);
+
         BucketListFragment fragment = new BucketListFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isEditMode = getArguments().getBoolean(KEY_EDIT_MODE);
         adapter = new BucketListAdapter(bucketList, new BucketListAdapter.LoadMoreListener() {
 
             @Override
@@ -67,8 +83,25 @@ public class BucketListFragment extends Fragment {
                 task.execute();
 
             }
-        });
+        }, isEditMode);
 
+        if (isEditMode) {setHasOptionsMenu(true);}
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if (isEditMode) {
+            inflater.inflate(R.menu.edit_bucket_menu, menu);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.save) {
+            Toast.makeText(getContext(), "Saved!", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -129,6 +162,8 @@ public class BucketListFragment extends Fragment {
             if (buckets != null) {
                 adapter.append(buckets);
                 adapter.setShowLoading(buckets.size() >= COUNT_PER_PAGE);
+            } else {
+                Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
             }
 
         }
@@ -156,7 +191,12 @@ public class BucketListFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Bucket bucket) {
-            adapter.append(bucket);
+            if (bucket != null) {
+                adapter.prepend(bucket);
+            } else {
+                Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
+            }
+
         }
     }
 
