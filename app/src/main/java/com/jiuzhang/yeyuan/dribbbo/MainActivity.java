@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, new ShotListFragment())
+                .replace(R.id.fragment_container, ShotListFragment.newInstance())
                 .commit();
 
     }
@@ -104,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
         ImageView userImage = headerLayout.findViewById(R.id.nav_header_user_img);
         TextView userName = headerLayout.findViewById(R.id.nav_header_user_name);
         TextView logout = headerLayout.findViewById(R.id.nav_header_log_out);
-
-//        new LoadImageTask(userImage).execute(Dribbble.getCurrentUser().avatar_url);
 
         Picasso.with(this)
                 .load(Dribbble.getCurrentUser().getProfileImageURL())
@@ -175,32 +173,3 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
-
-//class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
-//    private ImageView imageView;
-//
-//    protected LoadImageTask (ImageView view) {
-//        imageView = view;
-//    }
-//
-//    @Override
-//    protected Bitmap doInBackground(String... urls) {
-//        String url = urls[0];
-//        Bitmap bitmap = null;
-//
-//        try {
-//            InputStream in = new java.net.URL(url).openStream();
-//            bitmap = BitmapFactory.decodeStream(in);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return bitmap;
-//    }
-//
-//    @Override
-//    protected void onPostExecute(Bitmap bitmap) {
-//        super.onPostExecute(bitmap);
-//        imageView.setImageBitmap(bitmap);
-//    }
-//}

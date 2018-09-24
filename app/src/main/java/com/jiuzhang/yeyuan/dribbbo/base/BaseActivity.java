@@ -29,10 +29,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         setTitle(getActivityTitle());
 
         if (savedInstanceState == null) {
-            Fragment fragment = newFragment();
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, fragment).commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container, newFragment())
+                    .commit();
         }
 
     }

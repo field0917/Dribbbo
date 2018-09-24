@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -21,14 +22,17 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private LoadMoreListener loadMoreListener;
     private boolean showLoading;
     private boolean isEditMode;
+    private ArrayList<Integer> chosenBucketIds;
 
     public BucketListAdapter (List<Bucket> bucketList,
                               LoadMoreListener loadMoreListener,
-                              boolean isEditMode) {
+                              boolean isEditMode,
+                              ArrayList<Integer> chosenBucketIds) {
         this.bucketList = bucketList;
         this.loadMoreListener = loadMoreListener;
         this.showLoading = true;
         this.isEditMode = isEditMode;
+        this.chosenBucketIds = chosenBucketIds;
     }
 
     @NonNull
@@ -50,12 +54,12 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public void onBindViewHolder (@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder (@NonNull RecyclerView.ViewHolder holder, final int position) {
         int viewType = getItemViewType(position);
 
         if (viewType == VIEW_TYPE_BUCKET_LIST) {
-            Bucket bucket = bucketList.get(position);
-            BucketListViewHolder bucketListViewHolder = (BucketListViewHolder) holder;
+            final Bucket bucket = bucketList.get(position);
+            final BucketListViewHolder bucketListViewHolder = (BucketListViewHolder) holder;
             bucketListViewHolder.bucketTitleTextView.setText(bucket.title);
 
             if (bucket.total_photos <= 1) {
@@ -66,8 +70,30 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             if (isEditMode) {
                 bucketListViewHolder.checkBox.setVisibility(View.VISIBLE);
+
+                if (bucket.isChosen) {
+                    bucketListViewHolder.checkBox.setImageResource(R.drawable.ic_check_box_black_24dp);
+                } else {
+                    bucketListViewHolder.checkBox.setImageResource(R.drawable.ic_check_box_outline_blank_black_24dp);
+                }
+
+                bucketListViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        bucket.isChosen = !bucket.isChosen;
+                        notifyItemChanged(position);
+
+                    }
+                });
             } else {
                 bucketListViewHolder.checkBox.setVisibility(View.GONE);
+                bucketListViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // if not in choosing mode, we need to open a new Activity to show
+                        // what shots are in this bucket, we will need ShotListFragment here!
+                    }
+                });
             }
 
         } else if (viewType == VIEW_TYPE_LOAD_MORE) {
@@ -104,6 +130,16 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void setShowLoading (boolean showLoading) {
         this.showLoading = showLoading;
         notifyDataSetChanged();
+    }
+
+    public ArrayList<Integer> getCurrentSelectedBucketIds () {
+        ArrayList<Integer> selectedBucketIds = new ArrayList<>();
+        for (Bucket bucket : bucketList) {
+            if (bucket.isChosen) {
+                selectedBucketIds.add(bucket.id);
+            }
+        }
+        return selectedBucketIds;
     }
 
     public interface LoadMoreListener {

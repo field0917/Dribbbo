@@ -30,16 +30,21 @@ public class Dribbble {
     private static final String KEY_TITLE = "title";
     private static final String KEY_DESCRIPTION = "description";
     private static final String SP_AUTH = "sp_auth";
+    public static final String KEY_SHOT_ID = "photo_id";
+    public static final String KEY_BUCKET_ID = "collection_id";
 
     private static final String API_URL = "https://api.unsplash.com/";
     private static final String USER_END_POINT = API_URL + "me";
     private static final String SHOTS_END_POINT = API_URL + "photos";
     private static final String BUCKET_CREATE_END_POINT = API_URL + "collections";
+    private static final String ADD_SHOT_TO_BUCKET_END_POINT = API_URL + "collections/";
+
 
     public static final TypeToken<User> USER_TYPE = new TypeToken<User>(){};
     private static final TypeToken<List<Shot>> SHOT_LIST_TYPE = new TypeToken<List<Shot>>(){};
     private static final TypeToken<List<Bucket>> BUCKET_LIST_TYPE = new TypeToken<List<Bucket>>(){};
     private static final TypeToken<Bucket> BUCKET_TYPE = new TypeToken<Bucket>(){};
+
 
 
     private static String accessToken;
@@ -115,6 +120,13 @@ public class Dribbble {
         return getResponseFromRequest(request);
     }
 
+    private static Response makeDeleteRequest (String url, RequestBody requestBody) throws IOException {
+        Request request = authRequestBuilder(url)
+                .delete(requestBody)
+                .build();
+        return getResponseFromRequest(request);
+    }
+
     private static Response getResponseFromRequest (Request request) throws IOException {
         return client.newCall(request).execute();
     }
@@ -156,6 +168,22 @@ public class Dribbble {
                 .build();
         Response response = makePostRequest(BUCKET_CREATE_END_POINT, requestBody);
         return parseResponse(response, BUCKET_TYPE);
+    }
+
+    public static void addShotToBucket (String shotID, int bucketID) throws IOException {
+        RequestBody requestBody = new FormBody.Builder()
+                .add(KEY_SHOT_ID, shotID)
+                .add(KEY_BUCKET_ID, String.valueOf(bucketID))
+                .build();
+        Response response = makePostRequest(ADD_SHOT_TO_BUCKET_END_POINT + bucketID + "/add", requestBody);
+    }
+
+    public static void removeShotFromBucket (String shotID, int bucketID) throws IOException {
+        RequestBody requestBody = new FormBody.Builder()
+                .add(KEY_SHOT_ID, shotID)
+                .add(KEY_BUCKET_ID, String.valueOf(bucketID))
+                .build();
+        Response response = makeDeleteRequest(ADD_SHOT_TO_BUCKET_END_POINT + bucketID + "/remove", requestBody);
     }
 
 }

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -46,7 +47,7 @@ public class BucketListFragment extends Fragment {
     public static final int REQ_NEW_BUCKET = 106;
 
     private static final String KEY_EDIT_MODE = "edit mode";
-    private static final String KEY_CHOSEN_BUCKET_ID_LIST = "id list";
+    public static final String KEY_CHOSEN_BUCKET_ID_LIST = "id list";
 
     @BindView(R.id.bucket_list_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.bucket_fab) FloatingActionButton fab;
@@ -55,7 +56,7 @@ public class BucketListFragment extends Fragment {
     private List<Bucket> bucketList = new ArrayList<>();
 
     public boolean isEditMode;
-    public List<Integer> chosenBucketIds;
+    public ArrayList<Integer> chosenBucketIds;
 
     public BucketListFragment() {
         // Required empty public constructor
@@ -74,7 +75,14 @@ public class BucketListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isEditMode = getArguments().getBoolean(KEY_EDIT_MODE);
+        Bundle args = getArguments();
+        isEditMode = args.getBoolean(KEY_EDIT_MODE);
+
+        if (isEditMode) {
+            chosenBucketIds = args.getIntegerArrayList(KEY_CHOSEN_BUCKET_ID_LIST);
+            chosenBucketIds = chosenBucketIds == null ? new ArrayList<Integer>() : chosenBucketIds;
+        }
+
         adapter = new BucketListAdapter(bucketList, new BucketListAdapter.LoadMoreListener() {
 
             @Override
@@ -83,7 +91,7 @@ public class BucketListFragment extends Fragment {
                 task.execute();
 
             }
-        }, isEditMode);
+        }, isEditMode, chosenBucketIds);
 
         if (isEditMode) {setHasOptionsMenu(true);}
 
@@ -99,7 +107,11 @@ public class BucketListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.save) {
-            Toast.makeText(getContext(), "Saved!", Toast.LENGTH_SHORT).show();
+            ArrayList<Integer> currentChosenBucketIds = adapter.getCurrentSelectedBucketIds();
+            Intent result = new Intent();
+            result.putIntegerArrayListExtra(KEY_CHOSEN_BUCKET_ID_LIST, currentChosenBucketIds);
+            getActivity().setResult(RESULT_OK, result);
+            getActivity().finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -138,7 +150,7 @@ public class BucketListFragment extends Fragment {
             String bucketDes = data.getStringExtra(NewBucketDialogFragment.KEY_NEW_BUCKET_DESCRIPTION);
 
             if (!TextUtils.isEmpty(bucketName)) {
-                CreateNewBucketTask task = new CreateNewBucketTask(bucketName, bucketDes);
+                UpdateBucketsTask task = new UpdateBucketsTask(bucketName, bucketDes);
                 task.execute();
             }
 
@@ -160,8 +172,19 @@ public class BucketListFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Bucket> buckets) {
             if (buckets != null) {
+
+                if (isEditMode) {
+                    // check if the shot has been stored in any bucket, if true, set the isChosen true
+                    // then add buckets to adapter
+                    for (Bucket bucket : buckets) {
+                        if (chosenBucketIds.contains(bucket.id)) {
+                            bucket.isChosen = true;
+                        }
+                    }
+                }
                 adapter.append(buckets);
                 adapter.setShowLoading(buckets.size() >= COUNT_PER_PAGE);
+
             } else {
                 Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
             }
@@ -169,12 +192,12 @@ public class BucketListFragment extends Fragment {
         }
     }
 
-    private class CreateNewBucketTask extends AsyncTask<Void, Void, Bucket> {
+    private class UpdateBucketsTask extends AsyncTask<Void, Void, Bucket> {
 
         String bucketName;
         String bucketDes;
 
-        public CreateNewBucketTask (String bucketName, String bucketDes) {
+        public UpdateBucketsTask (String bucketName, String bucketDes) {
             this.bucketName = bucketName;
             this.bucketDes = bucketDes;
         }
@@ -199,5 +222,6 @@ public class BucketListFragment extends Fragment {
 
         }
     }
+
 
 }

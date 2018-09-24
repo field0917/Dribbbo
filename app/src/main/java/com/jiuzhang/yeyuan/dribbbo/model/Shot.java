@@ -4,6 +4,8 @@ import com.jiuzhang.yeyuan.dribbbo.dribbble.Dribbble;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Shot {
@@ -22,7 +24,9 @@ public class Shot {
     public int height;
 
     public Map<String, String> urls;
-//    public Map<String, String> location;
+    public List<Bucket> current_user_collections; // The *current user's* collections that this photo belongs to.
+
+    public boolean bucked;
 
     public int views;
     public int likes;
@@ -36,12 +40,9 @@ public class Shot {
         if (urls == null) {
             return "";
         }
-        String url = urls.get(IMAGE_RAW) == null ?
-                urls.get(IMAGE_FULL) : urls.get(IMAGE_RAW);
-        return url == null ? urls.get(IMAGE_REGULAR) : url;
+        String url = urls.get(IMAGE_REGULAR) == null ?
+                urls.get(IMAGE_SMALL) : urls.get(IMAGE_REGULAR);
+        return url == null ? urls.get(IMAGE_THUMB) : url;
     }
 
-    public String getImageThumb () {
-        return urls.get("IMAGE_THUMB");
-    }
 }
