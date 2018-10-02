@@ -3,13 +3,17 @@ package com.jiuzhang.yeyuan.dribbbo.shot_detail;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.reflect.TypeToken;
@@ -22,9 +26,12 @@ import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static java.security.AccessController.getContext;
 
 public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -34,10 +41,9 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private Shot shot;
     private ShotDetailFragment shotDetailFragment;
-    private ArrayList<Integer> collectedBucketIds;
 
-
-    public ShotDetailAdapter (ShotDetailFragment shotDetailFragment, Shot shot) {
+    public ShotDetailAdapter (ShotDetailFragment shotDetailFragment,
+                              Shot shot) {
         this.shotDetailFragment = shotDetailFragment;
         this.shot = shot;
     }
@@ -69,8 +75,6 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        collectedBucketIds = getCollectedBucketIDs();
-
         int viewType = getItemViewType(position);
         final Context context = holder.itemView.getContext();
         switch (viewType) {
@@ -88,14 +92,32 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 ShotActionViewHolder shotActionViewHolder = (ShotActionViewHolder) holder;
                 shotActionViewHolder.viewCount.setText(String.valueOf(shot.views));
                 shotActionViewHolder.likeCount.setText(String.valueOf(shot.likes));
-                shotActionViewHolder.saveCount.setText(String.valueOf(shot.downloads));
+//                shotActionViewHolder.saveCount.setText(String.valueOf(shot.downloads));
 
-                shotActionViewHolder.save.setOnClickListener(new View.OnClickListener() {
+                shotActionViewHolder.collect.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        bucket(context);
+                        shotDetailFragment.bucket(context);
                     }
                 });
+
+                shotActionViewHolder.shareButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        shotDetailFragment.share(context);
+                    }
+                });
+
+                Drawable bucketImg = shot.bucketed ? context.getResources()
+                                                           .getDrawable(R.drawable.ic_inbox_red_200_18dp) :
+                                                     context.getResources()
+                                                           .getDrawable(R.drawable.ic_inbox_black_18dp);
+                shotActionViewHolder.collect
+                        .setCompoundDrawablesWithIntrinsicBounds(null, bucketImg, null, null);
+
+                if (shot.current_user_collections != null || !shot.current_user_collections.isEmpty()) {
+                    shot.bucketed = true;
+                }
 
                 break;
             case VIEW_TYPE_SHOT_INFO:
@@ -130,49 +152,5 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else {
             return -1;
         }
-    }
-
-    private ArrayList<Integer> getCollectedBucketIDs () { // The *current user's* collections that this photo belongs to.
-        List<Bucket> collectedBucket = shot.current_user_collections;
-        ArrayList<Integer> bucketIds = new ArrayList<>();
-        for (Bucket bucket : collectedBucket) {
-            bucketIds.add(bucket.id);
-        }
-        return bucketIds;
-    }
-
-    public List<Integer> getReadOnlyCollectedBucketIds () {
-        return Collections.unmodifiableList(collectedBucketIds);
-    }
-
-    public List<Integer> updateCollectedBucketIDs (List<Integer> added, List<Integer> removed) {
-        if (collectedBucketIds == null) {
-            collectedBucketIds = new ArrayList<>();
-        }
-
-        collectedBucketIds.addAll(added);
-        collectedBucketIds.removeAll(removed);
-
-        return collectedBucketIds;
-    }
-
-    public List<Integer> updateCollectedBucketIDs (List<Integer> bucketIds) {
-        if (collectedBucketIds == null) {
-            collectedBucketIds = new ArrayList<>();
-        }
-
-        collectedBucketIds.clear();
-        collectedBucketIds.addAll(bucketIds);
-
-        return collectedBucketIds;
-    }
-
-    private void bucket (Context context) {
-        if (collectedBucketIds != null) {
-            Intent intent = new Intent(context, EditBucketActivity.class);
-            intent.putExtra(BucketListFragment.KEY_CHOSEN_BUCKET_ID_LIST, collectedBucketIds);//give the selectedBuckets to EditBucketActivity
-            shotDetailFragment.startActivityForResult(intent, ShotDetailFragment.REQ_CHOSEN_BUCKET);
-        }
-
     }
 }

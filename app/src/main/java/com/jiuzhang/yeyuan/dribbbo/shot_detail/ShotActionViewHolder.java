@@ -20,9 +20,8 @@ public class ShotActionViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.shot_detail_view_count) TextView viewCount;
     @BindView(R.id.shot_detail_like_count) TextView likeCount;
-    @BindView(R.id.shot_detail_save_count) TextView saveCount;
     @BindView(R.id.action_like) LinearLayout like;
-    @BindView(R.id.action_save) LinearLayout save;
+    @BindView(R.id.action_collect) TextView collect;
     @BindView(R.id.action_share) TextView shareButton;
 
     public ShotActionViewHolder(final View itemView) {

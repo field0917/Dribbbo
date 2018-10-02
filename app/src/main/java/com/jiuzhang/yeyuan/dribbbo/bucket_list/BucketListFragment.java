@@ -24,15 +24,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.dribbble.Dribbble;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
+import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 import com.jiuzhang.yeyuan.dribbbo.utils.VerticalSpaceItemDecoration;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,8 +50,9 @@ public class BucketListFragment extends Fragment {
 
     public static final int REQ_NEW_BUCKET = 106;
 
-    private static final String KEY_EDIT_MODE = "edit mode";
-    public static final String KEY_CHOSEN_BUCKET_ID_LIST = "id list";
+    public static final String KEY_EDIT_MODE = "edit_mode";
+    public static final String KEY_COLLECTED_BUCKETS = "collected_buckets";
+    public static final String KEY_CHOSEN_BUCKETS = "chosen_buckets";
 
     @BindView(R.id.bucket_list_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.bucket_fab) FloatingActionButton fab;
@@ -56,16 +61,17 @@ public class BucketListFragment extends Fragment {
     private List<Bucket> bucketList = new ArrayList<>();
 
     public boolean isEditMode;
-    public ArrayList<Integer> chosenBucketIds;
+    public Set<Integer> chosenBucketIdsSet;
 
     public BucketListFragment() {
         // Required empty public constructor
     }
 
-    public static BucketListFragment newInstance(boolean isEditMode, ArrayList<Integer> chosenBucketIds) {
+    public static BucketListFragment newInstance(boolean isEditMode, List<Bucket> chosenBuckets) {
         Bundle args = new Bundle();
         args.putBoolean(KEY_EDIT_MODE, isEditMode);
-        args.putIntegerArrayList(KEY_CHOSEN_BUCKET_ID_LIST, chosenBucketIds);
+        args.putString(KEY_COLLECTED_BUCKETS,
+                ModelUtils.toString(chosenBuckets, new TypeToken<List<Bucket>>(){}));
 
         BucketListFragment fragment = new BucketListFragment();
         fragment.setArguments(args);
@@ -79,8 +85,11 @@ public class BucketListFragment extends Fragment {
         isEditMode = args.getBoolean(KEY_EDIT_MODE);
 
         if (isEditMode) {
-            chosenBucketIds = args.getIntegerArrayList(KEY_CHOSEN_BUCKET_ID_LIST);
-            chosenBucketIds = chosenBucketIds == null ? new ArrayList<Integer>() : chosenBucketIds;
+            List<Bucket> chosenBuckets = ModelUtils.toObject(args.getString(KEY_COLLECTED_BUCKETS),
+                    new TypeToken<List<Bucket>>(){});
+            List<Integer> chosenBucketIds = getBucketIds(chosenBuckets);
+            chosenBucketIdsSet = chosenBucketIds == null ? new HashSet<Integer>() :
+                                                                       new HashSet<>(chosenBucketIds);
         }
 
         adapter = new BucketListAdapter(bucketList, new BucketListAdapter.LoadMoreListener() {
@@ -91,10 +100,18 @@ public class BucketListFragment extends Fragment {
                 task.execute();
 
             }
-        }, isEditMode, chosenBucketIds);
+        }, isEditMode);
 
         if (isEditMode) {setHasOptionsMenu(true);}
 
+    }
+
+    private List<Integer> getBucketIds(List<Bucket> chosenBuckets) {
+        List<Integer> bucketIds = new ArrayList<>();
+        for (Bucket bucket : chosenBuckets) {
+            bucketIds.add(bucket.id);
+        }
+        return bucketIds;
     }
 
     @Override
@@ -107,9 +124,10 @@ public class BucketListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.save) {
-            ArrayList<Integer> currentChosenBucketIds = adapter.getCurrentSelectedBucketIds();
+            List<Bucket> currentChosenBuckets = adapter.getCurrentSelectedBuckets();
             Intent result = new Intent();
-            result.putIntegerArrayListExtra(KEY_CHOSEN_BUCKET_ID_LIST, currentChosenBucketIds);
+            result.putExtra(KEY_CHOSEN_BUCKETS, ModelUtils.toString(currentChosenBuckets,
+                    new TypeToken<List<Bucket>>(){}));
             getActivity().setResult(RESULT_OK, result);
             getActivity().finish();
         }
@@ -150,7 +168,7 @@ public class BucketListFragment extends Fragment {
             String bucketDes = data.getStringExtra(NewBucketDialogFragment.KEY_NEW_BUCKET_DESCRIPTION);
 
             if (!TextUtils.isEmpty(bucketName)) {
-                UpdateBucketsTask task = new UpdateBucketsTask(bucketName, bucketDes);
+                NewBucketsTask task = new NewBucketsTask(bucketName, bucketDes);
                 task.execute();
             }
 
@@ -177,7 +195,7 @@ public class BucketListFragment extends Fragment {
                     // check if the shot has been stored in any bucket, if true, set the isChosen true
                     // then add buckets to adapter
                     for (Bucket bucket : buckets) {
-                        if (chosenBucketIds.contains(bucket.id)) {
+                        if (chosenBucketIdsSet.contains(bucket.id)) {
                             bucket.isChosen = true;
                         }
                     }
@@ -192,12 +210,12 @@ public class BucketListFragment extends Fragment {
         }
     }
 
-    private class UpdateBucketsTask extends AsyncTask<Void, Void, Bucket> {
+    private class NewBucketsTask extends AsyncTask<Void, Void, Bucket> {
 
         String bucketName;
         String bucketDes;
 
-        public UpdateBucketsTask (String bucketName, String bucketDes) {
+        public NewBucketsTask (String bucketName, String bucketDes) {
             this.bucketName = bucketName;
             this.bucketDes = bucketDes;
         }

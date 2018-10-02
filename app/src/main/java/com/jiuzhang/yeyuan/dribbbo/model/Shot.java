@@ -24,9 +24,10 @@ public class Shot {
     public int height;
 
     public Map<String, String> urls;
+    public Map<String, String> links;
     public List<Bucket> current_user_collections; // The *current user's* collections that this photo belongs to.
 
-    public boolean bucked;
+    public boolean bucketed;
 
     public int views;
     public int likes;
@@ -43,6 +44,13 @@ public class Shot {
         String url = urls.get(IMAGE_REGULAR) == null ?
                 urls.get(IMAGE_SMALL) : urls.get(IMAGE_REGULAR);
         return url == null ? urls.get(IMAGE_THUMB) : url;
+    }
+
+    public String getHtmlUrl () {
+        if (links != null) {
+            return links.get("html");
+        }
+        return "Error!";
     }
 
 }

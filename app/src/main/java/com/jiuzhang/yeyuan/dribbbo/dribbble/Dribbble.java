@@ -44,6 +44,7 @@ public class Dribbble {
     private static final TypeToken<List<Shot>> SHOT_LIST_TYPE = new TypeToken<List<Shot>>(){};
     private static final TypeToken<List<Bucket>> BUCKET_LIST_TYPE = new TypeToken<List<Bucket>>(){};
     private static final TypeToken<Bucket> BUCKET_TYPE = new TypeToken<Bucket>(){};
+    private static final TypeToken<Shot> SHOT_TYPE = new TypeToken<Shot>(){};
 
 
 
@@ -154,6 +155,11 @@ public class Dribbble {
         return parseResponse(makeGetRequest(url), BUCKET_LIST_TYPE);
     }
 
+    public static Bucket getBucket (int bucketId) throws IOException {
+        String url = BUCKET_CREATE_END_POINT + "/" + bucketId;
+        return parseResponse(makeGetRequest(url), BUCKET_TYPE);
+    }
+
     private static String getCollectionsEndPoint () {
         String url = API_URL + "users/";
         url += getCurrentUser().username;
@@ -170,20 +176,22 @@ public class Dribbble {
         return parseResponse(response, BUCKET_TYPE);
     }
 
-    public static void addShotToBucket (String shotID, int bucketID) throws IOException {
+    public static Shot addShotToBucket (String shotID, int bucketID) throws IOException {
         RequestBody requestBody = new FormBody.Builder()
                 .add(KEY_SHOT_ID, shotID)
                 .add(KEY_BUCKET_ID, String.valueOf(bucketID))
                 .build();
         Response response = makePostRequest(ADD_SHOT_TO_BUCKET_END_POINT + bucketID + "/add", requestBody);
+        return parseResponse(response, SHOT_TYPE);
     }
 
-    public static void removeShotFromBucket (String shotID, int bucketID) throws IOException {
+    public static Shot removeShotFromBucket (String shotID, int bucketID) throws IOException {
         RequestBody requestBody = new FormBody.Builder()
                 .add(KEY_SHOT_ID, shotID)
                 .add(KEY_BUCKET_ID, String.valueOf(bucketID))
                 .build();
         Response response = makeDeleteRequest(ADD_SHOT_TO_BUCKET_END_POINT + bucketID + "/remove", requestBody);
+        return parseResponse(response, SHOT_TYPE);
     }
 
 }

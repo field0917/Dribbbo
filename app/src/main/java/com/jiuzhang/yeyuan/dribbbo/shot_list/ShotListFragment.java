@@ -1,5 +1,6 @@
 package com.jiuzhang.yeyuan.dribbbo.shot_list;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,13 +34,14 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.app.Activity.RESULT_OK;
+import static com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment.KEY_SHOT;
+
 
 public class ShotListFragment extends Fragment {
 
     private static final int VERTICAL_SPACE_HEIGHT = 20;
-
-//    private static final String MODEL_KEY_SHOT = "model key shot";
-//    private static final String MODEL_KEY_LIKED_SHOT = "model key liked shot";
+    public static final int REQ_SHOT_UPDATE = 108;
 
     private List<Shot> shotList = new ArrayList<>();
     private ShotListAdapter adapter;
@@ -70,7 +72,7 @@ public class ShotListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new ShotListAdapter(shotList, new ShotListAdapter.LoadMoreListener() {
+        adapter = new ShotListAdapter(this, shotList, new ShotListAdapter.LoadMoreListener() {
             @Override
             public void onLoadMore() {
                 LoadShotsTask task = new LoadShotsTask(adapter.getDataSetCount() / Dribbble.COUNT_PER_PAGE + 1);
@@ -97,6 +99,24 @@ public class ShotListFragment extends Fragment {
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_SPACE_HEIGHT));
 
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQ_SHOT_UPDATE && resultCode == RESULT_OK) {
+            Shot updatedShot = ModelUtils.toObject(data.getStringExtra(KEY_SHOT),
+                                                   new TypeToken<Shot>(){});
+            for (Shot shot : adapter.getData()) {
+                if (shot.id.equals(updatedShot.id)) {
+                    //TODO: update likes count
+                    shot.bucketed = updatedShot.bucketed; // TODO: after refresh, bucketed is false
+                    shot.current_user_collections = updatedShot.current_user_collections;
+                    adapter.notifyDataSetChanged();
+                    return;
+                }
+            }
+        }
+
     }
 
     private class LoadShotsTask extends AsyncTask<Void, Void, List<Shot>> {

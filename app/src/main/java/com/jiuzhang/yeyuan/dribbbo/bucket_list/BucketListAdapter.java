@@ -22,17 +22,14 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private LoadMoreListener loadMoreListener;
     private boolean showLoading;
     private boolean isEditMode;
-    private ArrayList<Integer> chosenBucketIds;
 
     public BucketListAdapter (List<Bucket> bucketList,
                               LoadMoreListener loadMoreListener,
-                              boolean isEditMode,
-                              ArrayList<Integer> chosenBucketIds) {
+                              boolean isEditMode) {
         this.bucketList = bucketList;
         this.loadMoreListener = loadMoreListener;
         this.showLoading = true;
         this.isEditMode = isEditMode;
-        this.chosenBucketIds = chosenBucketIds;
     }
 
     @NonNull
@@ -132,14 +129,14 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyDataSetChanged();
     }
 
-    public ArrayList<Integer> getCurrentSelectedBucketIds () {
-        ArrayList<Integer> selectedBucketIds = new ArrayList<>();
+    public List<Bucket> getCurrentSelectedBuckets () {
+        List<Bucket> selectedBuckets = new ArrayList<>();
         for (Bucket bucket : bucketList) {
             if (bucket.isChosen) {
-                selectedBucketIds.add(bucket.id);
+                selectedBuckets.add(bucket);
             }
         }
-        return selectedBucketIds;
+        return selectedBuckets;
     }
 
     public interface LoadMoreListener {

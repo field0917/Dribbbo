@@ -33,10 +33,12 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private boolean showLoading;
     //public boolean isRefreshing;
 
+    private ShotListFragment shotListFragment;
     private List<Shot> shotList;
     private LoadMoreListener loadMoreListener;
 
-    public ShotListAdapter (List<Shot> shotList, LoadMoreListener loadMoreListener) {
+    public ShotListAdapter (ShotListFragment shotListFragment, List<Shot> shotList, LoadMoreListener loadMoreListener) {
+        this.shotListFragment = shotListFragment;
         this.shotList = shotList;
         this.loadMoreListener = loadMoreListener;
         this.showLoading = true;
@@ -97,7 +99,8 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     String s = ModelUtils.toString(shot, new TypeToken<Shot>(){});
                     intent.putExtra(ShotDetailFragment.KEY_SHOT, s);
                     intent.putExtra(KEY_SHOT_TITLE, shot.id);
-                    context.startActivity(intent);
+//                    context.startActivity(intent);
+                    shotListFragment.startActivityForResult(intent, ShotListFragment.REQ_SHOT_UPDATE);
 
                 }
             });
@@ -129,6 +132,10 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         shotList.clear();
         shotList.addAll(data);
         notifyDataSetChanged();
+    }
+
+    public List<Shot> getData() {
+        return shotList;
     }
 
     public void setShowLoading(boolean showLoading) {
