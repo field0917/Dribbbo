@@ -53,6 +53,8 @@ public class BucketListFragment extends Fragment {
     public static final String KEY_EDIT_MODE = "edit_mode";
     public static final String KEY_COLLECTED_BUCKETS = "collected_buckets";
     public static final String KEY_CHOSEN_BUCKETS = "chosen_buckets";
+    public static final String KEY_BUCKET_TITLE = "bucket_title";
+    public static final String KEY_BUCKET_ID = "bucket_id";
 
     @BindView(R.id.bucket_list_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.bucket_fab) FloatingActionButton fab;

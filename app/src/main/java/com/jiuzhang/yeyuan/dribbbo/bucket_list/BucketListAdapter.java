@@ -1,5 +1,7 @@
 package com.jiuzhang.yeyuan.dribbbo.bucket_list;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
@@ -9,9 +11,13 @@ import android.view.ViewGroup;
 
 import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
+import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment.KEY_BUCKET_ID;
+import static com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment.KEY_BUCKET_TITLE;
 
 public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -53,6 +59,7 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder (@NonNull RecyclerView.ViewHolder holder, final int position) {
         int viewType = getItemViewType(position);
+        final Context context = holder.itemView.getContext();
 
         if (viewType == VIEW_TYPE_BUCKET_LIST) {
             final Bucket bucket = bucketList.get(position);
@@ -89,6 +96,10 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     public void onClick(View view) {
                         // if not in choosing mode, we need to open a new Activity to show
                         // what shots are in this bucket, we will need ShotListFragment here!
+                        Intent intent = new Intent(context, BucketShotListActivity.class);
+                        intent.putExtra(KEY_BUCKET_ID, bucket.id);
+                        intent.putExtra(KEY_BUCKET_TITLE, bucket.title);
+                        context.startActivity(intent);
                     }
                 });
             }

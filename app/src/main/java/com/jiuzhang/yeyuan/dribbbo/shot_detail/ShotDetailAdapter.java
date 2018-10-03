@@ -108,16 +108,12 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     }
                 });
 
-                Drawable bucketImg = shot.bucketed ? context.getResources()
+                Drawable bucketImg = shot.isBucketed() ? context.getResources()
                                                            .getDrawable(R.drawable.ic_inbox_red_200_18dp) :
                                                      context.getResources()
                                                            .getDrawable(R.drawable.ic_inbox_black_18dp);
                 shotActionViewHolder.collect
                         .setCompoundDrawablesWithIntrinsicBounds(null, bucketImg, null, null);
-
-                if (shot.current_user_collections != null || !shot.current_user_collections.isEmpty()) {
-                    shot.bucketed = true;
-                }
 
                 break;
             case VIEW_TYPE_SHOT_INFO:

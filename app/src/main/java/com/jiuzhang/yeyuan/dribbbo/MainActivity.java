@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, ShotListFragment.newInstance())
+                .replace(R.id.fragment_container,
+                        ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1))
                 .commit();
 
     }
@@ -141,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
                 item.setChecked(true);
                 // change the title in tool bar
                 setTitle(item.getTitle());
-                //Toast.makeText(getApplicationContext(), item.getTitle().toString() + " is clicked!", Toast.LENGTH_SHORT).show();
                 selectDrawerItem(item);
                 drawerLayout.closeDrawers();
                 return true;
@@ -153,10 +153,10 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
         switch (item.getItemId()) {
             case R.id.drawer_item_home:
-                fragment = ShotListFragment.newInstance();
+                fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1);
                 break;
             case R.id.drawer_item_likes:
-                fragment = ShotListFragment.newInstance();
+                fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_LIKED, -1);
                 break;
             case R.id.drawer_item_buckets:
                 fragment = BucketListFragment.newInstance(false, null);

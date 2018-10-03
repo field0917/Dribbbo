@@ -27,8 +27,6 @@ public class Shot {
     public Map<String, String> links;
     public List<Bucket> current_user_collections; // The *current user's* collections that this photo belongs to.
 
-    public boolean bucketed;
-
     public int views;
     public int likes;
     public int downloads;
@@ -51,6 +49,10 @@ public class Shot {
             return links.get("html");
         }
         return "Error!";
+    }
+
+    public boolean isBucketed() {
+        return !this.current_user_collections.isEmpty();
     }
 
 }

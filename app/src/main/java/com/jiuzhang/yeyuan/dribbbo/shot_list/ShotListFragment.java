@@ -35,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.app.Activity.RESULT_OK;
+import static com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment.KEY_BUCKET_ID;
 import static com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment.KEY_SHOT;
 
 
@@ -42,9 +43,16 @@ public class ShotListFragment extends Fragment {
 
     private static final int VERTICAL_SPACE_HEIGHT = 20;
     public static final int REQ_SHOT_UPDATE = 108;
+    public static final String KEY_LIST_TYPE = "list_type";
+
+    public static final int LIST_TYPE_POPULAR = 0;
+    public static final int LIST_TYPE_LIKED = 1;
+    public static final int LIST_TYPE_BUCKETED = 2;
 
     private List<Shot> shotList = new ArrayList<>();
     private ShotListAdapter adapter;
+
+    public int listType;
 
     @BindView(R.id.shot_list_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_container) SwipeRefreshLayout swipeRefreshLayout;
@@ -53,8 +61,12 @@ public class ShotListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static Fragment newInstance() {
+    public static ShotListFragment newInstance(int listType, int bucketId) {
+        Bundle args = new Bundle();
+        args.putInt(KEY_LIST_TYPE, listType);
+        args.putInt(KEY_BUCKET_ID, bucketId);
         ShotListFragment fragment = new ShotListFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -72,10 +84,12 @@ public class ShotListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        listType = getArguments().getInt(KEY_LIST_TYPE);
+
         adapter = new ShotListAdapter(this, shotList, new ShotListAdapter.LoadMoreListener() {
             @Override
             public void onLoadMore() {
-                LoadShotsTask task = new LoadShotsTask(adapter.getDataSetCount() / Dribbble.COUNT_PER_PAGE + 1);
+                LoadShotsTask task = new LoadShotsTask(false);
                 task.execute();
             }
         });
@@ -109,7 +123,6 @@ public class ShotListFragment extends Fragment {
             for (Shot shot : adapter.getData()) {
                 if (shot.id.equals(updatedShot.id)) {
                     //TODO: update likes count
-                    shot.bucketed = updatedShot.bucketed; // TODO: after refresh, bucketed is false
                     shot.current_user_collections = updatedShot.current_user_collections;
                     adapter.notifyDataSetChanged();
                     return;
@@ -121,12 +134,7 @@ public class ShotListFragment extends Fragment {
 
     private class LoadShotsTask extends AsyncTask<Void, Void, List<Shot>> {
 
-        int page;
         boolean refresh;
-
-        public LoadShotsTask (int page) {
-            this.page = page;
-        }
 
         public LoadShotsTask (boolean refresh) {
             this.refresh = refresh;
@@ -134,31 +142,42 @@ public class ShotListFragment extends Fragment {
 
         @Override
         protected List<Shot> doInBackground(Void... voids) {
-            try {
-                return refresh ? Dribbble.getShots(1) : Dribbble.getShots(page);
 
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
+            int page = refresh ? 1 : adapter.getDataSetCount() / Dribbble.COUNT_PER_PAGE + 1;
+            switch (listType) {
+                case LIST_TYPE_POPULAR:
+                    try {
+                        return Dribbble.getShots(page);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                case LIST_TYPE_BUCKETED:
+                    int bucketId = getArguments().getInt(KEY_BUCKET_ID);
+                    try {
+                        return Dribbble.getBucketShots(page, bucketId);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                default:
+                    return null;
             }
-            //return fakeData(1);
+
         }
 
         @Override
         protected void onPostExecute(List<Shot> shots) {
             super.onPostExecute(shots);
             if (shots != null) {
+
                 if (refresh) {
                     adapter.setData(shots);
                     swipeRefreshLayout.setRefreshing(false);
                 } else {
                     adapter.append(shots);
                 }
-                adapter.setShowLoading(shots.size() == Dribbble.COUNT_PER_PAGE);
-                //adapter.setIsRefreshing(false);
+                adapter.setShowLoading(shots.size() >= Dribbble.COUNT_PER_PAGE);
                 swipeRefreshLayout.setEnabled(true);
             }
         }
     }
-
 }

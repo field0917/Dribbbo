@@ -20,11 +20,12 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme"/>
-        <!--<activity android:name=".base.BaseActivity" />-->
+            android:theme="@style/AppTheme" />
+        <!-- <activity android:name=".base.BaseActivity" /> -->
         <activity android:name=".shot_detail.ShotDetailActivity" />
-        <activity android:name=".AuthActivity"/>
-        <activity android:name=".bucket_list.EditBucketActivity"/>
+        <activity android:name=".AuthActivity" />
+        <activity android:name=".bucket_list.EditBucketActivity" />
+        <activity android:name=".bucket_list.BucketShotListActivity"/>
     </application>
 
 </manifest>

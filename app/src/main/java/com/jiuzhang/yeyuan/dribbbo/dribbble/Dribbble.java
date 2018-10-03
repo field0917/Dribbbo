@@ -37,7 +37,7 @@ public class Dribbble {
     private static final String USER_END_POINT = API_URL + "me";
     private static final String SHOTS_END_POINT = API_URL + "photos";
     private static final String BUCKET_CREATE_END_POINT = API_URL + "collections";
-    private static final String ADD_SHOT_TO_BUCKET_END_POINT = API_URL + "collections/";
+    private static final String BUCKET_SHOT_END_POINT = API_URL + "collections/";
 
 
     public static final TypeToken<User> USER_TYPE = new TypeToken<User>(){};
@@ -181,7 +181,7 @@ public class Dribbble {
                 .add(KEY_SHOT_ID, shotID)
                 .add(KEY_BUCKET_ID, String.valueOf(bucketID))
                 .build();
-        Response response = makePostRequest(ADD_SHOT_TO_BUCKET_END_POINT + bucketID + "/add", requestBody);
+        Response response = makePostRequest(BUCKET_SHOT_END_POINT + bucketID + "/add", requestBody);
         return parseResponse(response, SHOT_TYPE);
     }
 
@@ -190,8 +190,13 @@ public class Dribbble {
                 .add(KEY_SHOT_ID, shotID)
                 .add(KEY_BUCKET_ID, String.valueOf(bucketID))
                 .build();
-        Response response = makeDeleteRequest(ADD_SHOT_TO_BUCKET_END_POINT + bucketID + "/remove", requestBody);
+        Response response = makeDeleteRequest(BUCKET_SHOT_END_POINT + bucketID + "/remove", requestBody);
         return parseResponse(response, SHOT_TYPE);
+    }
+
+    public static List<Shot> getBucketShots (int page, int bucketID) throws IOException {
+        String url = BUCKET_SHOT_END_POINT + bucketID + "/photos?page=" + page;
+        return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
     }
 
 }

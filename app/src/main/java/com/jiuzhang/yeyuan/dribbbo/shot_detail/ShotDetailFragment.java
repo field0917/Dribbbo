@@ -188,7 +188,6 @@ public class ShotDetailFragment extends Fragment {
             collectedBuckets.addAll(addedBuckets);
             collectedBuckets.removeAll(removedBuckets);
 
-            shot.bucketed = !collectedBuckets.isEmpty();
             shot.current_user_collections.addAll(addedBuckets);
             shot.current_user_collections.removeAll(removedBuckets);
             adapter.notifyDataSetChanged();
