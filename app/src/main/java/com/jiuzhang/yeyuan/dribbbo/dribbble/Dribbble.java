@@ -32,6 +32,7 @@ public class Dribbble {
     private static final String SP_AUTH = "sp_auth";
     public static final String KEY_SHOT_ID = "photo_id";
     public static final String KEY_BUCKET_ID = "collection_id";
+    public static final String KEY_ID = "id";
 
     private static final String API_URL = "https://api.unsplash.com/";
     private static final String USER_END_POINT = API_URL + "me";
@@ -197,6 +198,22 @@ public class Dribbble {
     public static List<Shot> getBucketShots (int page, int bucketID) throws IOException {
         String url = BUCKET_SHOT_END_POINT + bucketID + "/photos?page=" + page;
         return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
+    }
+
+    public static void likeTheShot (String shotID) throws IOException {
+        String url = SHOTS_END_POINT + "/" + shotID + "/like";
+        RequestBody requestBody = new FormBody.Builder()
+                .add(KEY_ID, shotID)
+                .build();
+        Response response = makePostRequest(url, requestBody);
+    }
+
+    public static void unlikeTheShot (String shotID) throws IOException {
+        String url = SHOTS_END_POINT + "/" + shotID + "/like";
+        RequestBody requestBody = new FormBody.Builder()
+                .add(KEY_ID, shotID)
+                .build();
+        Response response = makeDeleteRequest(url, requestBody);
     }
 
 }

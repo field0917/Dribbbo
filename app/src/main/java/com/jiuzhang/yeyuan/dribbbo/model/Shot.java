@@ -30,6 +30,7 @@ public class Shot {
     public int views;
     public int likes;
     public int downloads;
+    public boolean liked_by_user;
 
     public User user;
 

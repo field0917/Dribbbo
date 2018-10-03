@@ -94,6 +94,13 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 shotActionViewHolder.likeCount.setText(String.valueOf(shot.likes));
 //                shotActionViewHolder.saveCount.setText(String.valueOf(shot.downloads));
 
+                shotActionViewHolder.likeIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        shotDetailFragment.like(shot.liked_by_user);
+                    }
+                });
+
                 shotActionViewHolder.collect.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -108,12 +115,20 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     }
                 });
 
+                // Set the bucket icon according to isBucketed
                 Drawable bucketImg = shot.isBucketed() ? context.getResources()
-                                                           .getDrawable(R.drawable.ic_inbox_red_200_18dp) :
-                                                     context.getResources()
-                                                           .getDrawable(R.drawable.ic_inbox_black_18dp);
+                                                         .getDrawable(R.drawable.ic_inbox_red_200_18dp)
+                                                       : context.getResources()
+                                                         .getDrawable(R.drawable.ic_inbox_black_18dp);
                 shotActionViewHolder.collect
                         .setCompoundDrawablesWithIntrinsicBounds(null, bucketImg, null, null);
+
+                // Set the like icon according to liked_by_user
+                Drawable likeImg = shot.liked_by_user ? context.getResources()
+                                                        .getDrawable(R.drawable.ic_favorite_red_200_18dp)
+                                                      : context.getResources()
+                                                        .getDrawable(R.drawable.ic_favorite_border_black_18dp);
+                shotActionViewHolder.likeIcon.setImageDrawable(likeImg);
 
                 break;
             case VIEW_TYPE_SHOT_INFO:

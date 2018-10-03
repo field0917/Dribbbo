@@ -117,6 +117,11 @@ public class ShotDetailFragment extends Fragment {
         }
     }
 
+    public void like (boolean currentLiked) {
+        LikeOrUnlikeTheShotTask task = new LikeOrUnlikeTheShotTask();
+        task.execute(currentLiked);
+    }
+
     public void bucket (Context context) {
         if (collectedBuckets == null) {
             Snackbar.make(getView(), R.string.shot_detail_loading_buckets, Snackbar.LENGTH_LONG).show();
@@ -194,6 +199,47 @@ public class ShotDetailFragment extends Fragment {
 
             setResult();
         }
-
     }
+
+    private class LikeOrUnlikeTheShotTask extends AsyncTask<Boolean, Void, Void> {
+
+        boolean currentLiked;
+
+        @Override
+        protected Void doInBackground(Boolean... booleans) {
+            currentLiked = booleans[0];
+
+            if (!currentLiked) {
+                try {
+                    Dribbble.likeTheShot(shot.id);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    Dribbble.unlikeTheShot(shot.id);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            shot.liked_by_user = !shot.liked_by_user;
+            if (currentLiked) {
+                shot.likes -= 1;
+            } else {
+                shot.likes += 1;
+            }
+            adapter.notifyDataSetChanged();
+
+            setResult();
+        }
+    }
+
+
 }

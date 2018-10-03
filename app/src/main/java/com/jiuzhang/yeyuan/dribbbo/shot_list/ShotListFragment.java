@@ -122,7 +122,8 @@ public class ShotListFragment extends Fragment {
                                                    new TypeToken<Shot>(){});
             for (Shot shot : adapter.getData()) {
                 if (shot.id.equals(updatedShot.id)) {
-                    //TODO: update likes count
+                    shot.liked_by_user = updatedShot.liked_by_user;
+                    shot.likes = updatedShot.likes;
                     shot.current_user_collections = updatedShot.current_user_collections;
                     adapter.notifyDataSetChanged();
                     return;

@@ -14,7 +14,24 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95935075-ab7e-467b-887e-77de0f88bf87" name="Default" comment="" />
+    <list default="true" id="95935075-ab7e-467b-887e-77de0f88bf87" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/dribbble/Dribbble.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/dribbble/Dribbble.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/model/Shot.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/model/Shot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotActionViewHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotActionViewHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_list/ShotListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_list/ShotListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/shot_detail_action.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/shot_detail_action.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,24 +53,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BucketListFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/bucket_list/BucketListFragment.java">
+      <file leaf-file-name="Dribbble.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/dribbble/Dribbble.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="55" column="31" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
+            <state relative-caret-position="533">
+              <caret line="215" column="64" selection-start-line="215" selection-start-column="64" selection-end-line="215" selection-end-column="64" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BucketListAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/bucket_list/BucketListAdapter.java">
+      <file leaf-file-name="ShotDetailFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="101" column="54" selection-start-line="101" selection-start-column="54" selection-end-line="101" selection-end-column="54" />
-              <folding>
-                <element signature="e#3389#3725#0" expanded="true" />
-                <element signature="e#3724#3725#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="445">
+              <caret line="233" column="51" selection-start-line="233" selection-start-column="38" selection-end-line="233" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -61,20 +74,13 @@
       <file leaf-file-name="ShotDetailAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="110" column="54" selection-start-line="110" selection-start-column="54" selection-end-line="110" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Shot.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/model/Shot.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="54" column="15" selection-start-line="54" selection-start-column="15" selection-end-line="54" selection-end-column="15" />
+            <state relative-caret-position="367">
+              <caret line="93" selection-start-line="93" selection-end-line="93" />
               <folding>
-                <element signature="e#1438#1439#0" expanded="true" />
-                <element signature="e#1501#1502#0" expanded="true" />
+                <element signature="e#3850#4026#0" expanded="true" />
+                <element signature="e#4025#4026#0" expanded="true" />
+                <element signature="e#3837#4048#0" expanded="true" />
+                <element signature="e#4047#4048#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -83,39 +89,35 @@
       <file leaf-file-name="ShotListFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_list/ShotListFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-290">
-              <caret line="124" column="46" selection-start-line="124" selection-start-column="46" selection-end-line="124" selection-end-column="46" />
-              <folding>
-                <element signature="e#2490#2760#0" expanded="true" />
-                <element signature="e#2759#2760#0" expanded="true" />
-                <element signature="e#2912#3267#0" expanded="true" />
-                <element signature="e#3266#3267#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-425">
+              <caret line="127" selection-start-line="127" selection-end-line="127" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BucketShotListActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/bucket_list/BucketShotListActivity.java">
+      <file leaf-file-name="BucketListAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/bucket_list/BucketListAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="39" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="312">
+              <caret line="101" column="54" selection-start-line="101" selection-start-column="54" selection-end-line="101" selection-end-column="54" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ShotListAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_list/ShotListAdapter.java">
+      <file leaf-file-name="Shot.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/model/Shot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1191">
-              <caret line="137" column="24" selection-start-line="137" selection-start-column="24" selection-end-line="137" selection-end-column="24" />
-              <folding>
-                <element signature="e#5058#5059#0" expanded="true" />
-                <element signature="e#5089#5090#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="317">
+              <caret line="32" column="33" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ShotActionViewHolder.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotActionViewHolder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
             </state>
           </provider>
         </entry>
@@ -2147,19 +2149,19 @@
       <list>
         <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_list/ShotListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotActionViewHolder.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/shot_detail_action.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/bucket_list/EditBucketActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/dribbble/Dribbble.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/bucket_list/BucketListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/bucket_list/BucketListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/bucket_list/BucketShotListActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_list/ShotListFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/model/Shot.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/dribbble/Dribbble.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/shot_detail_action.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotActionViewHolder.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_list/ShotListFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailFragment.java" />
       </list>
     </option>
   </component>
@@ -2201,6 +2203,20 @@
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="dribbbo" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="bucket_list" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Dribbbo" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="dribbbo" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="dribbble" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Dribbbo" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="dribbbo" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -2216,6 +2232,17 @@
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="dribbbo" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="shot_list" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Dribbbo" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
+            <path>
+              <item name="Dribbbo" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
           </expand>
           <select />
@@ -2402,6 +2429,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="Android Profiler" order="7" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32954547" />
@@ -2410,6 +2438,7 @@
       <window_info id="Build Variants" order="2" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="right" id="Preview" order="3" weight="0.32956383" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
@@ -2417,17 +2446,16 @@
       <window_info id="Captures" order="2" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24959612" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24959612" />
       <window_info anchor="bottom" id="Build" order="7" weight="0.32905984" />
       <window_info anchor="right" id="Gradle" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39914772" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3988604" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Preview" order="3" weight="0.32956383" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -2440,7 +2468,31 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="13" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailFragment.java</url>
+          <line>229</line>
+          <properties class="com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment.LikeOrUnlikeTheShotTask" method="onPostExecute">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_list/ShotListFragment.java</url>
+          <line>118</line>
+          <properties class="com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment" method="onActivityResult">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailAdapter.java</url>
+          <line>93</line>
+          <properties />
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="17" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -2498,12 +2550,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1650">
           <caret line="149" column="32" selection-start-line="149" selection-start-column="32" selection-end-line="149" selection-end-column="32" />
-          <folding>
-            <element signature="e#2490#2760#0" expanded="true" />
-            <element signature="e#2759#2760#0" expanded="true" />
-            <element signature="e#2912#3267#0" expanded="true" />
-            <element signature="e#3266#3267#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2518,23 +2564,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="31" selection-start-line="31" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotActionViewHolder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="21" column="57" lean-forward="true" selection-start-line="21" selection-start-column="57" selection-end-line="21" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/shot_detail_action.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="47" column="28" selection-start-line="47" selection-start-column="28" selection-end-line="47" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -2556,13 +2585,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/dribbble/Dribbble.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="197" column="78" selection-start-line="197" selection-start-column="78" selection-end-line="197" selection-end-column="78" />
         </state>
       </provider>
     </entry>
@@ -2612,16 +2634,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/bucket_list/BucketShotListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="39" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_list/ShotListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1191">
@@ -2633,34 +2645,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/bucket_list/BucketShotListActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2240">
-          <caret line="190" selection-start-line="190" selection-end-line="190" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_list/ShotListFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-290">
-          <caret line="124" column="46" selection-start-line="124" selection-start-column="46" selection-end-line="124" selection-end-column="46" />
+        <state relative-caret-position="225">
+          <caret line="15" column="39" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
           <folding>
-            <element signature="e#2490#2760#0" expanded="true" />
-            <element signature="e#2759#2760#0" expanded="true" />
-            <element signature="e#2912#3267#0" expanded="true" />
-            <element signature="e#3266#3267#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/bucket_list/BucketListAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/shot_detail_action.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="101" column="54" selection-start-line="101" selection-start-column="54" selection-end-line="101" selection-end-column="54" />
-          <folding>
-            <element signature="e#3389#3725#0" expanded="true" />
-            <element signature="e#3724#3725#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="240">
+          <caret line="30" column="37" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -2671,21 +2672,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotActionViewHolder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="110" column="54" selection-start-line="110" selection-start-column="54" selection-end-line="110" selection-end-column="54" />
+        <state relative-caret-position="120">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/model/Shot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="54" column="15" selection-start-line="54" selection-start-column="15" selection-end-line="54" selection-end-column="15" />
+        <state relative-caret-position="317">
+          <caret line="32" column="33" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/dribbble/Dribbble.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="533">
+          <caret line="215" column="64" selection-start-line="215" selection-start-column="64" selection-end-line="215" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/bucket_list/BucketListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="101" column="54" selection-start-line="101" selection-start-column="54" selection-end-line="101" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_list/ShotListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-425">
+          <caret line="127" selection-start-line="127" selection-end-line="127" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
           <folding>
-            <element signature="e#1438#1439#0" expanded="true" />
-            <element signature="e#1501#1502#0" expanded="true" />
+            <element signature="e#3850#4026#0" expanded="true" />
+            <element signature="e#4025#4026#0" expanded="true" />
+            <element signature="e#3837#4048#0" expanded="true" />
+            <element signature="e#4047#4048#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jiuzhang/yeyuan/dribbbo/shot_detail/ShotDetailFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="445">
+          <caret line="233" column="51" selection-start-line="233" selection-start-column="38" selection-end-line="233" selection-end-column="39" />
         </state>
       </provider>
     </entry>
