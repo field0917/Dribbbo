@@ -152,6 +152,14 @@ public class ShotListFragment extends Fragment {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
+                case LIST_TYPE_LIKED:
+                    try {
+                        return Dribbble.getLikedShots(page);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 case LIST_TYPE_BUCKETED:
                     int bucketId = getArguments().getInt(KEY_BUCKET_ID);
                     try {

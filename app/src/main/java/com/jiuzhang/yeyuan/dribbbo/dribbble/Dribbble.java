@@ -216,4 +216,9 @@ public class Dribbble {
         Response response = makeDeleteRequest(url, requestBody);
     }
 
+    public static List<Shot> getLikedShots (int page) throws IOException {
+        String url = API_URL + "users/" + user.username + "/likes?page=" + page;
+        return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
+    }
+
 }
