@@ -6,11 +6,11 @@
 <!--</resources>-->
 
 <resources>
-    <color name="colorPrimary">#FEDBD0</color>
-    <color name="colorPrimaryDark">#FECDAF</color>
-    <color name="colorPrimaryLight">#FEEAE6</color>
-    <color name="colorAccent">#009688</color>
-    <color name="colorPrimaryText">#442C2E</color>
+    <color name="colorPrimary">#344955</color>
+    <color name="colorPrimaryDark">#232f34</color>
+    <color name="colorPrimaryLight">#4a6572</color>
+    <color name="colorAccent">#f9aa33</color>
+    <color name="colorPrimaryText">#ffffff</color>
     <color name="colorSecondaryText">#757575</color>
     <color name="colorIcons">#442C2E</color>
     <color name="colorDivider">#BDBDBD</color>
