@@ -151,6 +151,11 @@ public class Dribbble {
         return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
     }
 
+    public static Shot getShot (String shotId) throws IOException {
+        String url = SHOTS_END_POINT + "/" + shotId;
+        return parseResponse(makeGetRequest(url), SHOT_TYPE);
+    }
+
     public static List<Bucket> getBuckets () throws IOException {
         String url = getCollectionsEndPoint ();
         return parseResponse(makeGetRequest(url), BUCKET_LIST_TYPE);

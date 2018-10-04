@@ -140,7 +140,10 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         .apply(RequestOptions.circleCropTransform())
                         .thumbnail(0.01f)
                         .into(shotInfoViewHolder.shotAuthorImage);
+
                 shotInfoViewHolder.shotAuthor.setText(shot.user.name);
+                //TODO: location cannot get
+//                shotInfoViewHolder.shotLocation.setText(shot.location.name);
                 break;
         }
     }

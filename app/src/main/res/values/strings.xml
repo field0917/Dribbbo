@@ -17,4 +17,5 @@
     <string name="edit_bucket_menu_save">Save</string>
     <string name="send_to">share</string>
     <string name="shot_detail_loading_buckets">Loading buckets....</string>
+    <string name="shot_author_image">shot author profile image</string>
 </resources>

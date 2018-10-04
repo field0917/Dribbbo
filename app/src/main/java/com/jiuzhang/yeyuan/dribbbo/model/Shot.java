@@ -27,12 +27,14 @@ public class Shot {
     public Map<String, String> links;
     public List<Bucket> current_user_collections; // The *current user's* collections that this photo belongs to.
 
-    public int views;
+    public int views;//TODO: cannot get this
     public int likes;
     public int downloads;
     public boolean liked_by_user;
 
     public User user;
+    public Location location; //TODO: cannot get this
+    public Info exif;//TODO: cannot get this
 
 //    public String imageURL;
 
@@ -40,9 +42,9 @@ public class Shot {
         if (urls == null) {
             return "";
         }
-        String url = urls.get(IMAGE_REGULAR) == null ?
-                urls.get(IMAGE_SMALL) : urls.get(IMAGE_REGULAR);
-        return url == null ? urls.get(IMAGE_THUMB) : url;
+        String url = urls.get(IMAGE_RAW) == null ?
+                urls.get(IMAGE_FULL) : urls.get(IMAGE_RAW);
+        return url == null ? urls.get(IMAGE_REGULAR) : url;
     }
 
     public String getHtmlUrl () {

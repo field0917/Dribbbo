@@ -19,18 +19,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="20dp"
-            android:contentDescription="shot author image"
+            android:contentDescription="@string/shot_author_image"
             android:layout_centerVertical="true"/>
-
-        <!--<TextView-->
-            <!--android:id="@+id/shot_title"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--tools:text="New Teblksmith.com"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textColor="#000000"-->
-            <!--android:layout_toRightOf="@+id/shot_author_image"-->
-            <!--android:layout_toEndOf="@+id/shot_author_image"/>-->
 
         <TextView
             android:id="@+id/shot_author"
@@ -38,10 +28,20 @@
             android:layout_height="wrap_content"
             tools:text="David M. Smith"
             android:textColor="#000000"
-            android:textSize="18dp"
+            android:textSize="16sp"
+            android:layout_toRightOf="@+id/shot_author_image"
+            android:layout_toEndOf="@+id/shot_author_image" />
+
+        <TextView
+            android:id="@+id/shot_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Los Angeles, CA, United States"
+            android:textSize="10sp"
+            android:textColor="@color/colorSecondaryText"
             android:layout_toRightOf="@+id/shot_author_image"
             android:layout_toEndOf="@+id/shot_author_image"
-            android:layout_centerVertical="true"/>
+            android:layout_below="@+id/shot_author"/>
 
     </RelativeLayout>
 

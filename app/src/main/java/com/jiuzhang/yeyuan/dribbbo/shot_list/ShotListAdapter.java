@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -22,10 +23,13 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
+import com.jiuzhang.yeyuan.dribbbo.dribbble.Dribbble;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailActivity;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
+
+import java.io.IOException;
 import java.util.List;
 
 public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -101,13 +105,13 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(context, ShotDetailActivity.class);
-                    String s = ModelUtils.toString(shot, new TypeToken<Shot>(){});
-                    intent.putExtra(ShotDetailFragment.KEY_SHOT, s);
-                    intent.putExtra(KEY_SHOT_TITLE, shot.id);
-//                    context.startActivity(intent);
-                    shotListFragment.startActivityForResult(intent, ShotListFragment.REQ_SHOT_UPDATE);
-
+//                    Intent intent = new Intent(context, ShotDetailActivity.class);
+//                    String s = ModelUtils.toString(shot, new TypeToken<Shot>(){});
+//                    intent.putExtra(ShotDetailFragment.KEY_SHOT, s);
+//                    intent.putExtra(KEY_SHOT_TITLE, shot.id);
+//                    shotListFragment.startActivityForResult(intent, ShotListFragment.REQ_SHOT_UPDATE);
+                    LoadFullShotDetailTask task = new LoadFullShotDetailTask();
+                    task.execute(shot.id);
                 }
             });
         } else if (viewType == VIEW_TYPE_LOADING) {
@@ -151,5 +155,28 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public interface LoadMoreListener {
         void onLoadMore();
+    }
+
+    public class LoadFullShotDetailTask extends AsyncTask<String, Void, Shot> {
+
+        @Override
+        protected Shot doInBackground(String... strings) {
+            String shotId = strings[0];
+            try {
+                return Dribbble.getShot(shotId);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Shot shot) {
+            Intent intent = new Intent(shotListFragment.getContext(), ShotDetailActivity.class);
+            String s = ModelUtils.toString(shot, new TypeToken<Shot>(){});
+            intent.putExtra(ShotDetailFragment.KEY_SHOT, s);
+            intent.putExtra(KEY_SHOT_TITLE, shot.id);
+            shotListFragment.startActivityForResult(intent, ShotListFragment.REQ_SHOT_UPDATE);
+        }
     }
 }

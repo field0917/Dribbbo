@@ -82,6 +82,7 @@ public class ShotDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         shot = ModelUtils.toObject(getArguments().getString(KEY_SHOT), new TypeToken<Shot>(){});
+
         if (collectedBuckets == null || collectedBuckets.isEmpty()) {
             collectedBuckets = shot.current_user_collections;// The *current user's* collections that this photo belongs to.
         }
