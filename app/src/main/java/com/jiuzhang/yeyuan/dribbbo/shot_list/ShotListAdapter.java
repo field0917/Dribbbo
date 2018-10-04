@@ -75,13 +75,14 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             ShotListViewHolder shotListViewHolder = (ShotListViewHolder) holder;
 
-            shotListViewHolder.shotCountTextView.setText(String.valueOf(shot.views));
             shotListViewHolder.shotLikeTextView.setText(String.valueOf(shot.likes));
-            shotListViewHolder.shotSaveTextView.setText(String.valueOf(shot.downloads));
+            shotListViewHolder.shotAuthorName.setText(shot.user.name);
 
-//            Picasso.with(context)
-//                    .load(Uri.parse(shot.imageURL))
-//                    .into(shotListViewHolder.shotImageView);
+            Glide.with(context)
+                    .load(shot.user.getProfileImageURL())
+                    .placeholder(R.drawable.user_picture_placeholder)
+                    .thumbnail(0.1f)
+                    .into(shotListViewHolder.shotAuthorImg);
 
             Glide.with(context)
                     .load(shot.getImageUrl())

@@ -15,9 +15,9 @@ public class ShotListViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.shot_card_view) CardView shotCardView;
     @BindView(R.id.shot_image_view) ImageView shotImageView;
-    @BindView(R.id.shot_count_text_view) TextView shotCountTextView;
+    @BindView(R.id.shot_author_image) ImageView shotAuthorImg;
+    @BindView(R.id.shot_author_name) TextView shotAuthorName;
     @BindView(R.id.shot_like_text_view) TextView shotLikeTextView;
-    @BindView(R.id.shot_save_text_view) TextView shotSaveTextView;
 
     public ShotListViewHolder(View itemView) {
         super(itemView);

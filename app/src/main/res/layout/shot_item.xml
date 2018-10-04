@@ -19,48 +19,48 @@
         <ImageView
             android:id="@+id/shot_image_view"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="220dp"
             tools:src="@drawable/shot_image_placeholder"
             android:contentDescription="This is an image"
             android:scaleType="centerCrop"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:orientation="horizontal"
-            android:gravity="end|center">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
+            <ImageView
+                android:id="@+id/shot_author_image"
+                android:layout_height="24dp"
+                android:layout_width="24dp"
+                android:src="@drawable/user_picture_placeholder"
+                android:layout_centerVertical="true"/>
             <TextView
-                android:id="@+id/shot_count_text_view"
+                android:id="@+id/shot_author_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:drawableLeft="@drawable/ic_eye"
-                android:drawablePadding="3dp"
-                tools:text="3450"
-                android:paddingRight="15dp"/>
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/shot_author_image"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                tools:text="Ye Yuan" />
 
             <TextView
                 android:id="@+id/shot_like_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/ic_favorite_black_18dp"
                 android:drawablePadding="3dp"
-                tools:text="400"
-                android:paddingRight="15dp"/>
+                tools:text="400" />
 
-            <TextView
-                android:id="@+id/shot_save_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:drawableLeft="@drawable/ic_inbox_black_18dp"
-                android:drawablePadding="3dp"
-                tools:text="124"
-                android:paddingRight="15dp"/>
-
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 
