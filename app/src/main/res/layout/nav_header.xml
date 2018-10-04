@@ -11,7 +11,7 @@
     android:paddingBottom="@dimen/spacing_medium"
     android:paddingRight="@dimen/spacing_medium">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/nav_header_user_img"
         android:layout_width="@dimen/user_image_size"
         android:layout_height="@dimen/user_image_size"

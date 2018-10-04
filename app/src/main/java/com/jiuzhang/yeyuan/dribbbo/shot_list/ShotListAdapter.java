@@ -3,6 +3,7 @@ package com.jiuzhang.yeyuan.dribbbo.shot_list;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
@@ -23,8 +26,6 @@ import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailActivity;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
-import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -82,25 +83,33 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             shotListViewHolder.shotLikeTextView.setText(String.valueOf(shot.likes));
             shotListViewHolder.shotAuthorName.setText(shot.user.name);
 
+//            Glide.with(context)
+//                    .load(shot.user.getProfileImageURL())
+//                    .asBitmap()
+//                    .placeholder(R.drawable.user_picture_placeholder)
+//                    .thumbnail(0.1f)
+//                    .into(new BitmapImageViewTarget(shotListViewHolder.shotAuthorImg) {
+//                        @Override
+//                        protected void setResource(Bitmap resource) {
+//                            RoundedBitmapDrawable circularBitmapDrawable =
+//                                    RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+//                            circularBitmapDrawable.setCircular(true);
+//                            shotListViewHolder.shotAuthorImg.setImageDrawable(circularBitmapDrawable);
+//                        }
+//                    });
+
             Glide.with(context)
                     .load(shot.user.getProfileImageURL())
-                    .asBitmap()
-                    .placeholder(R.drawable.user_picture_placeholder)
+                    .apply(new RequestOptions().placeholder(R.drawable.user_picture_placeholder))
+                    .apply(RequestOptions.circleCropTransform())
                     .thumbnail(0.1f)
-                    .into(new BitmapImageViewTarget(shotListViewHolder.shotAuthorImg) {
-                        @Override
-                        protected void setResource(Bitmap resource) {
-                            RoundedBitmapDrawable circularBitmapDrawable =
-                                    RoundedBitmapDrawableFactory.create(context.getResources(), resource);
-                            circularBitmapDrawable.setCircular(true);
-                            shotListViewHolder.shotAuthorImg.setImageDrawable(circularBitmapDrawable);
-                        }
-                    });
+                    .into(shotListViewHolder.shotAuthorImg);
 
             Glide.with(context)
                     .load(shot.getImageUrl())
-                    .placeholder(R.drawable.shot_image_placeholder)
-                    .error(R.drawable.error_image_not_found)
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.shot_image_placeholder)
+                            .error(R.drawable.error_image_not_found))
                     .thumbnail(0.1f)//Load a thumbnail at 1/10th the size of your view and then load the full image on top
                                     //This will reduce the time your user has to see image loading spinners without sacrificing quality
                     .into(shotListViewHolder.shotImageView);

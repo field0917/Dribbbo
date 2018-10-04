@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.jiuzhang.yeyuan.dribbbo.dribbble.Dribbble;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment;
 import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment;
@@ -106,17 +107,18 @@ public class MainActivity extends AppCompatActivity {
         TextView userName = headerLayout.findViewById(R.id.nav_header_user_name);
         TextView logout = headerLayout.findViewById(R.id.nav_header_log_out);
 
-        Picasso.with(this)
-                .load(Dribbble.getCurrentUser().getProfileImageURL())
-                .placeholder(R.drawable.user_picture_placeholder)
-                .into(userImage);
+//        Picasso.with(this)
+//                .load(Dribbble.getCurrentUser().getProfileImageURL())
+//                .placeholder(R.drawable.user_picture_placeholder)
+//                .into(userImage);
 
 // User picture cannot load with Glide
-//        Glide.with(this)
-//                .load(Dribbble.getCurrentUser().avatar_url)
-//                .placeholder(R.drawable.user_picture_placeholder)
-//                .thumbnail(0.1f)
-//                .into(userImage);
+        Glide.with(this)
+                .load(Dribbble.getCurrentUser().getProfileImageURL())
+                .apply(new RequestOptions().placeholder(R.drawable.user_picture_placeholder))
+                .apply(RequestOptions.circleCropTransform())
+                .thumbnail(0.1f)
+                .into(userImage);
 
         userName.setText(Dribbble.getCurrentUser().name);
 

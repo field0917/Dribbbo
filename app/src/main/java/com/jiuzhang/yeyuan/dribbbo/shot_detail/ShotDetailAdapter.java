@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment;
@@ -83,8 +84,8 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 Glide.with(context)
                         .load(shot.getImageUrl())
-                        .placeholder(R.drawable.shot_image_placeholder)
-                        .error(R.drawable.error_image_not_found)
+                        .apply(new RequestOptions().placeholder(R.drawable.shot_image_placeholder)
+                                .error(R.drawable.error_image_not_found))
                         .thumbnail(0.01f)
                         .into(shotImageViewHolder.imageView);
                 break;
@@ -136,7 +137,8 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 Glide.with(context)
                         .load(shot.user.getProfileImageURL())
-                        .placeholder(R.drawable.user_picture_placeholder)
+                        .apply(new RequestOptions().placeholder(R.drawable.user_picture_placeholder))
+                        .apply(RequestOptions.circleCropTransform())
                         .thumbnail(0.01f)
                         .into(shotInfoViewHolder.shotAuthorImage);
                 shotInfoViewHolder.shotAuthor.setText(shot.user.name);
