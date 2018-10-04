@@ -12,7 +12,7 @@ public class User {
         if (profile_image == null) {
             return "";
         }
-        String url = profile_image.containsKey("small") ? profile_image.get("small") : profile_image.get("medium");
+        String url = profile_image.containsKey("large") ? profile_image.get("large") : profile_image.get("medium");
         return url == null ? "" : url;
     }
 }

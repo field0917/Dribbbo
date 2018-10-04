@@ -41,9 +41,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
     @BindView(R.id.nav_view) NavigationView navigationView;
-//    @BindView(R.id.nav_header_user_name) TextView userName;
-//    @BindView(R.id.nav_header_log_out) TextView logout;
-//    @BindView(R.id.nav_header_user_img) ImageView userImage;
 
     private ActionBarDrawerToggle drawerToggle;
 
@@ -112,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
 //                .placeholder(R.drawable.user_picture_placeholder)
 //                .into(userImage);
 
-// User picture cannot load with Glide
         Glide.with(this)
                 .load(Dribbble.getCurrentUser().getProfileImageURL())
                 .apply(new RequestOptions().placeholder(R.drawable.user_picture_placeholder))

@@ -36,7 +36,6 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public static final String KEY_SHOT_TITLE = "shot title";
 
     private boolean showLoading;
-    //public boolean isRefreshing;
 
     private ShotListFragment shotListFragment;
     private List<Shot> shotList;
@@ -47,7 +46,6 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.shotList = shotList;
         this.loadMoreListener = loadMoreListener;
         this.showLoading = true;
-        //this.isRefreshing = true;
     }
 
 
@@ -83,25 +81,10 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             shotListViewHolder.shotLikeTextView.setText(String.valueOf(shot.likes));
             shotListViewHolder.shotAuthorName.setText(shot.user.name);
 
-//            Glide.with(context)
-//                    .load(shot.user.getProfileImageURL())
-//                    .asBitmap()
-//                    .placeholder(R.drawable.user_picture_placeholder)
-//                    .thumbnail(0.1f)
-//                    .into(new BitmapImageViewTarget(shotListViewHolder.shotAuthorImg) {
-//                        @Override
-//                        protected void setResource(Bitmap resource) {
-//                            RoundedBitmapDrawable circularBitmapDrawable =
-//                                    RoundedBitmapDrawableFactory.create(context.getResources(), resource);
-//                            circularBitmapDrawable.setCircular(true);
-//                            shotListViewHolder.shotAuthorImg.setImageDrawable(circularBitmapDrawable);
-//                        }
-//                    });
-
             Glide.with(context)
                     .load(shot.user.getProfileImageURL())
                     .apply(new RequestOptions().placeholder(R.drawable.user_picture_placeholder))
-                    .apply(RequestOptions.circleCropTransform())
+                    .apply(RequestOptions.circleCropTransform()) // make the image circle
                     .thumbnail(0.1f)
                     .into(shotListViewHolder.shotAuthorImg);
 
@@ -165,11 +148,6 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.showLoading = showLoading;
         notifyDataSetChanged();
     }
-
-//    public void setIsRefreshing(boolean isRefreshing) {
-//        this.isRefreshing = isRefreshing;
-//        notifyDataSetChanged();
-//    }
 
     public interface LoadMoreListener {
         void onLoadMore();

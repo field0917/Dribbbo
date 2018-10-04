@@ -93,7 +93,6 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 ShotActionViewHolder shotActionViewHolder = (ShotActionViewHolder) holder;
                 shotActionViewHolder.viewCount.setText(String.valueOf(shot.views));
                 shotActionViewHolder.likeCount.setText(String.valueOf(shot.likes));
-//                shotActionViewHolder.saveCount.setText(String.valueOf(shot.downloads));
 
                 shotActionViewHolder.likeIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -142,8 +141,6 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         .thumbnail(0.01f)
                         .into(shotInfoViewHolder.shotAuthorImage);
                 shotInfoViewHolder.shotAuthor.setText(shot.user.name);
-                //shotInfoViewHolder.shotTitle.setText(shot.title);
-                //shotInfoViewHolder.shotInfo.setText(shot.description);
                 break;
         }
     }
