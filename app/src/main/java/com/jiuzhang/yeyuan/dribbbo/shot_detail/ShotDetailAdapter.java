@@ -143,7 +143,11 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 shotInfoViewHolder.shotAuthor.setText(shot.user.name);
                 //TODO: location cannot get
-//                shotInfoViewHolder.shotLocation.setText(shot.location.name);
+                if (shot.location == null) {
+                    shotInfoViewHolder.shotLocation.setText("not known");
+                } else {
+                    shotInfoViewHolder.shotLocation.setText(shot.location.name);
+                }
                 break;
         }
     }

@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             tools:text="David M. Smith"
             android:textColor="#000000"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:layout_toRightOf="@+id/shot_author_image"
             android:layout_toEndOf="@+id/shot_author_image" />
 
@@ -36,8 +36,10 @@
             android:id="@+id/shot_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_location_on_black_18dp"
+            android:drawablePadding="@dimen/drawable_padding_left"
             tools:text="Los Angeles, CA, United States"
-            android:textSize="10sp"
+            android:textSize="@dimen/location_text_size"
             android:textColor="@color/colorSecondaryText"
             android:layout_toRightOf="@+id/shot_author_image"
             android:layout_toEndOf="@+id/shot_author_image"

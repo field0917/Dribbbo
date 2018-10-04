@@ -27,14 +27,14 @@ public class Shot {
     public Map<String, String> links;
     public List<Bucket> current_user_collections; // The *current user's* collections that this photo belongs to.
 
-    public int views;//TODO: cannot get this
+    public int views;
     public int likes;
     public int downloads;
     public boolean liked_by_user;
 
     public User user;
     public Location location; //TODO: cannot get this
-    public Info exif;//TODO: cannot get this
+    public Info exif;
 
 //    public String imageURL;
 
