@@ -2,8 +2,11 @@ package com.jiuzhang.yeyuan.dribbbo.shot_list;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
@@ -73,16 +77,25 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             final Shot shot = shotList.get(position);
             final Context context = holder.itemView.getContext();
 
-            ShotListViewHolder shotListViewHolder = (ShotListViewHolder) holder;
+            final ShotListViewHolder shotListViewHolder = (ShotListViewHolder) holder;
 
             shotListViewHolder.shotLikeTextView.setText(String.valueOf(shot.likes));
             shotListViewHolder.shotAuthorName.setText(shot.user.name);
 
             Glide.with(context)
                     .load(shot.user.getProfileImageURL())
+                    .asBitmap()
                     .placeholder(R.drawable.user_picture_placeholder)
                     .thumbnail(0.1f)
-                    .into(shotListViewHolder.shotAuthorImg);
+                    .into(new BitmapImageViewTarget(shotListViewHolder.shotAuthorImg) {
+                        @Override
+                        protected void setResource(Bitmap resource) {
+                            RoundedBitmapDrawable circularBitmapDrawable =
+                                    RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                            circularBitmapDrawable.setCircular(true);
+                            shotListViewHolder.shotAuthorImg.setImageDrawable(circularBitmapDrawable);
+                        }
+                    });
 
             Glide.with(context)
                     .load(shot.getImageUrl())

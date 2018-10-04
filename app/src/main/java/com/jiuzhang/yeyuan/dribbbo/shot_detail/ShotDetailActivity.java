@@ -37,7 +37,7 @@ public class ShotDetailActivity extends BaseActivity {
 
     @Override
     protected String getActivityTitle() {
-        Intent intent = getIntent();
-        return intent.getStringExtra(ShotListAdapter.KEY_SHOT_TITLE);
+
+        return super.getActivityTitle();
     }
 }
