@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:src="@drawable/ic_favorite_border_black_18dp"
-            android:background="?attr/selectableItemBackground"
+            android:background="@android:color/transparent"
             android:paddingBottom="@dimen/shot_action_padding_bottom"/>
 
         <TextView
@@ -44,13 +44,23 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/shot_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Info"
+        android:drawableTop="@drawable/ic_info_outline_black_18dp"
+        android:drawablePadding="@dimen/shot_action_padding_bottom"/>
+
+    <TextView
         android:id="@+id/action_collect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Collect"
         tools:drawableTop="@drawable/ic_inbox_black_18dp"
         android:drawablePadding="@dimen/shot_action_padding_bottom"
-        android:layout_weight="1"
+        android:layout_weight="0.7"
         android:gravity="center"/>
 
 
@@ -61,7 +71,7 @@
         android:text="Share"
         android:drawableTop="@drawable/ic_share_black_18dp"
         android:drawablePadding="@dimen/shot_action_padding_bottom"
-        android:layout_weight="1"
+        android:layout_weight="0.7"
         android:gravity="center"/>
 
 
