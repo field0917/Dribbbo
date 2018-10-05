@@ -19,4 +19,5 @@
     <dimen name="shot_detail_image_size">400dp</dimen>
     <dimen name="drawable_padding_left">3dp</dimen>
     <dimen name="location_text_size">11sp</dimen>
+    <dimen name="shot_detail_action_text_size">8dp</dimen>
 </resources>

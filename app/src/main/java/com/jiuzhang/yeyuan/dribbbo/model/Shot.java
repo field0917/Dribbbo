@@ -33,7 +33,7 @@ public class Shot {
     public boolean liked_by_user;
 
     public User user;
-    public Location location; //TODO: cannot get this
+    public Location location;
     public Info exif;
 
 //    public String imageURL;
@@ -42,9 +42,9 @@ public class Shot {
         if (urls == null) {
             return "";
         }
-        String url = urls.get(IMAGE_RAW) == null ?
-                urls.get(IMAGE_FULL) : urls.get(IMAGE_RAW);
-        return url == null ? urls.get(IMAGE_REGULAR) : url;
+        String url = urls.get(IMAGE_FULL) == null ?
+                urls.get(IMAGE_REGULAR) : urls.get(IMAGE_FULL);
+        return url == null ? urls.get(IMAGE_SMALL) : url;
     }
 
     public String getHtmlUrl () {

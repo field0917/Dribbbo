@@ -5,4 +5,5 @@ public class Location {
     public String name;
     public String city;
     public String country;
+    public Position position;
 }

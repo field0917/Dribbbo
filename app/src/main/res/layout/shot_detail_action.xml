@@ -15,6 +15,7 @@
         android:layout_weight="1"
         android:gravity="center"
         tools:text="2780"
+        android:textSize="@dimen/shot_detail_action_text_size"
         android:drawableTop="@drawable/ic_eye"
         android:drawablePadding="@dimen/shot_action_padding_bottom"/>
 
@@ -39,7 +40,8 @@
             android:id="@+id/shot_detail_like_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="295"/>
+            tools:text="295"
+            android:textSize="@dimen/shot_detail_action_text_size" />
 
     </LinearLayout>
 
@@ -50,6 +52,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="Info"
+        android:textSize="@dimen/shot_detail_action_text_size"
         android:drawableTop="@drawable/ic_info_outline_black_18dp"
         android:drawablePadding="@dimen/shot_action_padding_bottom"/>
 
@@ -58,9 +61,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Collect"
+        android:textSize="@dimen/shot_detail_action_text_size"
         tools:drawableTop="@drawable/ic_inbox_black_18dp"
         android:drawablePadding="@dimen/shot_action_padding_bottom"
-        android:layout_weight="0.7"
+        android:layout_weight="1"
         android:gravity="center"/>
 
 
@@ -69,9 +73,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Share"
+        android:textSize="@dimen/shot_detail_action_text_size"
         android:drawableTop="@drawable/ic_share_black_18dp"
         android:drawablePadding="@dimen/shot_action_padding_bottom"
-        android:layout_weight="0.7"
+        android:layout_weight="1"
         android:gravity="center"/>
 
 
