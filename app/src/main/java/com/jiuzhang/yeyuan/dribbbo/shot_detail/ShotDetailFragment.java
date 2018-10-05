@@ -11,17 +11,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
+import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.EditBucketActivity;
-import com.jiuzhang.yeyuan.dribbbo.dribbble.Dribbble;
+import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
@@ -144,49 +143,24 @@ public class ShotDetailFragment extends Fragment {
         context.startActivity(Intent.createChooser(intent, context.getResources().getText(R.string.send_to)));
     }
 
-    private class UpdateCollectedBucketTask extends AsyncTask<List<Bucket>, Void, Shot> {
+    private class UpdateCollectedBucketTask extends WendoTask<List<Bucket>, Void, Shot> {
 
         private List<Bucket> addedBuckets;
         private List<Bucket> removedBuckets;
 
         @Override
-        protected Shot doInBackground(List<Bucket>... lists) {
+        public Shot doOnNewThread(List<Bucket>... lists) throws Exception {
             addedBuckets = lists[0];
             removedBuckets = lists[1];
 
             addShotToBucket(addedBuckets);
 
             removeShotFromBucket(removedBuckets);
-
             return null;
         }
 
-        protected Shot addShotToBucket (List<Bucket> addedBuckets) {
-            Shot newShot = null;
-            for (Bucket bucket : addedBuckets) {
-                try {
-                    newShot = Dribbble.addShotToBucket(shot.id, bucket.id);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return newShot;
-        }
-
-        protected Shot removeShotFromBucket (List<Bucket> removedBuckets) {
-            Shot newShot = null;
-            for (Bucket bucket : removedBuckets) {
-                try {
-                    newShot = Dribbble.removeShotFromBucket(shot.id, bucket.id);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return newShot;
-        }
-
         @Override
-        protected void onPostExecute(Shot updatedShot) {
+        public void onSuccess(Shot shot) {
             if (collectedBuckets == null) {
                 collectedBuckets = new ArrayList<>();
             }
@@ -200,36 +174,48 @@ public class ShotDetailFragment extends Fragment {
 
             setResult();
         }
+
+        @Override
+        public void onFailed(Exception e) {
+            Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG).show();
+        }
+
+        protected Shot addShotToBucket (List<Bucket> addedBuckets) throws IOException {
+            Shot newShot = null;
+            for (Bucket bucket : addedBuckets) {
+                newShot = Wendo.addShotToBucket(shot.id, bucket.id);
+            }
+            return newShot;
+        }
+
+        protected Shot removeShotFromBucket (List<Bucket> removedBuckets) throws IOException {
+            Shot newShot = null;
+            for (Bucket bucket : removedBuckets) {
+                newShot = Wendo.removeShotFromBucket(shot.id, bucket.id);
+            }
+            return newShot;
+        }
+
     }
 
-    private class LikeOrUnlikeTheShotTask extends AsyncTask<Boolean, Void, Void> {
+    private class LikeOrUnlikeTheShotTask extends WendoTask<Boolean, Void, Void> {
 
         boolean currentLiked;
 
         @Override
-        protected Void doInBackground(Boolean... booleans) {
+        public Void doOnNewThread(Boolean... booleans) throws Exception {
             currentLiked = booleans[0];
 
             if (!currentLiked) {
-                try {
-                    Dribbble.likeTheShot(shot.id);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Wendo.likeTheShot(shot.id);
             } else {
-                try {
-                    Dribbble.unlikeTheShot(shot.id);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Wendo.unlikeTheShot(shot.id);
             }
-
             return null;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        public void onSuccess(Void aVoid) {
             shot.liked_by_user = !shot.liked_by_user;
             if (currentLiked) {
                 shot.likes -= 1;
@@ -240,6 +226,12 @@ public class ShotDetailFragment extends Fragment {
 
             setResult();
         }
+
+        @Override
+        public void onFailed(Exception e) {
+            Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG).show();
+        }
+
     }
 
 

@@ -2,9 +2,6 @@ package com.jiuzhang.yeyuan.dribbbo;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -15,7 +12,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,15 +19,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.jiuzhang.yeyuan.dribbbo.dribbble.Dribbble;
+import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment;
 import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment;
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,23 +95,23 @@ public class MainActivity extends AppCompatActivity {
         TextView logout = headerLayout.findViewById(R.id.nav_header_log_out);
 
 //        Picasso.with(this)
-//                .load(Dribbble.getCurrentUser().getProfileImageURL())
+//                .load(Wendo.getCurrentUser().getProfileImageURL())
 //                .placeholder(R.drawable.user_picture_placeholder)
 //                .into(userImage);
 
         Glide.with(this)
-                .load(Dribbble.getCurrentUser().getProfileImageURL())
+                .load(Wendo.getCurrentUser().getProfileImageURL())
                 .apply(new RequestOptions().placeholder(R.drawable.user_picture_placeholder))
                 .apply(RequestOptions.circleCropTransform())
                 .thumbnail(0.1f)
                 .into(userImage);
 
-        userName.setText(Dribbble.getCurrentUser().name);
+        userName.setText(Wendo.getCurrentUser().name);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dribbble.logout(MainActivity.this);
+                Wendo.logout(MainActivity.this);
 
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);

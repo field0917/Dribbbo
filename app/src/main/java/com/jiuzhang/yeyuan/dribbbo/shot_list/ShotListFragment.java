@@ -8,30 +8,24 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
-import com.jiuzhang.yeyuan.dribbbo.dribbble.Dribbble;
+import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
+import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
-import com.jiuzhang.yeyuan.dribbbo.model.User;
-import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailActivity;
-import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 import com.jiuzhang.yeyuan.dribbbo.utils.VerticalSpaceItemDecoration;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -135,7 +129,7 @@ public class ShotListFragment extends Fragment {
 
     }
 
-    private class LoadShotsTask extends AsyncTask<Void, Void, List<Shot>> {
+    private class LoadShotsTask extends WendoTask<Void, Void, List<Shot>> {
 
         boolean refresh;
 
@@ -144,40 +138,25 @@ public class ShotListFragment extends Fragment {
         }
 
         @Override
-        protected List<Shot> doInBackground(Void... voids) {
-
-            int page = refresh ? 1 : adapter.getDataSetCount() / Dribbble.COUNT_PER_PAGE + 1;
+        public List<Shot> doOnNewThread(Void... voids) throws Exception {
+            int page = refresh ? 1 : adapter.getDataSetCount() / Wendo.COUNT_PER_PAGE + 1;
             switch (listType) {
                 case LIST_TYPE_POPULAR:
-                    try {
-                        return Dribbble.getShots(page);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    return Wendo.getShots(page);
 
                 case LIST_TYPE_LIKED:
-                    try {
-                        return Dribbble.getLikedShots(page);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    return Wendo.getLikedShots(page);
 
                 case LIST_TYPE_BUCKETED:
                     int bucketId = getArguments().getInt(KEY_BUCKET_ID);
-                    try {
-                        return Dribbble.getBucketShots(page, bucketId);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    return Wendo.getBucketShots(page, bucketId);
                 default:
                     return null;
             }
-
         }
 
         @Override
-        protected void onPostExecute(List<Shot> shots) {
-            super.onPostExecute(shots);
+        public void onSuccess (List<Shot> shots) {
             if (shots != null) {
 
                 if (refresh) {
@@ -186,9 +165,14 @@ public class ShotListFragment extends Fragment {
                 } else {
                     adapter.append(shots);
                 }
-                adapter.setShowLoading(shots.size() >= Dribbble.COUNT_PER_PAGE);
+                adapter.setShowLoading(shots.size() >= Wendo.COUNT_PER_PAGE);
                 swipeRefreshLayout.setEnabled(true);
             }
+        }
+
+        @Override
+        public void onFailed (Exception e) {
+            Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG).show();
         }
     }
 }

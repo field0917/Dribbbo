@@ -2,28 +2,22 @@ package com.jiuzhang.yeyuan.dribbbo.shot_list;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.support.v7.widget.CardView;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
-import com.jiuzhang.yeyuan.dribbbo.dribbble.Dribbble;
+import com.jiuzhang.yeyuan.dribbbo.base.WendoException;
+import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
+import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailActivity;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment;
@@ -157,26 +151,26 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         void onLoadMore();
     }
 
-    public class LoadFullShotDetailTask extends AsyncTask<String, Void, Shot> {
+    public class LoadFullShotDetailTask extends WendoTask<String, Void, Shot> {
 
         @Override
-        protected Shot doInBackground(String... strings) {
+        public Shot doOnNewThread(String... strings) throws Exception {
             String shotId = strings[0];
-            try {
-                return Dribbble.getShot(shotId);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
+            return Wendo.getShot(shotId);
         }
 
         @Override
-        protected void onPostExecute(Shot shot) {
+        public void onSuccess(Shot shot) {
             Intent intent = new Intent(shotListFragment.getContext(), ShotDetailActivity.class);
             String s = ModelUtils.toString(shot, new TypeToken<Shot>(){});
             intent.putExtra(ShotDetailFragment.KEY_SHOT, s);
             intent.putExtra(KEY_SHOT_TITLE, shot.id);
             shotListFragment.startActivityForResult(intent, ShotListFragment.REQ_SHOT_UPDATE);
+        }
+
+        @Override
+        public void onFailed(Exception e) {
+            Snackbar.make(shotListFragment.getView(), e.getMessage(), Snackbar.LENGTH_LONG).show();
         }
     }
 }

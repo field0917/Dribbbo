@@ -1,10 +1,5 @@
 package com.jiuzhang.yeyuan.dribbbo.model;
 
-import com.jiuzhang.yeyuan.dribbbo.dribbble.Dribbble;
-import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
-
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

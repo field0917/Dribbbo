@@ -34,7 +34,7 @@ public class AuthActivity extends AppCompatActivity {
         toolbar.setTitle("Log into PinkUnicorn");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        setTitle("Log into Dribbble");
+//        setTitle("Log into Wendo");
 
         progressBar.setMax(100);
 

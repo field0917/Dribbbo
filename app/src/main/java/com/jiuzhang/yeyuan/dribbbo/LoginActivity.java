@@ -3,11 +3,10 @@ package com.jiuzhang.yeyuan.dribbbo;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.jiuzhang.yeyuan.dribbbo.dribbble.Dribbble;
+import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 
 import java.io.IOException;
 
@@ -24,9 +23,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        Dribbble.init(this);
-        //Log.i("Test: ", Dribbble.isLoggedIn() + "");
-        if (!Dribbble.isLoggedIn()) {
+        Wendo.init(this);
+        //Log.i("Test: ", Wendo.isLoggedIn() + "");
+        if (!Wendo.isLoggedIn()) {
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -51,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                    String token = Auth.getAccessToken(authCode);
                     // Store token and user
                     try {
-                        Dribbble.login(LoginActivity.this, token);
+                        Wendo.login(LoginActivity.this, token);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();

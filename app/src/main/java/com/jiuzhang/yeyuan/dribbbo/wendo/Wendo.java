@@ -1,8 +1,7 @@
-package com.jiuzhang.yeyuan.dribbbo.dribbble;
+package com.jiuzhang.yeyuan.dribbbo.wendo;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
@@ -11,7 +10,6 @@ import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.List;
 
 import okhttp3.FormBody;
@@ -20,7 +18,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class Dribbble {
+public class Wendo {
 
     public static final int COUNT_PER_PAGE = 10;
     private static final String KEY_PER_PAGE = "per_page";
@@ -130,7 +128,8 @@ public class Dribbble {
     }
 
     private static Response getResponseFromRequest (Request request) throws IOException {
-        return client.newCall(request).execute();
+        Response response = client.newCall(request).execute();
+        return response;
     }
 
     public static User getCurrentUser () {

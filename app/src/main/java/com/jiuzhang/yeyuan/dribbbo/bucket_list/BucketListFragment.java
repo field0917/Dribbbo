@@ -1,12 +1,8 @@
 package com.jiuzhang.yeyuan.dribbbo.bucket_list;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -15,18 +11,17 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
-import com.jiuzhang.yeyuan.dribbbo.dribbble.Dribbble;
+import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
+import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 import com.jiuzhang.yeyuan.dribbbo.utils.VerticalSpaceItemDecoration;
@@ -35,7 +30,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -177,20 +171,15 @@ public class BucketListFragment extends Fragment {
         }
     }
 
-    private class LoadBucketTask extends AsyncTask<Void, Void, List<Bucket>> {
+    private class LoadBucketTask extends WendoTask<Void, Void, List<Bucket>> {
 
         @Override
-        protected List<Bucket> doInBackground(Void... voids) {
-            try {
-                return Dribbble.getBuckets();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
+        public List<Bucket> doOnNewThread(Void... voids) throws Exception {
+            return Wendo.getBuckets();
         }
 
         @Override
-        protected void onPostExecute(List<Bucket> buckets) {
+        public void onSuccess(List<Bucket> buckets) {
             if (buckets != null) {
 
                 if (isEditMode) {
@@ -208,11 +197,15 @@ public class BucketListFragment extends Fragment {
             } else {
                 Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
             }
+        }
 
+        @Override
+        public void onFailed(Exception e) {
+            Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG).show();
         }
     }
 
-    private class NewBucketsTask extends AsyncTask<Void, Void, Bucket> {
+    private class NewBucketsTask extends WendoTask<Void, Void, Bucket> {
 
         String bucketName;
         String bucketDes;
@@ -223,23 +216,22 @@ public class BucketListFragment extends Fragment {
         }
 
         @Override
-        protected Bucket doInBackground(Void... voids) {
-            try {
-                return Dribbble.createNewBucket(bucketName, bucketDes);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
+        public Bucket doOnNewThread(Void... voids) throws Exception {
+            return Wendo.createNewBucket(bucketName, bucketDes);
         }
 
         @Override
-        protected void onPostExecute(Bucket bucket) {
+        public void onSuccess(Bucket bucket) {
             if (bucket != null) {
                 adapter.prepend(bucket);
             } else {
                 Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
             }
+        }
 
+        @Override
+        public void onFailed(Exception e) {
+            Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG).show();
         }
     }
 
