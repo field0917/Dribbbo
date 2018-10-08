@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -40,10 +41,13 @@ public class ShotListFragment extends Fragment {
     private static final int VERTICAL_SPACE_HEIGHT = 20;
     public static final int REQ_SHOT_UPDATE = 108;
     public static final String KEY_LIST_TYPE = "list_type";
+    public static final String KEY_USER_NAME = "username";
 
     public static final int LIST_TYPE_POPULAR = 0;
     public static final int LIST_TYPE_LIKED = 1;
     public static final int LIST_TYPE_BUCKETED = 2;
+    public static final int LIST_TYPE_USER_PHOTOS = 3;
+    public static final int LIST_TYPE_USER_LIKES = 4;
 
     private List<Shot> shotList = new ArrayList<>();
     private ShotListAdapter adapter;
@@ -57,10 +61,11 @@ public class ShotListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ShotListFragment newInstance(int listType, int bucketId) {
+    public static ShotListFragment newInstance(int listType, int bucketId, String username) {
         Bundle args = new Bundle();
         args.putInt(KEY_LIST_TYPE, listType);
         args.putInt(KEY_BUCKET_ID, bucketId);
+        args.putString(KEY_USER_NAME, username);
         ShotListFragment fragment = new ShotListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -109,6 +114,12 @@ public class ShotListFragment extends Fragment {
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_SPACE_HEIGHT));
 
         recyclerView.setAdapter(adapter);
+
+//        if (adapter.getItemCount() == 0) {
+//            noShotTextView.setVisibility(View.VISIBLE);
+//        } else {
+//            noShotTextView.setVisibility(View.GONE);
+//        }
     }
 
     @Override
@@ -140,6 +151,7 @@ public class ShotListFragment extends Fragment {
         @Override
         public List<Shot> doOnNewThread(Void... voids) throws Exception {
             int page = refresh ? 1 : adapter.getDataSetCount() / Wendo.COUNT_PER_PAGE + 1;
+            String username;
             switch (listType) {
                 case LIST_TYPE_POPULAR:
                     return Wendo.getShots(page);
@@ -150,6 +162,14 @@ public class ShotListFragment extends Fragment {
                 case LIST_TYPE_BUCKETED:
                     int bucketId = getArguments().getInt(KEY_BUCKET_ID);
                     return Wendo.getBucketShots(page, bucketId);
+
+                case LIST_TYPE_USER_PHOTOS:
+                    username = getArguments().getString(KEY_USER_NAME);
+                    return Wendo.getUserShots(username, page);
+
+                case LIST_TYPE_USER_LIKES:
+                    username = getArguments().getString(KEY_USER_NAME);
+                    return Wendo.getUserLikes(username, page);
                 default:
                     return null;
             }

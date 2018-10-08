@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container,
-                        ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1))
+                        ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1, ""))
                 .commit();
 
     }
@@ -141,13 +141,13 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
         switch (item.getItemId()) {
             case R.id.drawer_item_home:
-                fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1);
+                fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1, "");
                 break;
             case R.id.drawer_item_likes:
-                fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_LIKED, -1);
+                fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_LIKED, -1, "");
                 break;
             case R.id.drawer_item_buckets:
-                fragment = BucketListFragment.newInstance(false, null);
+                fragment = BucketListFragment.newInstance(false, null, null);
                 break;
         }
 

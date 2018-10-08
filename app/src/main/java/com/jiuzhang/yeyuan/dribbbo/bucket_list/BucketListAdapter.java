@@ -28,6 +28,7 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private LoadMoreListener loadMoreListener;
     private boolean showLoading;
     private boolean isEditMode;
+//    private String username;
 
     public BucketListAdapter (List<Bucket> bucketList,
                               LoadMoreListener loadMoreListener,
@@ -36,6 +37,7 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.loadMoreListener = loadMoreListener;
         this.showLoading = true;
         this.isEditMode = isEditMode;
+//        this.username = username;
     }
 
     @NonNull

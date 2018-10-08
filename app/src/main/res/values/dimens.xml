@@ -20,4 +20,5 @@
     <dimen name="drawable_padding_left">3dp</dimen>
     <dimen name="location_text_size">11sp</dimen>
     <dimen name="shot_detail_action_text_size">8dp</dimen>
+    <dimen name="user_toolbar_padding">10dp</dimen>
 </resources>

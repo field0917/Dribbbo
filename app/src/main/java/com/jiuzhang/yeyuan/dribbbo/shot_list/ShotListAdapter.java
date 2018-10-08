@@ -30,6 +30,7 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private final int VIEW_TYPE_SHOT = 0;
     private final int VIEW_TYPE_LOADING = 1;
+//    private final int VIEW_TYPE_NO_SHOT = 2;
 
     public static final String KEY_SHOT_TITLE = "shot title";
 
@@ -60,6 +61,9 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.loading_item_activity, parent, false);
                 return new RecyclerView.ViewHolder(view) {};
+//            case VIEW_TYPE_NO_SHOT:
+//                view = LayoutInflater.from(parent.getContext())
+//                        .inflate(R.layout.empty_message, parent, false);
             default:
                 return null;
         }
@@ -111,6 +115,9 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         } else if (viewType == VIEW_TYPE_LOADING) {
             loadMoreListener.onLoadMore();
         }
+//        else if (viewType == VIEW_TYPE_NO_SHOT) {
+//            EmptyMessageViewHolder viewHolder = (EmptyMessageViewHolder) holder;
+//        }
     }
 
     @Override
@@ -124,6 +131,9 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType (int position) {
+//        if (shotList == null || shotList.size() == 0) {
+//            return VIEW_TYPE_NO_SHOT;
+//        }
         return position < shotList.size() ? VIEW_TYPE_SHOT : VIEW_TYPE_LOADING;
     }
 

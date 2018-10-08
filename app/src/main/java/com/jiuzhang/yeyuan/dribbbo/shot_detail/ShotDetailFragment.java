@@ -17,9 +17,11 @@ import android.view.ViewGroup;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
+import com.jiuzhang.yeyuan.dribbbo.UserActivity;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.EditBucketActivity;
+import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
@@ -38,6 +40,7 @@ import static android.app.Activity.RESULT_OK;
 public class ShotDetailFragment extends Fragment {
 
     public static final String KEY_SHOT = "shot";
+    public static final String KEY_USER = "user";
     public static final int REQ_CHOSEN_BUCKET = 107 ;
 
     private ShotDetailAdapter adapter;
@@ -143,6 +146,12 @@ public class ShotDetailFragment extends Fragment {
         context.startActivity(Intent.createChooser(intent, context.getResources().getText(R.string.send_to)));
     }
 
+    public void getUserDetail (Context context) {
+        Intent intent = new Intent(context, UserActivity.class);
+        intent.putExtra(KEY_USER, ModelUtils.toString(shot.user, new TypeToken<User>(){}));
+        startActivity(intent);
+    }
+
     private class UpdateCollectedBucketTask extends WendoTask<List<Bucket>, Void, Shot> {
 
         private List<Bucket> addedBuckets;
@@ -160,7 +169,7 @@ public class ShotDetailFragment extends Fragment {
         }
 
         @Override
-        public void onSuccess(Shot shot) {
+        public void onSuccess(Shot newShot) {
             if (collectedBuckets == null) {
                 collectedBuckets = new ArrayList<>();
             }

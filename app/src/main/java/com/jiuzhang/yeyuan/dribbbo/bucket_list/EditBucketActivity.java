@@ -18,7 +18,7 @@ public class EditBucketActivity extends BaseActivity{
         List<Bucket> chosenBuckets = ModelUtils.toObject(
                 getIntent().getStringExtra(BucketListFragment.KEY_COLLECTED_BUCKETS),
                 new TypeToken<List<Bucket>>(){});
-        return BucketListFragment.newInstance(isEditMode, chosenBuckets);
+        return BucketListFragment.newInstance(isEditMode, chosenBuckets, null);
     }
 
     @Override

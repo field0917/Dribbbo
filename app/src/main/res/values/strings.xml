@@ -18,4 +18,7 @@
     <string name="send_to">share</string>
     <string name="shot_detail_loading_buckets">Loading buckets....</string>
     <string name="shot_author_image">shot author profile image</string>
+    <string name="follow">Follow</string>
+    <string name="no_shot">The user has not upload any photo</string>
+    <string name="no_bucket">The user has not create any collection</string>
 </resources>

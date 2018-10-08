@@ -12,6 +12,16 @@
         <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
 
+    <style name="AppTheme.TextView.Toolbar.Title" parent="AppTheme.TextView">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.TextView.Toolbar.Location" parent="AppTheme.TextView.Toolbar.Title">
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
     <style name="AppTheme.TextView.Clickable">
         <item name="android:background">?android:attr/selectableItemBackground</item>
         <item name="android:padding">@dimen/spacing_small</item>

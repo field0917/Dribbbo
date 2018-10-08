@@ -33,7 +33,8 @@ public class Wendo {
     public static final String KEY_ID = "id";
 
     private static final String API_URL = "https://api.unsplash.com/";
-    private static final String USER_END_POINT = API_URL + "me";
+    private static final String CURRENT_USER_END_POINT = API_URL + "me";
+    private static final String USER_END_POINT = API_URL + "users/";
     private static final String SHOTS_END_POINT = API_URL + "photos";
     private static final String BUCKET_CREATE_END_POINT = API_URL + "collections";
     private static final String BUCKET_SHOT_END_POINT = API_URL + "collections/";
@@ -92,7 +93,7 @@ public class Wendo {
     }
 
     private static User getUser () throws IOException {
-        return parseResponse(makeGetRequest(USER_END_POINT), USER_TYPE);
+        return parseResponse(makeGetRequest(CURRENT_USER_END_POINT), USER_TYPE);
     }
 
     private static <T> T parseResponse (Response response, TypeToken<T> typeToken) throws IOException {
@@ -223,6 +224,21 @@ public class Wendo {
     public static List<Shot> getLikedShots (int page) throws IOException {
         String url = API_URL + "users/" + user.username + "/likes?page=" + page;
         return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
+    }
+
+    public static List<Shot> getUserShots (String username, int page) throws IOException {
+        String url = USER_END_POINT + username + "/photos?page=" + page;
+        return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
+    }
+
+    public static List<Shot> getUserLikes (String username, int page) throws IOException {
+        String url = USER_END_POINT + username + "/likes?page=" + page;
+        return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
+    }
+
+    public static List<Bucket> getUserBuckets (String username) throws IOException {
+        String url = USER_END_POINT + username + "/collections";
+        return parseResponse(makeGetRequest(url), BUCKET_LIST_TYPE);
     }
 
 }

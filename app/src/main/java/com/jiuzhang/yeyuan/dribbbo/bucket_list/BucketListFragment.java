@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
@@ -49,6 +50,7 @@ public class BucketListFragment extends Fragment {
     public static final String KEY_CHOSEN_BUCKETS = "chosen_buckets";
     public static final String KEY_BUCKET_TITLE = "bucket_title";
     public static final String KEY_BUCKET_ID = "bucket_id";
+    public static final String KEY_USER_NAME = "username";
 
     @BindView(R.id.bucket_list_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.bucket_fab) FloatingActionButton fab;
@@ -58,16 +60,18 @@ public class BucketListFragment extends Fragment {
 
     public boolean isEditMode;
     public Set<Integer> chosenBucketIdsSet;
+    public String username;
 
     public BucketListFragment() {
         // Required empty public constructor
     }
 
-    public static BucketListFragment newInstance(boolean isEditMode, List<Bucket> chosenBuckets) {
+    public static BucketListFragment newInstance(boolean isEditMode, List<Bucket> chosenBuckets, String username) {
         Bundle args = new Bundle();
         args.putBoolean(KEY_EDIT_MODE, isEditMode);
         args.putString(KEY_COLLECTED_BUCKETS,
                 ModelUtils.toString(chosenBuckets, new TypeToken<List<Bucket>>(){}));
+        args.putString(KEY_USER_NAME, username);
 
         BucketListFragment fragment = new BucketListFragment();
         fragment.setArguments(args);
@@ -79,6 +83,7 @@ public class BucketListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         isEditMode = args.getBoolean(KEY_EDIT_MODE);
+        username = args.getString(KEY_USER_NAME);
 
         if (isEditMode) {
             List<Bucket> chosenBuckets = ModelUtils.toObject(args.getString(KEY_COLLECTED_BUCKETS),
@@ -146,15 +151,25 @@ public class BucketListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_SPACE_HEIGHT));
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NewBucketDialogFragment dialogFragment = NewBucketDialogFragment.newInstance();
-                dialogFragment.setTargetFragment(BucketListFragment.this, REQ_NEW_BUCKET);
-                dialogFragment.show(getFragmentManager(), NewBucketDialogFragment.TAG);
-            }
-        });
+        if (username != null) {
+            fab.setVisibility(View.GONE);
+        } else {
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    NewBucketDialogFragment dialogFragment = NewBucketDialogFragment.newInstance();
+                    dialogFragment.setTargetFragment(BucketListFragment.this, REQ_NEW_BUCKET);
+                    dialogFragment.show(getFragmentManager(), NewBucketDialogFragment.TAG);
+                }
+            });
+        }
 
+//        if (adapter.getItemCount() == 0) {
+//            noBucketTextView.setVisibility(View.VISIBLE);
+//        } else {
+//            noBucketTextView.setVisibility(View.GONE);
+//        }
     }
 
     @Override
@@ -175,7 +190,12 @@ public class BucketListFragment extends Fragment {
 
         @Override
         public List<Bucket> doOnNewThread(Void... voids) throws Exception {
-            return Wendo.getBuckets();
+            if (username == null) {
+                return Wendo.getBuckets();
+            } else {
+                return Wendo.getUserBuckets(username);
+            }
+
         }
 
         @Override
