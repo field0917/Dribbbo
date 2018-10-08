@@ -96,6 +96,19 @@ public class Wendo {
         return parseResponse(makeGetRequest(CURRENT_USER_END_POINT), USER_TYPE);
     }
 
+    private static String loadAccessToken (Context context) {
+        SharedPreferences sp = context.getApplicationContext().getSharedPreferences(SP_AUTH, Context.MODE_PRIVATE);
+        return sp.getString(KEY_ACCESS_TOKEN, null);
+    }
+
+    private static User loadUser (Context context) {
+        return ModelUtils.read(context, KEY_USER, USER_TYPE);
+    }
+
+    public static User getCurrentUser () {
+        return user;
+    }
+
     private static <T> T parseResponse (Response response, TypeToken<T> typeToken) throws IOException {
         String responseString = response.body().string();
         return ModelUtils.toObject(responseString, typeToken);
@@ -131,19 +144,6 @@ public class Wendo {
     private static Response getResponseFromRequest (Request request) throws IOException {
         Response response = client.newCall(request).execute();
         return response;
-    }
-
-    public static User getCurrentUser () {
-        return user;
-    }
-
-    private static String loadAccessToken (Context context) {
-        SharedPreferences sp = context.getApplicationContext().getSharedPreferences(SP_AUTH, Context.MODE_PRIVATE);
-        return sp.getString(KEY_ACCESS_TOKEN, null);
-    }
-
-    private static User loadUser (Context context) {
-        return ModelUtils.read(context, KEY_USER, USER_TYPE);
     }
 
     public static List<Shot> getShots (int page) throws IOException {

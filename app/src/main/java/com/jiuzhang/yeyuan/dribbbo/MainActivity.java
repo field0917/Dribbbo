@@ -19,6 +19,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.reflect.TypeToken;
+import com.jiuzhang.yeyuan.dribbbo.model.User;
+import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment;
+import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment;
 import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment;
@@ -94,17 +98,22 @@ public class MainActivity extends AppCompatActivity {
         TextView userName = headerLayout.findViewById(R.id.nav_header_user_name);
         TextView logout = headerLayout.findViewById(R.id.nav_header_log_out);
 
-//        Picasso.with(this)
-//                .load(Wendo.getCurrentUser().getProfileImageURL())
-//                .placeholder(R.drawable.user_picture_placeholder)
-//                .into(userImage);
-
         Glide.with(this)
                 .load(Wendo.getCurrentUser().getProfileImageURL())
                 .apply(new RequestOptions().placeholder(R.drawable.user_picture_placeholder))
                 .apply(RequestOptions.circleCropTransform())
                 .thumbnail(0.1f)
                 .into(userImage);
+
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                intent.putExtra(ShotDetailFragment.KEY_USER,
+                        ModelUtils.toString(Wendo.getCurrentUser(), new TypeToken<User>(){}));
+                startActivity(intent);
+            }
+        });
 
         userName.setText(Wendo.getCurrentUser().name);
 
