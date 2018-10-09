@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
+import com.jiuzhang.yeyuan.dribbbo.base.WendoException;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
@@ -236,7 +237,7 @@ public class BucketListFragment extends Fragment {
         }
 
         @Override
-        public Bucket doOnNewThread(Void... voids) throws Exception {
+        public Bucket doOnNewThread(Void... voids) throws IOException {
             return Wendo.createNewBucket(bucketName, bucketDes);
         }
 
