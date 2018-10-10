@@ -12,8 +12,7 @@
         android:layout_height="match_parent"
         tools:context=".bucket_list.BucketListFragment"
         android:id="@+id/bucket_list_recycler_view"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/recycler_view_padding"/>
+        android:layout_centerHorizontal="true" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/bucket_fab"

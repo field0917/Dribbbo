@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/shot_image_view"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="@dimen/list_image_height"
             tools:src="@drawable/shot_image_placeholder"
             android:contentDescription="This is an image"
             android:scaleType="centerCrop"/>

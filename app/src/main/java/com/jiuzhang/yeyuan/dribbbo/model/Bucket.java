@@ -6,6 +6,7 @@ public class Bucket {
     public String title;
     public int total_photos;
     public String description;
+    public Shot cover_photo;
 
     public boolean isChosen;
 

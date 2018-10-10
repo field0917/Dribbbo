@@ -8,9 +8,8 @@
 
         <item
             android:id="@+id/drawer_item_home"
-            android:checked="true"
             android:icon="@drawable/ic_home_black_18dp"
-            android:title="@string/drawer_menu_home"/>
+            android:title="@string/drawer_menu_home" />
 
         <item
             android:id="@+id/drawer_item_likes"

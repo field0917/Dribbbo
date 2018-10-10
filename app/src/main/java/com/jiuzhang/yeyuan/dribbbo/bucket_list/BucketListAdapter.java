@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
 import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment;
@@ -64,8 +66,15 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         final Context context = holder.itemView.getContext();
 
         if (viewType == VIEW_TYPE_BUCKET_LIST) {
+
             final Bucket bucket = bucketList.get(position);
             final BucketListViewHolder bucketListViewHolder = (BucketListViewHolder) holder;
+
+            Glide.with(context)
+                    .load(bucket.cover_photo.getImageUrl())
+                    .apply(new RequestOptions().placeholder(R.drawable.shot_image_placeholder))
+                    .into(bucketListViewHolder.bucketCoverImage);
+
             bucketListViewHolder.bucketTitleTextView.setText(bucket.title);
 
             if (bucket.total_photos <= 1) {
