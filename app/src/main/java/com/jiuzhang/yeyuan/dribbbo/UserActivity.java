@@ -40,7 +40,9 @@ public class UserActivity extends AppCompatActivity {
     @BindView(R.id.user_photos) TextView userPhotos;
     @BindView(R.id.user_likes) TextView userLikes;
     @BindView(R.id.user_collections) TextView userCollections;
-    @BindView(R.id.btn_follow) Button follow;
+    @BindView(R.id.portfolio_url) TextView porfolioUrl;
+    @BindView(R.id.instagram) TextView instagram;
+    @BindView(R.id.bio) TextView bio;
 
 
     private static final int POSITION_ONE = 0;
@@ -83,13 +85,21 @@ public class UserActivity extends AppCompatActivity {
         userPhotos.setText(String.valueOf(user.total_photos));
         userLikes.setText(String.valueOf(user.total_likes));
         userCollections.setText(String.valueOf(user.total_collections));
-
-//        follow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+        if (user.portfolio_url != null) {
+            porfolioUrl.setText(user.portfolio_url);
+        } else {
+            porfolioUrl.setVisibility(View.GONE);
+        }
+        if (user.instagram_username != null) {
+            instagram.setText("Instagram: " + user.instagram_username);
+        } else {
+            instagram.setVisibility(View.GONE);
+        }
+        if (user.bio != null) {
+            bio.setText(user.bio);
+        } else {
+            bio.setText("Download free, beautiful high-quality photos curated by " + user.name);
+        }
 
         // Setup viewpager's adapter
         UserPagerAdapter adapter = new UserPagerAdapter(getSupportFragmentManager());
@@ -123,7 +133,6 @@ public class UserActivity extends AppCompatActivity {
                     return ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_USER_PHOTOS, -1, user.username);
                 case POSITION_TWO:
                     return ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_USER_LIKES, -1, user.username);
-                    //TODO:user collections add later
                 case POSITION_THREE:
                     return BucketListFragment.newInstance(false, null, user.username);
                 default:
