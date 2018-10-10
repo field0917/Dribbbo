@@ -26,7 +26,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1"
-        android:gravity="center">
+        android:gravity="center"
+        android:clickable="true">
 
         <ImageButton
             android:id="@+id/img_like"
@@ -45,16 +46,16 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/shot_info"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="Info"
-        android:textSize="@dimen/shot_detail_action_text_size"
-        android:drawableTop="@drawable/ic_info_outline_black_18dp"
-        android:drawablePadding="@dimen/shot_action_padding_bottom"/>
+    <!--<TextView-->
+        <!--android:id="@+id/shot_info"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center"-->
+        <!--android:text="Info"-->
+        <!--android:textSize="@dimen/shot_detail_action_text_size"-->
+        <!--android:drawableTop="@drawable/ic_info_outline_black_18dp"-->
+        <!--android:drawablePadding="@dimen/shot_action_padding_bottom"/>-->
 
     <TextView
         android:id="@+id/action_collect"

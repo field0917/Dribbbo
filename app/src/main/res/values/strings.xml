@@ -21,4 +21,7 @@
     <string name="follow">Follow</string>
     <string name="no_shot">The user has not upload any photo</string>
     <string name="no_bucket">The user has not create any collection</string>
+    <string name="download">Download</string>
+    <string name="info">Info</string>
+    <string name="open_in_unsplash">Open in Unsplash</string>
 </resources>
