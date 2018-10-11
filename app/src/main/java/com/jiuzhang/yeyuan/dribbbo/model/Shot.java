@@ -49,6 +49,13 @@ public class Shot {
         return "Error!";
     }
 
+    public String getDownloadUrl () {
+        if (links != null) {
+            return links.get("download");
+        }
+        return "Error!";
+    }
+
     public boolean isBucketed() {
         return !this.current_user_collections.isEmpty();
     }

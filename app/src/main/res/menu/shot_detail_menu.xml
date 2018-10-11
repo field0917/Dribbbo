@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/download"
+        android:id="@+id/save_to_album"
         android:icon="@drawable/ic_file_download_white_24dp"
         android:title="@string/download"
         app:showAsAction="never"/>
@@ -12,12 +12,13 @@
         android:id="@+id/info"
         android:icon="@drawable/ic_info_outline_black_18dp"
         android:title="@string/info"
-        app:showAsAction="never"/>
+        app:showAsAction="never|collapseActionView"
+        android:actionLayout="@layout/shot_info"/>
 
     <item
         android:id="@+id/url"
         android:icon="@drawable/ic_public_white_18dp"
         android:title="@string/open_in_unsplash"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 
 </menu>

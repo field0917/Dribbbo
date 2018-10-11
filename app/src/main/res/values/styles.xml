@@ -46,5 +46,13 @@
     <style name="AppTheme.TextView.Clickable.2.White" parent="AppTheme.TextView.Clickable.2">
         <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
+    
+    <style name="Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@color/colorPrimaryLight</item>
+        <item name="textColorAlertDialogListItem">@color/colorPrimaryText</item>
+    </style>
 
 </resources>
