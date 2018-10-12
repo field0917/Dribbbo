@@ -15,8 +15,8 @@ import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 
 public abstract class CustomTarget<Bitmap> implements Target<Bitmap> {
 
-    Shot shot;
-    View view;
+    private Shot shot;
+    private View view;
 
     public CustomTarget (Shot shot, View view) {
         this.shot = shot;
