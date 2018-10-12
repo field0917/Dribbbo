@@ -7,23 +7,22 @@
     android:layout_margin="30dp">
 
     <TextView
-        android:id="@+id/image_width"
+        android:id="@+id/image_dimension"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Width: 1250"
-        android:textSize="@dimen/dialog_text_size"/>
-
-    <TextView
-        android:id="@+id/image_height"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Height: 1250"
+        android:drawableStart="@drawable/ic_border_style_white_18dp"
+        android:drawablePadding="@dimen/info_item_padding"
+        android:layout_marginBottom="@dimen/info_item_margin_bottom"
+        tools:text="Dimension: 1250 * 1250"
         android:textSize="@dimen/dialog_text_size"/>
 
     <TextView
         android:id="@+id/make"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_branding_white_18dp"
+        android:drawablePadding="@dimen/info_item_padding"
+        android:layout_marginBottom="@dimen/info_item_margin_bottom"
         tools:text="Make: Canon"
         android:textSize="@dimen/dialog_text_size"/>
 
@@ -31,6 +30,9 @@
         android:id="@+id/model"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_camera_enhance_white_18dp"
+        android:drawablePadding="@dimen/info_item_padding"
+        android:layout_marginBottom="@dimen/info_item_margin_bottom"
         tools:text="Model: Canon EOS 5D Mark III"
         android:textSize="@dimen/dialog_text_size"/>
 
@@ -38,6 +40,9 @@
         android:id="@+id/exposure_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_timelapse_white_18dp"
+        android:drawablePadding="@dimen/info_item_padding"
+        android:layout_marginBottom="@dimen/info_item_margin_bottom"
         tools:text="Exposure time: 1/2000"
         android:textSize="@dimen/dialog_text_size"/>
 
@@ -45,6 +50,9 @@
         android:id="@+id/aperture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_camera_white_18dp"
+        android:drawablePadding="@dimen/info_item_padding"
+        android:layout_marginBottom="@dimen/info_item_margin_bottom"
         tools:text="Aperture: 2.8"
         android:textSize="@dimen/dialog_text_size"/>
 
@@ -52,6 +60,9 @@
         android:id="@+id/focal_length"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_center_focus_strong_white_18dp"
+        android:drawablePadding="@dimen/info_item_padding"
+        android:layout_marginBottom="@dimen/info_item_margin_bottom"
         tools:text="Focal length: 50.0"
         android:textSize="@dimen/dialog_text_size"/>
 
@@ -59,6 +70,9 @@
         android:id="@+id/iso"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_iso_white_18dp"
+        android:drawablePadding="@dimen/info_item_padding"
+        android:layout_marginBottom="@dimen/info_item_margin_bottom"
         tools:text="ISO: 400"
         android:textSize="@dimen/dialog_text_size"/>
 

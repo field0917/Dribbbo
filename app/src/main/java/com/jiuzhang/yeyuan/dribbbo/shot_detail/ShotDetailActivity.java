@@ -97,8 +97,7 @@ public class ShotDetailActivity extends BaseActivity {
                 dialog.setContentView(R.layout.shot_info);
                 dialog.setTitle("Info");
 
-                TextView width = dialog.findViewById(R.id.image_width);
-                TextView height = dialog.findViewById(R.id.image_height);
+                TextView dimension = dialog.findViewById(R.id.image_dimension);
                 TextView make = dialog.findViewById(R.id.make);
                 TextView model = dialog.findViewById(R.id.model);
                 TextView exposureTime = dialog.findViewById(R.id.exposure_time);
@@ -106,15 +105,30 @@ public class ShotDetailActivity extends BaseActivity {
                 TextView focalLength = dialog.findViewById(R.id.focal_length);
                 TextView iso = dialog.findViewById(R.id.iso);
 
-                width.setText("Width: " + shot.width);
-                height.setText("Height: " + shot.height);
+                String dimensionText = shot.width == 0 && shot.height == 0 ? "---"
+                                   : "Dimension: " + shot.width + " x " + shot.height;
+                dimension.setText(dimensionText);
                 if (shot.exif != null) {
-                    make.setText("Make: " + shot.exif.make);
-                    model.setText("Model: " + shot.exif.model);
-                    exposureTime.setText("Exposure time: " + shot.exif.exposure_time);
-                    aperture.setText("Aperture: " + shot.exif.aperture);
-                    focalLength.setText("Focal length: " + shot.exif.focal_length);
-                    iso.setText("ISO: " + shot.exif.iso);
+                    String makeText = shot.exif.make == null ? "---" : "Make: " + shot.exif.make;
+                    make.setText(makeText);
+
+                    String modelText = shot.exif.model == null ? "---" : "Model: " + shot.exif.model;
+                    model.setText(modelText);
+
+                    String exposureTimeText = shot.exif.exposure_time == null ? "---"
+                                              : "Exposure time: " + shot.exif.exposure_time;
+                    exposureTime.setText(exposureTimeText);
+
+                    String apertureText = shot.exif.aperture == null ? "---"
+                                          : "Aperture: " + shot.exif.aperture;
+                    aperture.setText(apertureText);
+
+                    String focalLengthText = shot.exif.focal_length == null ? "---"
+                                             : "Focal length: " + shot.exif.focal_length;
+                    focalLength.setText(focalLengthText);
+
+                    String isoText = shot.exif.iso == 0 ? "---" : "ISO: " + shot.exif.iso;
+                    iso.setText(isoText);
                     dialog.show();
                 }
                 return true;
