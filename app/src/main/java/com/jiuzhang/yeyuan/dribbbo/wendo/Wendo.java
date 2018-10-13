@@ -3,6 +3,7 @@ package com.jiuzhang.yeyuan.dribbbo.wendo;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
@@ -37,7 +38,7 @@ public class Wendo {
     private static final String USER_END_POINT = API_URL + "users/";
     private static final String SHOTS_END_POINT = API_URL + "photos";
     private static final String BUCKET_CREATE_END_POINT = API_URL + "collections";
-    private static final String BUCKET_SHOT_END_POINT = API_URL + "collections/";
+    private static final String BUCKET_END_POINT = API_URL + "collections/";
 
 
     public static final TypeToken<User> USER_TYPE = new TypeToken<User>(){};
@@ -108,6 +109,10 @@ public class Wendo {
     public static User getCurrentUser () {
         return user;
     }
+
+//    private static boolean isJasonObject (String s) {
+//
+//    }
 
     private static <T> T parseResponse (Response response, TypeToken<T> typeToken) throws IOException {
         String responseString = response.body().string();
@@ -180,12 +185,21 @@ public class Wendo {
         return parseResponse(response, BUCKET_TYPE);
     }
 
+    public static Bucket removeABucket (int bucketId) throws IOException {
+        String url = BUCKET_END_POINT + bucketId;
+        RequestBody requestBody = new FormBody.Builder()
+                .add(KEY_ID, String.valueOf(bucketId))
+                .build();
+        Response response = makeDeleteRequest(url, requestBody);
+        return parseResponse(response, BUCKET_TYPE);
+    }
+
     public static Shot addShotToBucket (String shotID, int bucketID) throws IOException {
         RequestBody requestBody = new FormBody.Builder()
                 .add(KEY_SHOT_ID, shotID)
                 .add(KEY_BUCKET_ID, String.valueOf(bucketID))
                 .build();
-        Response response = makePostRequest(BUCKET_SHOT_END_POINT + bucketID + "/add", requestBody);
+        Response response = makePostRequest(BUCKET_END_POINT + bucketID + "/add", requestBody);
         return parseResponse(response, SHOT_TYPE);
     }
 
@@ -194,12 +208,12 @@ public class Wendo {
                 .add(KEY_SHOT_ID, shotID)
                 .add(KEY_BUCKET_ID, String.valueOf(bucketID))
                 .build();
-        Response response = makeDeleteRequest(BUCKET_SHOT_END_POINT + bucketID + "/remove", requestBody);
+        Response response = makeDeleteRequest(BUCKET_END_POINT + bucketID + "/remove", requestBody);
         return parseResponse(response, SHOT_TYPE);
     }
 
     public static List<Shot> getBucketShots (int page, int bucketID) throws IOException {
-        String url = BUCKET_SHOT_END_POINT + bucketID + "/photos?page=" + page;
+        String url = BUCKET_END_POINT + bucketID + "/photos?page=" + page;
         return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
     }
 
