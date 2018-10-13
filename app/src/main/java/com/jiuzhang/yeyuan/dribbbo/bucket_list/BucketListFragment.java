@@ -235,6 +235,9 @@ public class BucketListFragment extends Fragment {
         public List<Bucket> doOnNewThread(Void... voids) throws Exception {
             int page = refresh ? 1 : adapter.getDataSetCount() / Wendo.COUNT_PER_PAGE + 1;
             if (username == null) {
+                if (isEditMode) {
+                    return Wendo.getUserBuckets(Wendo.getCurrentUser().username, page);
+                }
                 return Wendo.getBuckets(page);
             } else {
                 return Wendo.getUserBuckets(username, page);
