@@ -151,26 +151,24 @@ public class Wendo {
         return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
     }
 
+    public static List<Shot> getCuratedShots (int page) throws IOException {
+        String url = SHOTS_END_POINT + "/curated" + "?page=" + page;
+        return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
+    }
+
     public static Shot getShot (String shotId) throws IOException {
         String url = SHOTS_END_POINT + "/" + shotId;
         return parseResponse(makeGetRequest(url), SHOT_TYPE);
     }
 
-    public static List<Bucket> getBuckets () throws IOException {
-        String url = getCollectionsEndPoint ();
+    public static List<Bucket> getBuckets (int page) throws IOException {
+        String url = BUCKET_CREATE_END_POINT + "/?page=" + page;
         return parseResponse(makeGetRequest(url), BUCKET_LIST_TYPE);
     }
 
     public static Bucket getBucket (int bucketId) throws IOException {
         String url = BUCKET_CREATE_END_POINT + "/" + bucketId;
         return parseResponse(makeGetRequest(url), BUCKET_TYPE);
-    }
-
-    private static String getCollectionsEndPoint () {
-        String url = API_URL + "users/";
-        url += getCurrentUser().username;
-        url += "/collections";
-        return url;
     }
 
     public static Bucket createNewBucket (String title, String description) throws IOException {
@@ -221,10 +219,10 @@ public class Wendo {
         Response response = makeDeleteRequest(url, requestBody);
     }
 
-    public static List<Shot> getLikedShots (int page) throws IOException {
-        String url = API_URL + "users/" + user.username + "/likes?page=" + page;
-        return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
-    }
+//    public static List<Shot> getLikedShots (int page) throws IOException {
+//        String url = API_URL + "users/" + user.username + "/likes?page=" + page;
+//        return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
+//    }
 
     public static List<Shot> getUserShots (String username, int page) throws IOException {
         String url = USER_END_POINT + username + "/photos?page=" + page;
@@ -236,8 +234,8 @@ public class Wendo {
         return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
     }
 
-    public static List<Bucket> getUserBuckets (String username) throws IOException {
-        String url = USER_END_POINT + username + "/collections";
+    public static List<Bucket> getUserBuckets (String username, int page) throws IOException {
+        String url = USER_END_POINT + username + "/collections?page=" + page;
         return parseResponse(makeGetRequest(url), BUCKET_LIST_TYPE);
     }
 

@@ -96,7 +96,7 @@ public class UserActivity extends AppCompatActivity {
             instagram.setVisibility(View.GONE);
         }
         if (user.bio != null) {
-            bio.setText(user.bio);
+            bio.setText(user.bio.trim());
         } else {
             bio.setText("Download free, beautiful high-quality photos curated by " + user.name);
         }
@@ -134,7 +134,7 @@ public class UserActivity extends AppCompatActivity {
                 case POSITION_TWO:
                     return ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_USER_LIKES, -1, user.username);
                 case POSITION_THREE:
-                    return BucketListFragment.newInstance(false, null, user.username);
+                    return BucketListFragment.newInstance(false,false, null, user.username);
                 default:
                     return null;
             }

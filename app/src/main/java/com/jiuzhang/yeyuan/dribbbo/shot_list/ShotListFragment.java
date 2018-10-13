@@ -45,7 +45,7 @@ public class ShotListFragment extends Fragment {
     public static final String KEY_USER_NAME = "username";
 
     public static final int LIST_TYPE_POPULAR = 0;
-    public static final int LIST_TYPE_LIKED = 1;
+    public static final int LIST_TYPE_FEATURED = 1;
     public static final int LIST_TYPE_BUCKETED = 2;
     public static final int LIST_TYPE_USER_PHOTOS = 3;
     public static final int LIST_TYPE_USER_LIKES = 4;
@@ -157,8 +157,8 @@ public class ShotListFragment extends Fragment {
                 case LIST_TYPE_POPULAR:
                     return Wendo.getShots(page);
 
-                case LIST_TYPE_LIKED:
-                    return Wendo.getLikedShots(page);
+                case LIST_TYPE_FEATURED:
+                    return Wendo.getCuratedShots(page);
 
                 case LIST_TYPE_BUCKETED:
                     int bucketId = getArguments().getInt(KEY_BUCKET_ID);

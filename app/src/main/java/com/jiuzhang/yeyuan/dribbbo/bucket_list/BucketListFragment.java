@@ -46,6 +46,7 @@ public class BucketListFragment extends Fragment {
 
     public static final int REQ_NEW_BUCKET = 106;
 
+    public static final String KEY_PUBLIC_MODE = "public_mode";
     public static final String KEY_EDIT_MODE = "edit_mode";
     public static final String KEY_COLLECTED_BUCKETS = "collected_buckets";
     public static final String KEY_CHOSEN_BUCKETS = "chosen_buckets";
@@ -59,6 +60,7 @@ public class BucketListFragment extends Fragment {
     private BucketListAdapter adapter;
     private List<Bucket> bucketList = new ArrayList<>();
 
+    public boolean publicMode;
     public boolean isEditMode;
     public Set<Integer> chosenBucketIdsSet;
     public String username;
@@ -67,8 +69,12 @@ public class BucketListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static BucketListFragment newInstance(boolean isEditMode, List<Bucket> chosenBuckets, String username) {
+    public static BucketListFragment newInstance(boolean publicMode,
+                                                 boolean isEditMode,
+                                                 List<Bucket> chosenBuckets,
+                                                 String username) {
         Bundle args = new Bundle();
+        args.putBoolean(KEY_PUBLIC_MODE, publicMode);
         args.putBoolean(KEY_EDIT_MODE, isEditMode);
         args.putString(KEY_COLLECTED_BUCKETS,
                 ModelUtils.toString(chosenBuckets, new TypeToken<List<Bucket>>(){}));
@@ -83,6 +89,7 @@ public class BucketListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
+        publicMode = args.getBoolean(KEY_PUBLIC_MODE);
         isEditMode = args.getBoolean(KEY_EDIT_MODE);
         username = args.getString(KEY_USER_NAME);
 
@@ -98,7 +105,7 @@ public class BucketListFragment extends Fragment {
 
             @Override
             public void onLoadMore() {
-                LoadBucketTask task = new LoadBucketTask();
+                LoadBucketTask task = new LoadBucketTask(false);
                 task.execute();
 
             }
@@ -151,10 +158,22 @@ public class BucketListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_SPACE_HEIGHT));
+//
+//        if (username != null || publicMode) {
+//            fab.setVisibility(View.GONE);
+//        } else {
+//            fab.setVisibility(View.VISIBLE);
+//            fab.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    NewBucketDialogFragment dialogFragment = NewBucketDialogFragment.newInstance();
+//                    dialogFragment.setTargetFragment(BucketListFragment.this, REQ_NEW_BUCKET);
+//                    dialogFragment.show(getFragmentManager(), NewBucketDialogFragment.TAG);
+//                }
+//            });
+//        }
 
-        if (username != null) {
-            fab.setVisibility(View.GONE);
-        } else {
+        if (username != null && username.equals(Wendo.getCurrentUser().username)) {
             fab.setVisibility(View.VISIBLE);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -164,19 +183,23 @@ public class BucketListFragment extends Fragment {
                     dialogFragment.show(getFragmentManager(), NewBucketDialogFragment.TAG);
                 }
             });
+            // Scroll down the recycler view, fab will hide.
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
+                        fab.hide();
+                    } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
+                        fab.show();
+                    }
+                }
+            });
+        } else {
+            fab.setVisibility(View.GONE);
         }
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
-                    fab.hide();
-                } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
-                    fab.show();
-                }
-            }
-        });
+
 
 
 //        if (adapter.getItemCount() == 0) {
@@ -202,12 +225,19 @@ public class BucketListFragment extends Fragment {
 
     private class LoadBucketTask extends WendoTask<Void, Void, List<Bucket>> {
 
+        boolean refresh;
+
+        private LoadBucketTask (boolean refresh) {
+            this.refresh = refresh;
+        }
+
         @Override
         public List<Bucket> doOnNewThread(Void... voids) throws Exception {
+            int page = refresh ? 1 : adapter.getDataSetCount() / Wendo.COUNT_PER_PAGE + 1;
             if (username == null) {
-                return Wendo.getBuckets();
+                return Wendo.getBuckets(page);
             } else {
-                return Wendo.getUserBuckets(username);
+                return Wendo.getUserBuckets(username, page);
             }
 
         }
@@ -215,6 +245,12 @@ public class BucketListFragment extends Fragment {
         @Override
         public void onSuccess(List<Bucket> buckets) {
             if (buckets != null) {
+
+                if (refresh) {
+                    adapter.setData(buckets);
+                } else {
+                    adapter.append(buckets);
+                }
 
                 if (isEditMode) {
                     // check if the shot has been stored in any bucket, if true, set the isChosen true
@@ -225,7 +261,6 @@ public class BucketListFragment extends Fragment {
                         }
                     }
                 }
-                adapter.append(buckets);
                 adapter.setShowLoading(buckets.size() >= COUNT_PER_PAGE);
 
             } else {

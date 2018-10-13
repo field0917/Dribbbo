@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Wendo</string>
     <string name="drawer_menu_home">Home</string>
-    <string name="drawer_menu_likes">Likes</string>
-    <string name="drawer_menu_buckets">Buckets</string>
+    <string name="drawer_menu_curated">Featured</string>
+    <string name="drawer_menu_buckets">Collections</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>

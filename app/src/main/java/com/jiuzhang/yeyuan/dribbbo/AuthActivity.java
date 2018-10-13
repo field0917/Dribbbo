@@ -31,7 +31,7 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth);
         ButterKnife.bind(this);
 
-        toolbar.setTitle("Log into PinkUnicorn");
+        toolbar.setTitle("Log into Wendo");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        setTitle("Log into Wendo");

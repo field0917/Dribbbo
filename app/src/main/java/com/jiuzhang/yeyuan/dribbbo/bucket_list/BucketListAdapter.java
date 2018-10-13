@@ -128,17 +128,22 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return showLoading ? bucketList.size() + 1 : bucketList.size();
     }
 
+    public int getDataSetCount() {
+        return bucketList.size();
+    }
+
     @Override
     public int getItemViewType(int position) {
         return position < bucketList.size() ? VIEW_TYPE_BUCKET_LIST : VIEW_TYPE_LOAD_MORE;
     }
 
-    public int getDataCount () {
-        return bucketList.size();
+    public void setData(List<Bucket> buckets) {
+        bucketList.clear();
+        bucketList.addAll(buckets);
+        notifyDataSetChanged();
     }
 
     public void append(List<Bucket> buckets) {
-        //bucketList.clear();
         bucketList.addAll(buckets);
         notifyDataSetChanged();
     }

@@ -12,9 +12,9 @@
             android:title="@string/drawer_menu_home" />
 
         <item
-            android:id="@+id/drawer_item_likes"
-            android:icon="@drawable/ic_favorite_black_18dp"
-            android:title="@string/drawer_menu_likes"/>
+            android:id="@+id/drawer_item_featured"
+            android:icon="@drawable/ic_star_black_18dp"
+            android:title="@string/drawer_menu_curated"/>
 
         <item
             android:id="@+id/drawer_item_buckets"
