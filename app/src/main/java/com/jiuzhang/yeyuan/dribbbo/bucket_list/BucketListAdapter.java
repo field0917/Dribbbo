@@ -70,10 +70,12 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             final Bucket bucket = bucketList.get(position);
             final BucketListViewHolder bucketListViewHolder = (BucketListViewHolder) holder;
 
-            Glide.with(context)
-                    .load(bucket.cover_photo.getImageUrl())
-                    .apply(new RequestOptions().placeholder(R.drawable.shot_image_placeholder))
-                    .into(bucketListViewHolder.bucketCoverImage);
+            if (bucket.cover_photo != null) {
+                Glide.with(context)
+                        .load(bucket.cover_photo.getImageUrl())
+                        .apply(new RequestOptions().placeholder(R.drawable.shot_image_placeholder))
+                        .into(bucketListViewHolder.bucketCoverImage);
+            }
 
             bucketListViewHolder.bucketTitleTextView.setText(bucket.title);
 
