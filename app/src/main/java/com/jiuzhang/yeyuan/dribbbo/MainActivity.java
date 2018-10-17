@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.reflect.TypeToken;
+import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
@@ -108,10 +110,7 @@ public class MainActivity extends AppCompatActivity {
         userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, UserActivity.class);
-                intent.putExtra(ShotDetailFragment.KEY_USER,
-                        ModelUtils.toString(Wendo.getCurrentUser(), new TypeToken<User>(){}));
-                startActivity(intent);
+                new LoadCurrentUserTask().execute();
             }
         });
 
@@ -168,5 +167,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private class LoadCurrentUserTask extends WendoTask<Void, Void, User> {
+
+        @Override
+        public User doOnNewThread(Void... voids) throws Exception {
+            return Wendo.getUser();
+        }
+
+        @Override
+        public void onSuccess(User user) {
+            Intent intent = new Intent(MainActivity.this, UserActivity.class);
+            intent.putExtra(ShotDetailFragment.KEY_USER,
+                    ModelUtils.toString(user, new TypeToken<User>(){}));
+            startActivity(intent);
+        }
+
+        @Override
+        public void onFailed(Exception e) {
+            Snackbar.make(findViewById(android.R.id.content), "Load current user failed!",
+                    Snackbar.LENGTH_LONG).show();
+        }
     }
 }

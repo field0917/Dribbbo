@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,17 +28,14 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private static final int VIEW_TYPE_LOAD_MORE = 1;
 
     private List<Bucket> bucketList;
-    private LoadMoreListener loadMoreListener;
     private boolean showLoading;
     private boolean isEditMode;
 //    private String username;
 
     public BucketListAdapter (List<Bucket> bucketList,
-                              LoadMoreListener loadMoreListener,
                               boolean isEditMode) {
         this.bucketList = bucketList;
-        this.loadMoreListener = loadMoreListener;
-        this.showLoading = true;
+//        this.showLoading = true;
         this.isEditMode = isEditMode;
 //        this.username = username;
     }
@@ -117,15 +115,13 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 });
             }
 
-        } else if (viewType == VIEW_TYPE_LOAD_MORE) {
-            loadMoreListener.onLoadMore();
         }
 
     }
 
     @Override
     public int getItemCount () {
-        return showLoading ? bucketList.size() + 1 : bucketList.size();
+        return bucketList.size();
     }
 
     public int getDataSetCount() {
@@ -166,9 +162,5 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
         }
         return selectedBuckets;
-    }
-
-    public interface LoadMoreListener {
-        void onLoadMore();
     }
 }

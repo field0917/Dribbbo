@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
+import com.jiuzhang.yeyuan.dribbbo.base.EndlessRecyclerViewScrollListener;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoException;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
@@ -59,6 +61,7 @@ public class BucketListFragment extends Fragment {
 
     private BucketListAdapter adapter;
     private List<Bucket> bucketList = new ArrayList<>();
+    LinearLayoutManager linearLayoutManager;
 
     public boolean publicMode;
     public boolean isEditMode;
@@ -100,16 +103,10 @@ public class BucketListFragment extends Fragment {
             chosenBucketIdsSet = chosenBucketIds == null ? new HashSet<Integer>() :
                                                                        new HashSet<>(chosenBucketIds);
         }
+        adapter = new BucketListAdapter(bucketList, isEditMode);
 
-        adapter = new BucketListAdapter(bucketList, new BucketListAdapter.LoadMoreListener() {
-
-            @Override
-            public void onLoadMore() {
-                LoadBucketTask task = new LoadBucketTask(false);
-                task.execute();
-
-            }
-        }, isEditMode);
+        LoadBucketsTask task = new LoadBucketsTask(1);
+        task.execute();
 
         if (isEditMode) {setHasOptionsMenu(true);}
 
@@ -155,25 +152,23 @@ public class BucketListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        linearLayoutManager = new LinearLayoutManager(view.getContext());
+
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_SPACE_HEIGHT));
-//
-//        if (username != null || publicMode) {
-//            fab.setVisibility(View.GONE);
-//        } else {
-//            fab.setVisibility(View.VISIBLE);
-//            fab.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    NewBucketDialogFragment dialogFragment = NewBucketDialogFragment.newInstance();
-//                    dialogFragment.setTargetFragment(BucketListFragment.this, REQ_NEW_BUCKET);
-//                    dialogFragment.show(getFragmentManager(), NewBucketDialogFragment.TAG);
-//                }
-//            });
-//        }
 
-        if (username != null && username.equals(Wendo.getCurrentUser().username)) {
+        recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.i("yuanxiuxiu", "" + page);
+                LoadBucketsTask task = new LoadBucketsTask(page + 1);
+                task.execute();
+            }
+        });
+
+        // Show fab only in edit mode
+        if (isEditMode) {
             fab.setVisibility(View.VISIBLE);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -218,27 +213,28 @@ public class BucketListFragment extends Fragment {
             if (!TextUtils.isEmpty(bucketName)) {
                 NewBucketsTask task = new NewBucketsTask(bucketName, bucketDes);
                 task.execute();
+
             }
 
         }
     }
 
-    private class LoadBucketTask extends WendoTask<Void, Void, List<Bucket>> {
+    private class LoadBucketsTask extends WendoTask<Void, Void, List<Bucket>> {
 
-        boolean refresh;
+        int page = 1;
 
-        private LoadBucketTask (boolean refresh) {
-            this.refresh = refresh;
+        private LoadBucketsTask (int page) {
+            this.page = page;
         }
 
         @Override
         public List<Bucket> doOnNewThread(Void... voids) throws Exception {
-            int page = refresh ? 1 : adapter.getDataSetCount() / Wendo.COUNT_PER_PAGE + 1;
             if (username == null) {
                 if (isEditMode) {
                     return Wendo.getUserBuckets(Wendo.getCurrentUser().username, page);
+                } else {
+                    return Wendo.getBuckets(page);
                 }
-                return Wendo.getBuckets(page);
             } else {
                 return Wendo.getUserBuckets(username, page);
             }
@@ -247,13 +243,9 @@ public class BucketListFragment extends Fragment {
 
         @Override
         public void onSuccess(List<Bucket> buckets) {
-            if (buckets != null) {
 
-                if (refresh) {
-                    adapter.setData(buckets);
-                } else {
-                    adapter.append(buckets);
-                }
+            if (buckets != null) {
+                adapter.append(buckets);
 
                 if (isEditMode) {
                     // check if the shot has been stored in any bucket, if true, set the isChosen true
@@ -264,6 +256,7 @@ public class BucketListFragment extends Fragment {
                         }
                     }
                 }
+
                 adapter.setShowLoading(buckets.size() >= COUNT_PER_PAGE);
 
             } else {

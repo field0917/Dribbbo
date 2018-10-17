@@ -165,7 +165,7 @@
                         android:id="@+id/portfolio_url"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:text="rucksackmwefawefawefawefawefewawag.com"
+                        tools:text="rucksackdtrdtrdhtrdtrdhtrdtrdhtrdtmwefawefawefawefawefewawag.com"
                         android:autoLink="web"
                         android:linksClickable="true"
                         android:textColor="@color/colorPrimaryText"
@@ -189,11 +189,11 @@
                     android:id="@+id/bio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/user_image"
+                    android:layout_below="@+id/bio_linearlayout"
                     tools:text="The names Kal and visuals is the game, my passion is creating superior media content that inspires positive change. I live to create. I'm addicted to my craft and find myself never leaving the office. The world is my office."
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="13sp"
-                    android:layout_marginTop="25dp"/>
+                    android:layout_marginTop="18dp"/>
 
 
             </RelativeLayout>

@@ -93,7 +93,7 @@ public class Wendo {
         ModelUtils.save(context, KEY_USER, user);
     }
 
-    private static User getUser () throws IOException {
+    public static User getUser () throws IOException {
         return parseResponse(makeGetRequest(CURRENT_USER_END_POINT), USER_TYPE);
     }
 

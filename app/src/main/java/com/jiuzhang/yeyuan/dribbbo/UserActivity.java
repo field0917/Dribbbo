@@ -20,11 +20,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.reflect.TypeToken;
+import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment;
 import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
+import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -160,4 +162,5 @@ public class UserActivity extends AppCompatActivity {
             }
         }
     }
+
 }
