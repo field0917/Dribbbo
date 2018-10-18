@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
+import com.jiuzhang.yeyuan.dribbbo.base.EmptyRecyclerView;
 import com.jiuzhang.yeyuan.dribbbo.base.EndlessRecyclerViewScrollListener;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoException;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
@@ -42,9 +43,8 @@ import butterknife.ButterKnife;
 import static android.app.Activity.RESULT_OK;
 
 public class BucketListFragment extends Fragment {
-
+    private int currentPage = 1;
     private static final int VERTICAL_SPACE_HEIGHT = 20;
-    private static final int COUNT_PER_PAGE = 7;
 
     public static final int REQ_NEW_BUCKET = 106;
 
@@ -56,12 +56,14 @@ public class BucketListFragment extends Fragment {
     public static final String KEY_BUCKET_ID = "bucket_id";
     public static final String KEY_USER_NAME = "username";
 
-    @BindView(R.id.bucket_list_recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.bucket_list_recycler_view) EmptyRecyclerView recyclerView;
     @BindView(R.id.bucket_fab) FloatingActionButton fab;
+    @BindView(R.id.empty_view) TextView emptyView;
 
     private BucketListAdapter adapter;
     private List<Bucket> bucketList = new ArrayList<>();
     LinearLayoutManager linearLayoutManager;
+    private boolean isLoading = false;
 
     public boolean publicMode;
     public boolean isEditMode;
@@ -105,11 +107,70 @@ public class BucketListFragment extends Fragment {
         }
         adapter = new BucketListAdapter(bucketList, isEditMode);
 
-        LoadBucketsTask task = new LoadBucketsTask(1);
-        task.execute();
-
         if (isEditMode) {setHasOptionsMenu(true);}
 
+        if (!isLoading) {
+            LoadBucketsTask task = new LoadBucketsTask(currentPage);
+            task.execute();
+        }
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_bucket_list, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        linearLayoutManager = new LinearLayoutManager(view.getContext());
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setEmptyView(emptyView);
+        recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_SPACE_HEIGHT));
+
+        recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener() {
+            @Override
+            public void onLoadMore() {
+                if (!isLoading) {
+                    LoadBucketsTask task = new LoadBucketsTask(currentPage);
+                    task.execute();
+                }
+            }
+        });
+
+        // Show fab only in edit mode
+        if (isEditMode) {
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    NewBucketDialogFragment dialogFragment = NewBucketDialogFragment.newInstance();
+                    dialogFragment.setTargetFragment(BucketListFragment.this, REQ_NEW_BUCKET);
+                    dialogFragment.show(getFragmentManager(), NewBucketDialogFragment.TAG);
+                }
+            });
+            // Scroll down the recycler view, fab will hide.
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
+                        fab.hide();
+                    } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
+                        fab.show();
+                    }
+                }
+            });
+        } else {
+            fab.setVisibility(View.GONE);
+        }
     }
 
     private List<Integer> getBucketIds(List<Bucket> chosenBuckets) {
@@ -141,70 +202,6 @@ public class BucketListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bucket_list, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        linearLayoutManager = new LinearLayoutManager(view.getContext());
-
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_SPACE_HEIGHT));
-
-        recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Log.i("yuanxiuxiu", "" + page);
-                LoadBucketsTask task = new LoadBucketsTask(page + 1);
-                task.execute();
-            }
-        });
-
-        // Show fab only in edit mode
-        if (isEditMode) {
-            fab.setVisibility(View.VISIBLE);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    NewBucketDialogFragment dialogFragment = NewBucketDialogFragment.newInstance();
-                    dialogFragment.setTargetFragment(BucketListFragment.this, REQ_NEW_BUCKET);
-                    dialogFragment.show(getFragmentManager(), NewBucketDialogFragment.TAG);
-                }
-            });
-            // Scroll down the recycler view, fab will hide.
-            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-                    if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
-                        fab.hide();
-                    } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
-                        fab.show();
-                    }
-                }
-            });
-        } else {
-            fab.setVisibility(View.GONE);
-        }
-
-
-
-
-//        if (adapter.getItemCount() == 0) {
-//            noBucketTextView.setVisibility(View.VISIBLE);
-//        } else {
-//            noBucketTextView.setVisibility(View.GONE);
-//        }
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQ_NEW_BUCKET && resultCode == RESULT_OK) {
             String bucketName = data.getStringExtra(NewBucketDialogFragment.KEY_NEW_BUCKET_NAME);
@@ -213,18 +210,22 @@ public class BucketListFragment extends Fragment {
             if (!TextUtils.isEmpty(bucketName)) {
                 NewBucketsTask task = new NewBucketsTask(bucketName, bucketDes);
                 task.execute();
-
             }
-
         }
     }
 
     private class LoadBucketsTask extends WendoTask<Void, Void, List<Bucket>> {
 
-        int page = 1;
+        int page;
 
         private LoadBucketsTask (int page) {
             this.page = page;
+        }
+
+        @Override
+        protected void onPreExecute () {
+            isLoading = !isLoading;
+            adapter.setShowLoading(isLoading);
         }
 
         @Override
@@ -238,7 +239,6 @@ public class BucketListFragment extends Fragment {
             } else {
                 return Wendo.getUserBuckets(username, page);
             }
-
         }
 
         @Override
@@ -246,7 +246,6 @@ public class BucketListFragment extends Fragment {
 
             if (buckets != null) {
                 adapter.append(buckets);
-
                 if (isEditMode) {
                     // check if the shot has been stored in any bucket, if true, set the isChosen true
                     // then add buckets to adapter
@@ -256,18 +255,22 @@ public class BucketListFragment extends Fragment {
                         }
                     }
                 }
-
-                adapter.setShowLoading(buckets.size() >= COUNT_PER_PAGE);
-
+                currentPage += 1;
+                isLoading = !isLoading;
             } else {
                 Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
             }
+
+            adapter.setShowLoading(isLoading);
         }
 
         @Override
         public void onFailed(Exception e) {
+            adapter.setShowLoading(false);
             Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG).show();
         }
+
+
     }
 
     private class NewBucketsTask extends WendoTask<Void, Void, Bucket> {
@@ -299,6 +302,4 @@ public class BucketListFragment extends Fragment {
             Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG).show();
         }
     }
-
-
 }

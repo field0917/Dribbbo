@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
 import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment;
+import com.jiuzhang.yeyuan.dribbbo.utils.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +29,14 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private static final int VIEW_TYPE_LOAD_MORE = 1;
 
     private List<Bucket> bucketList;
-    private boolean showLoading;
     private boolean isEditMode;
-//    private String username;
+
+    private boolean showLoading = false;
 
     public BucketListAdapter (List<Bucket> bucketList,
                               boolean isEditMode) {
         this.bucketList = bucketList;
-//        this.showLoading = true;
         this.isEditMode = isEditMode;
-//        this.username = username;
     }
 
     @NonNull
@@ -68,12 +67,10 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             final Bucket bucket = bucketList.get(position);
             final BucketListViewHolder bucketListViewHolder = (BucketListViewHolder) holder;
 
-            if (bucket.cover_photo != null) {
-                Glide.with(context)
-                        .load(bucket.cover_photo.getImageUrl())
-                        .apply(new RequestOptions().placeholder(R.drawable.shot_image_placeholder))
-                        .into(bucketListViewHolder.bucketCoverImage);
-            }
+            Glide.with(context)
+                    .load(bucket.cover_photo == null ? R.drawable.error_image_not_found : bucket.cover_photo.getImageUrl())
+                    .apply(new RequestOptions().placeholder(R.drawable.shot_image_placeholder))
+                    .into(bucketListViewHolder.bucketCoverImage);
 
             bucketListViewHolder.bucketTitleTextView.setText(bucket.title);
 
@@ -119,13 +116,14 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     }
 
-    @Override
-    public int getItemCount () {
-        return bucketList.size();
+    public void setShowLoading(boolean showLoading) {
+        this.showLoading = showLoading;
+        notifyDataSetChanged();
     }
 
-    public int getDataSetCount() {
-        return bucketList.size();
+    @Override
+    public int getItemCount () {
+        return this.showLoading ? bucketList.size() + 1 : bucketList.size();
     }
 
     @Override
@@ -147,11 +145,6 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void prepend (Bucket bucket) {
         bucketList.add(0, bucket);
         notifyItemInserted(0); //item reflected at position 0 has been newly inserted. The item previously at position is now at position position + 1
-    }
-
-    public void setShowLoading (boolean showLoading) {
-        this.showLoading = showLoading;
-        notifyDataSetChanged();
     }
 
     public List<Bucket> getCurrentSelectedBuckets () {

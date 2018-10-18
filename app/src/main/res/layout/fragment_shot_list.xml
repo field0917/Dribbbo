@@ -6,16 +6,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".shot_list.ShotListFragment"
-        android:id="@+id/shot_list_recycler_view"
-        android:padding="@dimen/recycler_view_padding"
-        android:layout_centerHorizontal="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:layout_height="match_parent">
 
+        <com.jiuzhang.yeyuan.dribbbo.base.EmptyRecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".shot_list.ShotListFragment"
+            android:id="@+id/shot_list_recycler_view"
+            android:padding="@dimen/recycler_view_padding"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        <TextView
+            android:id="@+id/empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Nothing is here yet..."
+            android:visibility="gone"
+            android:textColor="@color/colorSecondaryText"
+            android:layout_marginTop="30dp" />
+    </FrameLayout>
 </android.support.v4.widget.SwipeRefreshLayout>
 

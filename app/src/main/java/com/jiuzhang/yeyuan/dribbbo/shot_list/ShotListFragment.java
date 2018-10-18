@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
+import com.jiuzhang.yeyuan.dribbbo.base.EmptyRecyclerView;
+import com.jiuzhang.yeyuan.dribbbo.base.EndlessRecyclerViewScrollListener;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
@@ -52,11 +55,14 @@ public class ShotListFragment extends Fragment {
 
     private List<Shot> shotList = new ArrayList<>();
     private ShotListAdapter adapter;
+    private int currentPage = 1;
+    private boolean isLoading = false;
 
     public int listType;
 
-    @BindView(R.id.shot_list_recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.shot_list_recycler_view) EmptyRecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_container) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.empty_view) TextView emptyView;
 
     public ShotListFragment() {
         // Required empty public constructor
@@ -73,6 +79,16 @@ public class ShotListFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        listType = getArguments().getInt(KEY_LIST_TYPE);
+        adapter = new ShotListAdapter(this, shotList);
+        if (!isLoading) {
+            new LoadShotsTask(false, currentPage).execute();
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -86,41 +102,35 @@ public class ShotListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        listType = getArguments().getInt(KEY_LIST_TYPE);
-
-        adapter = new ShotListAdapter(this, shotList, new ShotListAdapter.LoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                LoadShotsTask task = new LoadShotsTask(false);
-                task.execute();
-            }
-        });
-
         swipeRefreshLayout.setEnabled(false); // During the first loading, disable swipe to refresh
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                LoadShotsTask task = new LoadShotsTask(true);
-                task.execute();
-                //adapter.setIsRefreshing(true);
+                currentPage = 1;
                 swipeRefreshLayout.setRefreshing(true); // Enable the refresh icon
-
+                LoadShotsTask task = new LoadShotsTask(true, currentPage);
+                task.execute();
+//                Log.i("Ye Refresh", currentPage + "");
             }
         });
-
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_SPACE_HEIGHT));
 
         recyclerView.setAdapter(adapter);
 
-//        if (adapter.getItemCount() == 0) {
-//            noShotTextView.setVisibility(View.VISIBLE);
-//        } else {
-//            noShotTextView.setVisibility(View.GONE);
-//        }
+        recyclerView.setEmptyView(emptyView);
+
+        recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener() {
+            @Override
+            public void onLoadMore() {
+                if (!isLoading) {
+                    new LoadShotsTask(false, currentPage).execute();
+//                    Log.i("Ye OnScroll", currentPage + "");
+                }
+            }
+        });
+
     }
 
     @Override
@@ -144,14 +154,22 @@ public class ShotListFragment extends Fragment {
     private class LoadShotsTask extends WendoTask<Void, Void, List<Shot>> {
 
         boolean refresh;
+        int page;
 
-        public LoadShotsTask (boolean refresh) {
+        public LoadShotsTask (boolean refresh, int page) {
             this.refresh = refresh;
+            this.page = page;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            isLoading = !isLoading;
+            adapter.setShowLoading(isLoading);
         }
 
         @Override
         public List<Shot> doOnNewThread(Void... voids) throws Exception {
-            int page = refresh ? 1 : adapter.getDataSetCount() / Wendo.COUNT_PER_PAGE + 1;
+
             String username;
             switch (listType) {
                 case LIST_TYPE_POPULAR:
@@ -179,16 +197,19 @@ public class ShotListFragment extends Fragment {
         @Override
         public void onSuccess (List<Shot> shots) {
             if (shots != null) {
-
                 if (refresh) {
                     adapter.setData(shots);
                     swipeRefreshLayout.setRefreshing(false);
                 } else {
                     adapter.append(shots);
                 }
-                adapter.setShowLoading(shots.size() >= Wendo.COUNT_PER_PAGE);
                 swipeRefreshLayout.setEnabled(true);
+                currentPage += 1;
+                isLoading = !isLoading;
+            } else {
+                Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
             }
+            adapter.setShowLoading(isLoading);
         }
 
         @Override
@@ -202,6 +223,7 @@ public class ShotListFragment extends Fragment {
                         }
                     })
                     .show();
+            adapter.setShowLoading(false);
         }
     }
 }

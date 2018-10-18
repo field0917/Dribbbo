@@ -21,7 +21,8 @@ import okhttp3.Response;
 
 public class Wendo {
 
-    public static final int COUNT_PER_PAGE = 10;
+    public static final int BUCKET_COUNT_PER_PAGE = 3;
+    public static final int SHOT_COUNT_PER_PAGE = 10;
     private static final String KEY_PER_PAGE = "per_page";
 
     private static final String KEY_ACCESS_TOKEN = "access_token";
@@ -152,12 +153,12 @@ public class Wendo {
     }
 
     public static List<Shot> getShots (int page) throws IOException {
-        String url = SHOTS_END_POINT + "?page=" + page;
+        String url = SHOTS_END_POINT + "?page=" + page + "&" + KEY_PER_PAGE + "=" + SHOT_COUNT_PER_PAGE;
         return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
     }
 
     public static List<Shot> getCuratedShots (int page) throws IOException {
-        String url = SHOTS_END_POINT + "/curated" + "?page=" + page;
+        String url = SHOTS_END_POINT + "/curated" + "?page=" + page + "&" + KEY_PER_PAGE + "=" + SHOT_COUNT_PER_PAGE;
         return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
     }
 
@@ -167,7 +168,7 @@ public class Wendo {
     }
 
     public static List<Bucket> getBuckets (int page) throws IOException {
-        String url = BUCKET_CREATE_END_POINT + "/?page=" + page;
+        String url = BUCKET_CREATE_END_POINT + "/?page=" + page + "&" + KEY_PER_PAGE + "=" + BUCKET_COUNT_PER_PAGE;
         return parseResponse(makeGetRequest(url), BUCKET_LIST_TYPE);
     }
 
@@ -213,7 +214,7 @@ public class Wendo {
     }
 
     public static List<Shot> getBucketShots (int page, int bucketID) throws IOException {
-        String url = BUCKET_END_POINT + bucketID + "/photos?page=" + page;
+        String url = BUCKET_END_POINT + bucketID + "/photos?page=" + page +"&" + KEY_PER_PAGE + "=" + SHOT_COUNT_PER_PAGE;
         return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
     }
 
@@ -239,17 +240,17 @@ public class Wendo {
 //    }
 
     public static List<Shot> getUserShots (String username, int page) throws IOException {
-        String url = USER_END_POINT + username + "/photos?page=" + page;
+        String url = USER_END_POINT + username + "/photos?page=" + page + "&" + KEY_PER_PAGE + "=" + SHOT_COUNT_PER_PAGE;
         return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
     }
 
     public static List<Shot> getUserLikes (String username, int page) throws IOException {
-        String url = USER_END_POINT + username + "/likes?page=" + page;
+        String url = USER_END_POINT + username + "/likes?page=" + page + "&" + KEY_PER_PAGE + "=" + SHOT_COUNT_PER_PAGE;
         return parseResponse(makeGetRequest(url), SHOT_LIST_TYPE);
     }
 
     public static List<Bucket> getUserBuckets (String username, int page) throws IOException {
-        String url = USER_END_POINT + username + "/collections?page=" + page;
+        String url = USER_END_POINT + username + "/collections?page=" + page + "&" + KEY_PER_PAGE + "=" + BUCKET_COUNT_PER_PAGE;
         return parseResponse(makeGetRequest(url), BUCKET_LIST_TYPE);
     }
 

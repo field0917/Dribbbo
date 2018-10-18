@@ -90,12 +90,12 @@ public class UserActivity extends AppCompatActivity {
         if (user.portfolio_url != null) {
             porfolioUrl.setText(user.portfolio_url);
         } else {
-            porfolioUrl.setVisibility(View.GONE);
+            porfolioUrl.setText("Portfolio: -----");
         }
         if (user.instagram_username != null) {
             instagram.setText("Instagram: " + user.instagram_username);
         } else {
-            instagram.setVisibility(View.GONE);
+            instagram.setText("Instagram: -----");
         }
         if (user.bio != null) {
             bio.setText(user.bio.trim());

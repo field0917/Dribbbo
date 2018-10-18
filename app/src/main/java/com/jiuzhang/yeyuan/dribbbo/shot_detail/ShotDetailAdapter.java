@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.UserActivity;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
+import com.jiuzhang.yeyuan.dribbbo.utils.ImageUtils;
 
 public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -63,12 +64,13 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case VIEW_TYPE_SHOT_IMAGE:
                 ShotImageViewHolder shotImageViewHolder = (ShotImageViewHolder) holder;
 
-                Glide.with(context)
-                        .load(shot.getImageUrl())
-                        .apply(new RequestOptions().placeholder(R.drawable.shot_image_placeholder)
-                                .error(R.drawable.error_image_not_found))
-                        .thumbnail(0.01f)
-                        .into(shotImageViewHolder.imageView);
+//                Glide.with(context)
+//                        .load(shot.getImageUrl())
+//                        .apply(new RequestOptions().placeholder(R.drawable.shot_image_placeholder)
+//                                .error(R.drawable.error_image_not_found))
+//                        .thumbnail(0.01f)
+//                        .into(shotImageViewHolder.imageView);
+                ImageUtils.loadShotImage(context, shot.getImageUrl(), shotImageViewHolder.imageView);
                 break;
             case VIEW_TYPE_SHOT_ACTION:
                 ShotActionViewHolder shotActionViewHolder = (ShotActionViewHolder) holder;
@@ -115,12 +117,15 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case VIEW_TYPE_SHOT_INFO:
                 ShotInfoViewHolder shotInfoViewHolder = (ShotInfoViewHolder) holder;
 
-                Glide.with(context)
-                        .load(shot.user.getProfileImageURL())
-                        .apply(new RequestOptions().placeholder(R.drawable.user_picture_placeholder))
-                        .apply(RequestOptions.circleCropTransform())
-                        .thumbnail(0.01f)
-                        .into(shotInfoViewHolder.shotAuthorImage);
+//                Glide.with(context)
+//                        .load(shot.user.getProfileImageURL())
+//                        .apply(new RequestOptions().placeholder(R.drawable.user_picture_placeholder))
+//                        .apply(RequestOptions.circleCropTransform())
+//                        .thumbnail(0.01f)
+//                        .into(shotInfoViewHolder.shotAuthorImage);
+                ImageUtils.loadCircleUserImage(context,
+                                               shot.user.getProfileImageURL(),
+                                               shotInfoViewHolder.shotAuthorImage);
 
                 shotInfoViewHolder.shotAuthorImage.setOnClickListener(new View.OnClickListener() {
                     @Override
