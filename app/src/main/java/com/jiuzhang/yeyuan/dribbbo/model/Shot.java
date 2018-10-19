@@ -18,6 +18,8 @@ public class Shot {
     public int width;
     public int height;
 
+    public String created_at;
+
     public Map<String, String> urls;
     public Map<String, String> links;
     public List<Bucket> current_user_collections; // The *current user's* collections that this photo belongs to.
@@ -30,8 +32,6 @@ public class Shot {
     public User user;
     public Location location;
     public Info exif;
-
-//    public String imageURL;
 
     public String getImageUrl () {
         if (urls == null) {

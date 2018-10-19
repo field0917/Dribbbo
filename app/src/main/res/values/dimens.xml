@@ -9,14 +9,14 @@
     <dimen name="card_view_elevation">4dp</dimen>
     <dimen name="bucket_card_view_padding">15dp</dimen>
     <dimen name="bucket_fab_layout_margin">16dp</dimen>
-    <dimen name="shot_action_padding_bottom">7dp</dimen>
+    <dimen name="shot_action_padding_bottom">4dp</dimen>
     <dimen name="shot_author_picture_size">48dp</dimen>
     <dimen name="shot_author_picture_radius">24dp</dimen>
     <dimen name="progress_bar_size">24dp</dimen>
     <dimen name="loading_item_size">36dp</dimen>
     <dimen name="loading_web_page_progress_bar_height">2dp</dimen>
     <dimen name="user_image_size">56dp</dimen>
-    <dimen name="shot_detail_image_size">400dp</dimen>
+    <dimen name="shot_detail_image_size">420dp</dimen>
     <dimen name="drawable_padding_left">3dp</dimen>
     <dimen name="location_text_size">11sp</dimen>
     <dimen name="shot_detail_action_text_size">8dp</dimen>
@@ -25,4 +25,5 @@
     <dimen name="dialog_text_size">16sp</dimen>
     <dimen name="info_item_padding">20dp</dimen>
     <dimen name="info_item_margin_bottom">20dp</dimen>
+    <dimen name="shot_detail_action_icon_size">20dp</dimen>
 </resources>

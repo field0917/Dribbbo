@@ -36,6 +36,7 @@ import com.jiuzhang.yeyuan.dribbbo.base.CustomTarget;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListAdapter;
+import com.jiuzhang.yeyuan.dribbbo.utils.DateUtils;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 
 import java.io.File;
@@ -97,6 +98,7 @@ public class ShotDetailActivity extends BaseActivity {
                 dialog.setContentView(R.layout.shot_info);
                 dialog.setTitle("Info");
 
+                TextView createAt = dialog.findViewById(R.id.create_at);
                 TextView dimension = dialog.findViewById(R.id.image_dimension);
                 TextView make = dialog.findViewById(R.id.make);
                 TextView model = dialog.findViewById(R.id.model);
@@ -105,9 +107,14 @@ public class ShotDetailActivity extends BaseActivity {
                 TextView focalLength = dialog.findViewById(R.id.focal_length);
                 TextView iso = dialog.findViewById(R.id.iso);
 
+                String dateString = shot.created_at == null ? "---" :
+                        "Create At: " + DateUtils.formatDateString(shot.created_at);
+                createAt.setText(dateString);
+
                 String dimensionText = shot.width == 0 && shot.height == 0 ? "---"
                                    : "Dimension: " + shot.width + " x " + shot.height;
                 dimension.setText(dimensionText);
+                
                 if (shot.exif != null) {
                     String makeText = shot.exif.make == null ? "---" : "Make: " + shot.exif.make;
                     make.setText(makeText);

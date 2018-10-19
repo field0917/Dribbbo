@@ -17,7 +17,7 @@
         tools:text="2780"
         android:textSize="@dimen/shot_detail_action_text_size"
         android:drawableTop="@drawable/ic_eye"
-        android:drawablePadding="@dimen/shot_action_padding_bottom"/>
+        android:drawablePadding="@dimen/shot_action_padding_bottom" />
 
 
     <LinearLayout
@@ -27,7 +27,8 @@
         android:orientation="vertical"
         android:layout_weight="1"
         android:gravity="center"
-        android:clickable="true">
+        android:clickable="true"
+        android:background="?attr/selectableItemBackgroundBorderless">
 
         <ImageButton
             android:id="@+id/img_like"
@@ -46,17 +47,6 @@
 
     </LinearLayout>
 
-    <!--<TextView-->
-        <!--android:id="@+id/shot_info"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:gravity="center"-->
-        <!--android:text="Info"-->
-        <!--android:textSize="@dimen/shot_detail_action_text_size"-->
-        <!--android:drawableTop="@drawable/ic_info_outline_black_18dp"-->
-        <!--android:drawablePadding="@dimen/shot_action_padding_bottom"/>-->
-
     <TextView
         android:id="@+id/action_collect"
         android:layout_width="0dp"
@@ -66,7 +56,8 @@
         tools:drawableTop="@drawable/ic_inbox_black_18dp"
         android:drawablePadding="@dimen/shot_action_padding_bottom"
         android:layout_weight="1"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
 
 
     <TextView
@@ -78,7 +69,8 @@
         android:drawableTop="@drawable/ic_share_black_18dp"
         android:drawablePadding="@dimen/shot_action_padding_bottom"
         android:layout_weight="1"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
 
 
 </LinearLayout>

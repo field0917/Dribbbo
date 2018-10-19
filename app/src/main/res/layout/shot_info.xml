@@ -7,6 +7,16 @@
     android:layout_margin="30dp">
 
     <TextView
+        android:id="@+id/create_at"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_access_time_white_18dp"
+        android:drawablePadding="@dimen/info_item_padding"
+        android:layout_marginBottom="@dimen/info_item_margin_bottom"
+        tools:text="Created At: 09-17-2018"
+        android:textSize="@dimen/dialog_text_size"/>
+
+    <TextView
         android:id="@+id/image_dimension"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

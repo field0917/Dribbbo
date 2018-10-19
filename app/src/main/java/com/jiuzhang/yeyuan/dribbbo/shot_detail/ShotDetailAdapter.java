@@ -63,13 +63,6 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         switch (viewType) {
             case VIEW_TYPE_SHOT_IMAGE:
                 ShotImageViewHolder shotImageViewHolder = (ShotImageViewHolder) holder;
-
-//                Glide.with(context)
-//                        .load(shot.getImageUrl())
-//                        .apply(new RequestOptions().placeholder(R.drawable.shot_image_placeholder)
-//                                .error(R.drawable.error_image_not_found))
-//                        .thumbnail(0.01f)
-//                        .into(shotImageViewHolder.imageView);
                 ImageUtils.loadShotImage(context, shot.getImageUrl(), shotImageViewHolder.imageView);
                 break;
             case VIEW_TYPE_SHOT_ACTION:
@@ -116,13 +109,6 @@ public class ShotDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 break;
             case VIEW_TYPE_SHOT_INFO:
                 ShotInfoViewHolder shotInfoViewHolder = (ShotInfoViewHolder) holder;
-
-//                Glide.with(context)
-//                        .load(shot.user.getProfileImageURL())
-//                        .apply(new RequestOptions().placeholder(R.drawable.user_picture_placeholder))
-//                        .apply(RequestOptions.circleCropTransform())
-//                        .thumbnail(0.01f)
-//                        .into(shotInfoViewHolder.shotAuthorImage);
                 ImageUtils.loadCircleUserImage(context,
                                                shot.user.getProfileImageURL(),
                                                shotInfoViewHolder.shotAuthorImage);
