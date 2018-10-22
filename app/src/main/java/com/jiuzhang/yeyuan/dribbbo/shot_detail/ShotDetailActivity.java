@@ -1,59 +1,43 @@
 package com.jiuzhang.yeyuan.dribbbo.shot_detail;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.database.Cursor;
+
 import android.net.Uri;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.util.ArrayMap;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.Request;
-import com.bumptech.glide.request.target.BaseTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.SizeReadyCallback;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.base.BaseActivity;
-import com.jiuzhang.yeyuan.dribbbo.base.CustomTarget;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListAdapter;
 import com.jiuzhang.yeyuan.dribbbo.utils.DateUtils;
+import com.jiuzhang.yeyuan.dribbbo.utils.DownloadHelper;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
+import com.jiuzhang.yeyuan.dribbbo.utils.Utils;
+import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Method;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.concurrent.ExecutionException;
+import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class ShotDetailActivity extends BaseActivity {
 
     Shot shot;
+    long downloadReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,25 +57,10 @@ public class ShotDetailActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_to_album:
-//                CustomTarget target = new CustomTarget(shot, this.findViewById(android.R.id.content)) {
-//                    @Override
-//                    public void onResourceReady(@NonNull Object resource, @Nullable Transition transition) {
-//                        saveImage((Drawable) resource);
-//                    }
-//                };
-//
-//                Glide.with(this.getApplicationContext()) // Glide will stop the request when ShotDetailActivity stopped, so pass the application context
-//                        .load(shot.getDownloadUrl())
-//                        .into(target);
-                try {
-                    Bitmap imageBitmap = new DownloadImageTask().execute(shot.getDownloadUrl()).get();
-                    saveImage(imageBitmap);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
+                if (Utils.isStoragePermissionGranted(this) && shot != null) {
+                    Toast.makeText(this, getString(R.string.download_started), Toast.LENGTH_LONG).show();
+                    downloadImage(shot.getDownloadUrl());
                 }
-
                 return true;
             case R.id.info:
                 Dialog dialog = new Dialog(this, R.style.Dialog);
@@ -114,7 +83,7 @@ public class ShotDetailActivity extends BaseActivity {
                 String dimensionText = shot.width == 0 && shot.height == 0 ? "---"
                                    : "Dimension: " + shot.width + " x " + shot.height;
                 dimension.setText(dimensionText);
-                
+
                 if (shot.exif != null) {
                     String makeText = shot.exif.make == null ? "---" : "Make: " + shot.exif.make;
                     make.setText(makeText);
@@ -149,6 +118,12 @@ public class ShotDetailActivity extends BaseActivity {
 
     }
 
+    private void downloadImage (String url) {
+        String fileName = shot.id + Wendo.DOWNLOAD_PHOTO_FORMAT;
+        DownloadHelper helper = DownloadHelper.getInstance(this);
+        downloadReference = helper.addDownloadRequest(url, fileName);
+    }
+
     @Override
     protected Fragment newFragment() {
         Intent intent = getIntent();
@@ -164,79 +139,42 @@ public class ShotDetailActivity extends BaseActivity {
         return super.getActivityTitle();
     }
 
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
-    }
 
-    private String saveImage (Bitmap resource) {
 
-        boolean isWritable = isExternalStorageWritable();
-
-        if (isWritable) {
-
-            String savedImagePath = null;
-            String imageFileName = "JPEG_" + shot.id + ".jpg";
-            File storageDir = new File(Environment
-                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "Wendo");
-            boolean success = true;
-
-            // file not exist, create one
-            if (!storageDir.exists()) {
-                success = storageDir.mkdirs();
-            }
-
-            if (success) {
-                File imageFile = new File(storageDir, imageFileName);
-                savedImagePath = imageFile.getAbsolutePath();
-                try {
-                    OutputStream fOut = new FileOutputStream(imageFile);
-//                    Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
-                    resource.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-                    fOut.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                // Add the image to the system gallery
-                galleryAddPic(savedImagePath);
-            }
-            return savedImagePath;
-        }
-        return null;
-    }
-
-    private void galleryAddPic(String imagePath) {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(imagePath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        sendBroadcast(mediaScanIntent);
-    }
-
-    private class DownloadImageTask extends WendoTask<String, Void, Bitmap> {
-
-        @Override
-        public Bitmap doOnNewThread(String... urls) throws Exception {
-            URL url = new URL(urls[0]);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.connect();
-            InputStream inputStream = connection.getInputStream();
-            Bitmap imageBitmap = BitmapFactory.decodeStream(inputStream);
-            return imageBitmap;
-        }
-
-        @Override
-        public void onSuccess(Bitmap bitmap) {
-            Snackbar.make(findViewById(android.R.id.content), "Saved!", Snackbar.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onFailed(Exception e) {
-            Snackbar.make(findViewById(android.R.id.content), "Download Failed!", Snackbar.LENGTH_LONG).show();
-        }
-    }
+//    private String saveImage (Bitmap resource) {
+//
+//        boolean isWritable = isExternalStorageWritable();
+//
+//        if (isWritable) {
+//            String savedImagePath = null;
+//            String imageFileName = "JPEG_" + shot.id + ".jpg";
+//            File storageDir = new File(Environment
+//                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "Wendo");
+//            boolean success = false;
+//
+//            // file not exist, create one
+//            if (!storageDir.exists()) {
+//                success = storageDir.mkdirs();
+//
+//            }
+//
+//            if (success) {
+//                File imageFile = new File(storageDir, imageFileName);
+//                savedImagePath = imageFile.getAbsolutePath();
+//                try {
+//                    OutputStream fOut = new FileOutputStream(imageFile);
+////                    Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
+//                    resource.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+//                    fOut.close();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//
+//                // Add the image to the system gallery
+//                galleryAddPic(savedImagePath);
+//            }
+//            return savedImagePath;
+//        }
+//        return null;
+//    }
 }

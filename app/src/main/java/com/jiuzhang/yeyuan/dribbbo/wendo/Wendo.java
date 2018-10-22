@@ -48,6 +48,8 @@ public class Wendo {
     private static final TypeToken<Bucket> BUCKET_TYPE = new TypeToken<Bucket>(){};
     private static final TypeToken<Shot> SHOT_TYPE = new TypeToken<Shot>(){};
 
+    public static final String DOWNLOAD_PHOTO_FORMAT = ".jpg";
+    public static final String DOWNLOAD_PATH = "/Pictures/Wendo/";
 
 
     private static String accessToken;
