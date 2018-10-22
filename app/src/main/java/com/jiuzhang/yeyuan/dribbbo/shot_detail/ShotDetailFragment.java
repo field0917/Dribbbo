@@ -66,12 +66,6 @@ public class ShotDetailFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    private void setResult() {
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra(KEY_SHOT, ModelUtils.toString(shot, new TypeToken<Shot>(){}));
-        getActivity().setResult(RESULT_OK, resultIntent);
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -118,6 +112,12 @@ public class ShotDetailFragment extends Fragment {
             UpdateCollectedBucketTask task = new UpdateCollectedBucketTask();
             task.execute(addedBuckets, removedBuckets);
         }
+    }
+
+    private void setResult() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(KEY_SHOT, ModelUtils.toString(shot, new TypeToken<Shot>(){}));
+        getActivity().setResult(RESULT_OK, resultIntent);
     }
 
     public void like (boolean currentLiked) {

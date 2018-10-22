@@ -4,6 +4,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiuzhang.yeyuan.dribbbo.R;
@@ -17,7 +18,7 @@ public class ShotListViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.shot_image_view) ImageView shotImageView;
     @BindView(R.id.shot_author_image) ImageView shotAuthorImg;
     @BindView(R.id.shot_author_name) TextView shotAuthorName;
-    @BindView(R.id.shot_like_text_view) TextView shotLikeTextView;
+    @BindView(R.id.shot_author) LinearLayout shotAuthor;
 
     public ShotListViewHolder(View itemView) {
         super(itemView);

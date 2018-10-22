@@ -24,43 +24,32 @@
             android:contentDescription="This is an image"
             android:scaleType="centerCrop"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/shot_author"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:gravity="center_vertical"
+            android:clickable="true">
 
             <ImageView
                 android:id="@+id/shot_author_image"
                 android:layout_height="24dp"
                 android:layout_width="24dp"
-                android:src="@drawable/user_picture_placeholder"
-                android:layout_centerVertical="true"/>
+                android:src="@drawable/user_picture_placeholder" />
             <TextView
                 android:id="@+id/shot_author_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
-                android:layout_toEndOf="@+id/shot_author_image"
-                android:layout_centerVertical="true"
                 android:textColor="#000000"
                 android:textSize="12dp"
                 android:textStyle="bold"
                 tools:text="Ye Yuan" />
-
-            <TextView
-                android:id="@+id/shot_like_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/ic_favorite_black_18dp"
-                android:drawablePadding="3dp"
-                tools:text="400" />
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

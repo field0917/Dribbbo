@@ -15,8 +15,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
+import com.jiuzhang.yeyuan.dribbbo.UserActivity;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoException;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
+import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.utils.ImageUtils;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
@@ -26,6 +28,8 @@ import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 
 import java.io.IOException;
 import java.util.List;
+
+import static com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment.KEY_USER;
 
 public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -74,7 +78,6 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             final ShotListViewHolder shotListViewHolder = (ShotListViewHolder) holder;
 
-            shotListViewHolder.shotLikeTextView.setText(String.valueOf(shot.likes));
             shotListViewHolder.shotAuthorName.setText(shot.user.name);
 
             ImageUtils.loadCircleUserImage(context,
@@ -87,6 +90,16 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 public void onClick(View view) {
                     LoadFullShotDetailTask task = new LoadFullShotDetailTask();
                     task.execute(shot.id);
+                }
+            });
+
+            shotListViewHolder.shotAuthor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, UserActivity.class);
+                    intent.putExtra(KEY_USER, ModelUtils.toString(shot.user, new TypeToken<User>(){}));
+                    context.startActivity(intent);
+
                 }
             });
         }

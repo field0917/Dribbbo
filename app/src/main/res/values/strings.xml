@@ -25,5 +25,6 @@
     <string name="info">Info</string>
     <string name="open_in_unsplash">Open in Unsplash</string>
     <string name="download_started">Download started</string>
+    <string name="open_unsplash">Unsplash</string>
 
 </resources>
