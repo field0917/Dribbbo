@@ -35,23 +35,23 @@ public class Auth {
     private static final String URI_AUTHORIZE = "https://unsplash.com/oauth/authorize";
     private static final String URI_TOKEN = "https://unsplash.com/oauth/token";
 
-    private static final String CLIENT_ID = "3557d42a211f301f0748ce528a3e44c3c6146d8fe460404fbdc9eee5519eff2d";
-    private static final String CLIENT_SECRET = "812c6de60c3f06a0b2a881f543220763d070a5c40b8b086c25f69ad4b785bac5";
+    private static final String CLIENT_ID = "8a0a0cae5afbfbc0d419cfb47884ed096fe10267225fdb3a4488f97428b89f08";
+    private static final String CLIENT_SECRET = "dc93c10796feb82ef1d5f78feed092755b40f501383f4f0463896670d06d94ec";
     private static final String SCOPE = "public+read_user+write_user+read_photos+write_photos+write_followers+read_collections+write_collections+write_likes";
 
     public static final String REDIRECT_URL = "http://www.google.com";
     private static final String RESPONSE_TYPE = "code";
     private static final String GRANT_TYPE = "authorization_code";
 
-//https://unsplash.com/oauth/authorize?client_id=3557d42a211f301f0748ce528a3e44c3c6146d8fe460404fbdc9eee5519eff2d&redirect_uri=http://www.google.com&response_type=code&scope=public+read_user+write_user+read_photos+write_photos+write_followers+read_collections+write_collections+write_likes
-//https://unsplash.com/oauth/token?client_id=3557d42a211f301f0748ce528a3e44c3c6146d8fe460404fbdc9eee5519eff2d&client_secret=812c6de60c3f06a0b2a881f543220763d070a5c40b8b086c25f69ad4b785bac5&redirect_uri=http://www.google.com&code=18bc4c9078e73ba29307c5a69ef998af3a0ffeaa82b1071cbbf622456cfd89d4&grant_type=authorization_code
-//{
-//    "access_token": "90fbb59b8facf6e8146fb66686c62edb3c8188361b95b6d4d18b1d8ca91c325c",
-//    "token_type": "bearer",
-//    "refresh_token": "727ead34171c659aec730bc1a59fdb2bfc0f50295ee216d69fe3637c61b3116b",
-//    "scope": "public read_user write_user read_photos read_collections",
-//    "created_at": 1536697832
-//}
+//https://unsplash.com/oauth/authorize?client_id=8a0a0cae5afbfbc0d419cfb47884ed096fe10267225fdb3a4488f97428b89f08&redirect_uri=http://www.google.com&response_type=code&scope=public+read_user+write_user+read_photos+write_photos+write_followers+read_collections+write_collections+write_likes
+//https://unsplash.com/oauth/token?client_id=8a0a0cae5afbfbc0d419cfb47884ed096fe10267225fdb3a4488f97428b89f08&client_secret=dc93c10796feb82ef1d5f78feed092755b40f501383f4f0463896670d06d94ec&redirect_uri=http://www.google.com&code=2c631a813e70e37fb8eaa5a3bf2d5e1eaee56ccef997371f200dc9aec0ce7165&grant_type=authorization_code
+//    {
+//        "access_token": "72ca996f78090ed8dacd935b67dcc4aab9648ffd2614e96699ed6e442da4b420",
+//            "token_type": "bearer",
+//            "refresh_token": "aedce8ef7dc45c2ab4a13964eb54d931391cfc826330ce6ab436a0fc26b70708",
+//            "scope": "public read_user write_user read_photos write_photos write_followers read_collections write_collections write_likes",
+//            "created_at": 1540330645
+//    }
     public static void openAuthActivity(Activity activity) {
         Intent intent = new Intent(activity, AuthActivity.class);
         String url = getAuthorizeURL();

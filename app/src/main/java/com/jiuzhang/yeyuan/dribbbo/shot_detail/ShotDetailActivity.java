@@ -3,13 +3,17 @@ package com.jiuzhang.yeyuan.dribbbo.shot_detail;
 import android.Manifest;
 import android.app.Dialog;
 import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 
 import android.net.Uri;
 import android.os.Environment;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -31,6 +35,7 @@ import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 import com.jiuzhang.yeyuan.dribbbo.utils.Utils;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 
+import java.io.File;
 import java.util.Map;
 
 
@@ -38,6 +43,32 @@ public class ShotDetailActivity extends BaseActivity {
 
     Shot shot;
     long downloadReference;
+//    IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+//    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            long reference = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+//            if (downloadReference == reference) {
+//                Cursor cursor = DownloadHelper.getInstance(ShotDetailActivity.this)
+//                        .getDownloadCursor(downloadReference);
+//                if (cursor != null) {
+//                    switch (DownloadHelper.getInstance(ShotDetailActivity.this).checkDownloadStatus(cursor)) {
+//                        case DownloadHelper.DownloadStatus.SUCCESS:
+//                            File file = new File(DownloadHelper.getInstance(ShotDetailActivity.this)
+//                                    .getFilePath(downloadReference));
+//                            Uri uri = FileProvider.getUriForFile(ShotDetailActivity.this,
+//                                    "com.jiuzhang.yeyuan.dribbbo.fileprovider", file);
+//                            getApplicationContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+//
+//                        default:
+//                            break;
+//                    }
+//                    cursor.close();
+//                }
+//            }
+//        }
+//    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +77,18 @@ public class ShotDetailActivity extends BaseActivity {
         shot = ModelUtils.toObject(intent.getStringExtra(ShotDetailFragment.KEY_SHOT),
                                                          new TypeToken<Shot>(){});
     }
+
+//    @Override
+//    protected void onResume(){
+//        super.onResume();
+//        registerReceiver(broadcastReceiver, filter);
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        unregisterReceiver(broadcastReceiver);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -138,43 +181,4 @@ public class ShotDetailActivity extends BaseActivity {
 
         return super.getActivityTitle();
     }
-
-
-
-//    private String saveImage (Bitmap resource) {
-//
-//        boolean isWritable = isExternalStorageWritable();
-//
-//        if (isWritable) {
-//            String savedImagePath = null;
-//            String imageFileName = "JPEG_" + shot.id + ".jpg";
-//            File storageDir = new File(Environment
-//                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "Wendo");
-//            boolean success = false;
-//
-//            // file not exist, create one
-//            if (!storageDir.exists()) {
-//                success = storageDir.mkdirs();
-//
-//            }
-//
-//            if (success) {
-//                File imageFile = new File(storageDir, imageFileName);
-//                savedImagePath = imageFile.getAbsolutePath();
-//                try {
-//                    OutputStream fOut = new FileOutputStream(imageFile);
-////                    Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
-//                    resource.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-//                    fOut.close();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//
-//                // Add the image to the system gallery
-//                galleryAddPic(savedImagePath);
-//            }
-//            return savedImagePath;
-//        }
-//        return null;
-//    }
 }
