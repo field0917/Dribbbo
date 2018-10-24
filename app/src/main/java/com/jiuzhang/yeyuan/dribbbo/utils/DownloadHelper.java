@@ -34,11 +34,11 @@ public class DownloadHelper {
     private DownloadManager downloadManager;
     private Map<Long, String> mDownloads = new ArrayMap<>();
 
-    public DownloadHelper (Context context) {
+    private DownloadHelper (Context context) {
         this.downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
     }
 
-    public static DownloadHelper instance;
+    private static DownloadHelper instance;
 
     public static DownloadHelper getInstance (Context context) {
         if (instance == null) {
