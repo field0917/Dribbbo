@@ -1,5 +1,8 @@
 package com.jiuzhang.yeyuan.dribbbo;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -13,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +27,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.reflect.TypeToken;
+import com.jiuzhang.yeyuan.dribbbo.activities.SearchActivity;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment;
@@ -55,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container,
-                        ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1, ""))
+                        ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1, "", ""))
                 .commit();
 
     }
@@ -63,7 +68,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.appbar_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+
+//        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        // Can be replaced with getComponentName() if this SearchableActivity is current activity
+//        ComponentName componentName = new ComponentName(this, SearchActivity.class);
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+        return true;
     }
 
     private void setupHamburgerIcon() {
@@ -98,9 +109,8 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            case R.id.open_unsplash:
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://unsplash.com/"));
-                startActivity(browserIntent);
+            case R.id.action_search:
+                startActivity(new Intent(this, SearchActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -161,10 +171,10 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
         switch (item.getItemId()) {
             case R.id.drawer_item_home:
-                fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1, "");
+                fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1, "", "");
                 break;
             case R.id.drawer_item_featured:
-                fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_FEATURED, -1, "");
+                fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_FEATURED, -1, "", "");
                 break;
             case R.id.drawer_item_buckets:
                 fragment = BucketListFragment.newInstance(true,false, null, null);

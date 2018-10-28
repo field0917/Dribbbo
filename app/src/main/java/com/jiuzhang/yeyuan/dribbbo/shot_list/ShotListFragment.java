@@ -48,12 +48,14 @@ public class ShotListFragment extends Fragment {
     public static final int REQ_SHOT_UPDATE = 108;
     public static final String KEY_LIST_TYPE = "list_type";
     public static final String KEY_USER_NAME = "username";
+    public static final String KEY_QUERY = "query";
 
     public static final int LIST_TYPE_POPULAR = 0;
     public static final int LIST_TYPE_FEATURED = 1;
     public static final int LIST_TYPE_BUCKETED = 2;
     public static final int LIST_TYPE_USER_PHOTOS = 3;
     public static final int LIST_TYPE_USER_LIKES = 4;
+    public static final int LIST_TYPE_SEARCH_PHOTOS = 5;
 
     private List<Shot> shotList = new ArrayList<>();
     private ShotListAdapter adapter;
@@ -70,11 +72,12 @@ public class ShotListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ShotListFragment newInstance(int listType, int bucketId, String username) {
+    public static ShotListFragment newInstance(int listType, int bucketId, String username, String query) {
         Bundle args = new Bundle();
         args.putInt(KEY_LIST_TYPE, listType);
         args.putInt(KEY_BUCKET_ID, bucketId);
         args.putString(KEY_USER_NAME, username);
+        args.putString(KEY_QUERY, query);
         ShotListFragment fragment = new ShotListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -121,6 +124,8 @@ public class ShotListFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
+        setEmptyViewText(listType);
+
         recyclerView.setEmptyView(emptyView);
 
         recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener() {
@@ -133,6 +138,23 @@ public class ShotListFragment extends Fragment {
             }
         });
 
+    }
+
+    private void setEmptyViewText(int listType) {
+        switch (listType) {
+            case LIST_TYPE_BUCKETED:
+                emptyView.setText(getString(R.string.bucket_no_photo));
+                break;
+            case LIST_TYPE_USER_PHOTOS:
+                emptyView.setText(getString(R.string.user_no_photo));
+                break;
+            case LIST_TYPE_USER_LIKES:
+                emptyView.setText(getString(R.string.user_no_like));
+                break;
+            case LIST_TYPE_SEARCH_PHOTOS:
+                emptyView.setText(getString(R.string.no_search_result));
+                break;
+        }
     }
 
     @Override
@@ -173,6 +195,7 @@ public class ShotListFragment extends Fragment {
         public List<Shot> doOnNewThread(Void... voids) throws Exception {
 
             String username;
+            String query;
             switch (listType) {
                 case LIST_TYPE_POPULAR:
                     return Wendo.getShots(page);
@@ -191,6 +214,13 @@ public class ShotListFragment extends Fragment {
                 case LIST_TYPE_USER_LIKES:
                     username = getArguments().getString(KEY_USER_NAME);
                     return Wendo.getUserLikes(username, page);
+                case LIST_TYPE_SEARCH_PHOTOS:
+                    query = getArguments().getString(KEY_QUERY);
+                    if (!query.equals("")) {
+                        return Wendo.getSearchedShots(query, page);
+                    } else {
+                        return null;
+                    }
                 default:
                     return null;
             }

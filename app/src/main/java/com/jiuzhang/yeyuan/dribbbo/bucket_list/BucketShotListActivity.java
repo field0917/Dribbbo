@@ -13,7 +13,7 @@ public class BucketShotListActivity extends BaseActivity {
     protected Fragment newFragment() {
         int bucketId = getIntent().getIntExtra(KEY_BUCKET_ID, -1);
         ShotListFragment fragment = ShotListFragment.newInstance(
-                ShotListFragment.LIST_TYPE_BUCKETED, bucketId, "");
+                ShotListFragment.LIST_TYPE_BUCKETED, bucketId, "", "");
         return fragment;
     }
 

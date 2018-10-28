@@ -132,9 +132,9 @@ public class UserActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case POSITION_ONE:
-                    return ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_USER_PHOTOS, -1, user.username);
+                    return ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_USER_PHOTOS, -1, user.username, "");
                 case POSITION_TWO:
-                    return ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_USER_LIKES, -1, user.username);
+                    return ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_USER_LIKES, -1, user.username, "");
                 case POSITION_THREE:
                     return BucketListFragment.newInstance(false,false, null, user.username);
                 default:

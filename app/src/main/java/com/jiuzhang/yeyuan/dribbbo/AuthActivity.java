@@ -14,6 +14,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.jiuzhang.yeyuan.dribbbo.wendo.OAuth.Auth;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -39,21 +41,6 @@ public class AuthActivity extends AppCompatActivity {
         progressBar.setMax(100);
 
         webView.setWebViewClient(new WebViewClient() {
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//
-//                if (url.startsWith(REDIRECT_URL)) {
-//                    Uri uri = Uri.parse(url);
-//                    Intent resultIntent = new Intent();
-//                    resultIntent.putExtra(KEY_CODE, uri.getQueryParameter(KEY_CODE));
-//                    setResult(RESULT_OK, resultIntent);
-//                    finish();
-//                }
-//
-//                return super.shouldOverrideUrlLoading(view, url);
-//            }
-
-
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 String url = request.getUrl().toString();

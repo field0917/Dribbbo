@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.jiuzhang.yeyuan.dribbbo.wendo.OAuth.Auth;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 
 import java.io.IOException;

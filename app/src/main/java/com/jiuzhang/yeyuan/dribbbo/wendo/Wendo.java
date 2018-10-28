@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
+import com.jiuzhang.yeyuan.dribbbo.model.SearchPhotoResult;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
@@ -40,6 +41,7 @@ public class Wendo {
     private static final String SHOTS_END_POINT = API_URL + "photos";
     private static final String BUCKET_CREATE_END_POINT = API_URL + "collections";
     private static final String BUCKET_END_POINT = API_URL + "collections/";
+    private static final String SEARCH_SHOT_END_POINT = API_URL + "search/photos/?query=";
 
 
     public static final TypeToken<User> USER_TYPE = new TypeToken<User>(){};
@@ -47,9 +49,11 @@ public class Wendo {
     private static final TypeToken<List<Bucket>> BUCKET_LIST_TYPE = new TypeToken<List<Bucket>>(){};
     private static final TypeToken<Bucket> BUCKET_TYPE = new TypeToken<Bucket>(){};
     private static final TypeToken<Shot> SHOT_TYPE = new TypeToken<Shot>(){};
+    private static final TypeToken<SearchPhotoResult> SEARCH_SHOT_LIST_TYPE = new TypeToken<SearchPhotoResult>(){};
 
     public static final String DOWNLOAD_PHOTO_FORMAT = ".jpg";
     public static final String DOWNLOAD_PATH = "/Pictures/Wendo/";
+
 
 
     private static String accessToken;
@@ -254,6 +258,12 @@ public class Wendo {
     public static List<Bucket> getUserBuckets (String username, int page) throws IOException {
         String url = USER_END_POINT + username + "/collections?page=" + page + "&" + KEY_PER_PAGE + "=" + BUCKET_COUNT_PER_PAGE;
         return parseResponse(makeGetRequest(url), BUCKET_LIST_TYPE);
+    }
+
+    public static List<Shot> getSearchedShots (String query, int page) throws IOException {
+        String url = SEARCH_SHOT_END_POINT + query + "&page=" + page;
+        SearchPhotoResult result = parseResponse(makeGetRequest(url), SEARCH_SHOT_LIST_TYPE);
+        return result.results;
     }
 
 }

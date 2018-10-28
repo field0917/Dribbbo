@@ -13,10 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <provider
-            android:authorities="com.jiuzhang.yeyuan.dribbbo.fileprovider"
             android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.jiuzhang.yeyuan.dribbbo.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -33,13 +32,28 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+        </activity>
         <!-- <activity android:name=".base.BaseActivity" /> -->
         <activity android:name=".shot_detail.ShotDetailActivity" />
         <activity android:name=".AuthActivity" />
         <activity android:name=".bucket_list.EditBucketActivity" />
         <activity android:name=".bucket_list.BucketShotListActivity" />
-        <activity android:name=".UserActivity"/>
+        <activity android:name=".UserActivity" />
+        <activity
+            android:name=".activities.SearchActivity"
+            android:parentActivityName=".MainActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".activities.SearchActivity" />
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
     </application>
 
 </manifest>

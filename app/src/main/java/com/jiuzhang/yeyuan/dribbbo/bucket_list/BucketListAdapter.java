@@ -75,9 +75,9 @@ public class BucketListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             bucketListViewHolder.bucketTitleTextView.setText(bucket.title);
 
             if (bucket.total_photos <= 1) {
-                bucketListViewHolder.shotNumberTextView.setText(bucket.total_photos + " shot");
+                bucketListViewHolder.shotNumberTextView.setText(bucket.total_photos + " photo");
             } else {
-                bucketListViewHolder.shotNumberTextView.setText(bucket.total_photos + " shots");
+                bucketListViewHolder.shotNumberTextView.setText(bucket.total_photos + " photos");
             }
 
             if (isEditMode) {
