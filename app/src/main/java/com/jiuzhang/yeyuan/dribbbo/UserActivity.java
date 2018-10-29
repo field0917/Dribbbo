@@ -42,7 +42,7 @@ public class UserActivity extends AppCompatActivity {
     @BindView(R.id.user_photos) TextView userPhotos;
     @BindView(R.id.user_likes) TextView userLikes;
     @BindView(R.id.user_collections) TextView userCollections;
-    @BindView(R.id.portfolio_url) TextView porfolioUrl;
+    @BindView(R.id.portfolio_url) TextView portfolioUrl;
     @BindView(R.id.instagram) TextView instagram;
     @BindView(R.id.bio) TextView bio;
 
@@ -88,9 +88,9 @@ public class UserActivity extends AppCompatActivity {
         userLikes.setText(String.valueOf(user.total_likes));
         userCollections.setText(String.valueOf(user.total_collections));
         if (user.portfolio_url != null) {
-            porfolioUrl.setText(user.portfolio_url);
+            portfolioUrl.setText(user.portfolio_url);
         } else {
-            porfolioUrl.setText("Portfolio: -----");
+            portfolioUrl.setText("Portfolio: -----");
         }
         if (user.instagram_username != null) {
             instagram.setText("Instagram: " + user.instagram_username);
