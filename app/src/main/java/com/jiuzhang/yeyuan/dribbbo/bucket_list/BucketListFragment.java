@@ -41,14 +41,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.app.Activity.RESULT_OK;
+import static com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment.KEY_QUERY;
 
 public class BucketListFragment extends Fragment {
     private int currentPage = 1;
     private static final int VERTICAL_SPACE_HEIGHT = 20;
 
+    private static final int LIST_TYPE_ALL_BUCKET = 0;
+    private static final int LIST_TYPE_USER_BUCKET = 1;
+    private static final int LIST_TYPE_EDIT_BUCKET = 2;
+    private static final int LIST_TYPE_SEARCH_BUCKET = 3;
+
     public static final int REQ_NEW_BUCKET = 106;
 
-    public static final String KEY_PUBLIC_MODE = "public_mode";
     public static final String KEY_EDIT_MODE = "edit_mode";
     public static final String KEY_COLLECTED_BUCKETS = "collected_buckets";
     public static final String KEY_CHOSEN_BUCKETS = "chosen_buckets";
@@ -65,26 +70,25 @@ public class BucketListFragment extends Fragment {
     LinearLayoutManager linearLayoutManager;
     private boolean isLoading = false;
 
-    public boolean publicMode;
     public boolean isEditMode;
     public Set<Integer> chosenBucketIdsSet;
     public String username;
+    public String query;
 
     public BucketListFragment() {
         // Required empty public constructor
     }
 
-    public static BucketListFragment newInstance(boolean publicMode,
-                                                 boolean isEditMode,
+    public static BucketListFragment newInstance(boolean isEditMode,
                                                  List<Bucket> chosenBuckets,
-                                                 String username) {
+                                                 String username,
+                                                 String query) {
         Bundle args = new Bundle();
-        args.putBoolean(KEY_PUBLIC_MODE, publicMode);
         args.putBoolean(KEY_EDIT_MODE, isEditMode);
         args.putString(KEY_COLLECTED_BUCKETS,
                 ModelUtils.toString(chosenBuckets, new TypeToken<List<Bucket>>(){}));
         args.putString(KEY_USER_NAME, username);
-
+        args.putString(KEY_QUERY, query);
         BucketListFragment fragment = new BucketListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -94,9 +98,9 @@ public class BucketListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        publicMode = args.getBoolean(KEY_PUBLIC_MODE);
         isEditMode = args.getBoolean(KEY_EDIT_MODE);
         username = args.getString(KEY_USER_NAME);
+        query = args.getString(KEY_QUERY);
 
         if (isEditMode) {
             List<Bucket> chosenBuckets = ModelUtils.toObject(args.getString(KEY_COLLECTED_BUCKETS),
@@ -214,9 +218,21 @@ public class BucketListFragment extends Fragment {
         }
     }
 
+    private int getListType () {
+        if (!query.equals("")) {
+            return LIST_TYPE_SEARCH_BUCKET;
+        }
+        if (username == null) {
+            return isEditMode ?  LIST_TYPE_EDIT_BUCKET : LIST_TYPE_ALL_BUCKET;
+        } else {
+            return LIST_TYPE_USER_BUCKET;
+        }
+    }
+
     private class LoadBucketsTask extends WendoTask<Void, Void, List<Bucket>> {
 
         int page;
+        int listType = getListType();
 
         private LoadBucketsTask (int page) {
             this.page = page;
@@ -230,14 +246,17 @@ public class BucketListFragment extends Fragment {
 
         @Override
         public List<Bucket> doOnNewThread(Void... voids) throws Exception {
-            if (username == null) {
-                if (isEditMode) {
-                    return Wendo.getUserBuckets(Wendo.getCurrentUser().username, page);
-                } else {
+            switch (listType) {
+                case LIST_TYPE_ALL_BUCKET:
                     return Wendo.getBuckets(page);
-                }
-            } else {
-                return Wendo.getUserBuckets(username, page);
+                case LIST_TYPE_EDIT_BUCKET:
+                    return Wendo.getUserBuckets(Wendo.getCurrentUser().username, page);
+                case LIST_TYPE_USER_BUCKET:
+                    return Wendo.getUserBuckets(username, page);
+                case LIST_TYPE_SEARCH_BUCKET:
+                    return Wendo.getSearchedBuckets(query, page);
+                default:
+                    return null;
             }
         }
 

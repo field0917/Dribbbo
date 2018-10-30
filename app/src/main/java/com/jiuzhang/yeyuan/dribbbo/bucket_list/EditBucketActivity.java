@@ -13,7 +13,6 @@ public class EditBucketActivity extends BaseActivity{
 
     @Override
     protected Fragment newFragment() {
-        boolean publicMode = getIntent().getBooleanExtra(BucketListFragment.KEY_PUBLIC_MODE, false);
         boolean isEditMode = getIntent()
                 .getBooleanExtra(BucketListFragment.KEY_EDIT_MODE, false);
 
@@ -21,7 +20,7 @@ public class EditBucketActivity extends BaseActivity{
                 getIntent().getStringExtra(BucketListFragment.KEY_COLLECTED_BUCKETS),
                 new TypeToken<List<Bucket>>(){});
 
-        return BucketListFragment.newInstance(publicMode, isEditMode, chosenBuckets, null);
+        return BucketListFragment.newInstance(isEditMode, chosenBuckets, null, "");
     }
 
     @Override

@@ -5,7 +5,7 @@
     <dimen name="spacing_large">24dp</dimen>
     <dimen name="spacing_medium">16dp</dimen>
     <dimen name="toolbar_elevation">4dp</dimen>
-    <dimen name="recycler_view_padding">20dp</dimen>
+    <dimen name="recycler_view_padding">10dp</dimen>
     <dimen name="card_view_elevation">4dp</dimen>
     <dimen name="bucket_card_view_padding">15dp</dimen>
     <dimen name="bucket_fab_layout_margin">16dp</dimen>

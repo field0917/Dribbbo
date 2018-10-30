@@ -96,7 +96,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private Fragment newFragment() {
 //        return ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_SEARCH_PHOTOS, -1, "", query);
-        return UserListFragment.newInstance(query);
+//        return UserListFragment.newInstance(query);
+        return BucketListFragment.newInstance( false, null, "", query);
     }
 
 //    private class SearchPagerAdapter extends FragmentStatePagerAdapter {

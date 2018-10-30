@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
+import com.jiuzhang.yeyuan.dribbbo.model.SearchBucketResult;
 import com.jiuzhang.yeyuan.dribbbo.model.SearchPhotoResult;
 import com.jiuzhang.yeyuan.dribbbo.model.SearchUserResult;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
@@ -42,8 +43,9 @@ public class Wendo {
     private static final String SHOTS_END_POINT = API_URL + "photos";
     private static final String BUCKET_CREATE_END_POINT = API_URL + "collections";
     private static final String BUCKET_END_POINT = API_URL + "collections/";
-    private static final String SEARCH_SHOT_END_POINT = API_URL + "search/photos/?query=";
-    private static final String SEARCH_USER_END_POINT = API_URL + "search/users/?query=";
+    private static final String SEARCH_SHOT_END_POINT = API_URL + "search/photos?query=";
+    private static final String SEARCH_USER_END_POINT = API_URL + "search/users?query=";
+    private static final String SEARCH_BUCKET_END_POINT = API_URL + "search/collections?query=";
 
 
     public static final TypeToken<User> USER_TYPE = new TypeToken<User>(){};
@@ -53,6 +55,7 @@ public class Wendo {
     private static final TypeToken<Shot> SHOT_TYPE = new TypeToken<Shot>(){};
     private static final TypeToken<SearchPhotoResult> SEARCH_SHOT_LIST_TYPE = new TypeToken<SearchPhotoResult>(){};
     private static final TypeToken<SearchUserResult> SEARCH_USER_LIST_TYPE = new TypeToken<SearchUserResult>(){};
+    private static final TypeToken<SearchBucketResult> SEARCH_BUCKET_LIST_TYPE = new TypeToken<SearchBucketResult>(){};
 
     public static final String DOWNLOAD_PHOTO_FORMAT = ".jpg";
     public static final String DOWNLOAD_PATH = "/Pictures/Wendo/";
@@ -272,6 +275,12 @@ public class Wendo {
     public static List<User> getSearchedUsers (String query, int page) throws IOException {
         String url = SEARCH_USER_END_POINT + query + "&page=" + page;
         SearchUserResult result = parseResponse(makeGetRequest(url), SEARCH_USER_LIST_TYPE);
+        return result.results;
+    }
+
+    public static List<Bucket> getSearchedBuckets (String query, int page) throws IOException {
+        String url = SEARCH_BUCKET_END_POINT + query + "&page=" + page;
+        SearchBucketResult result = parseResponse(makeGetRequest(url), SEARCH_BUCKET_LIST_TYPE);
         return result.results;
     }
 }
