@@ -20,7 +20,7 @@ public class EditBucketActivity extends BaseActivity{
                 getIntent().getStringExtra(BucketListFragment.KEY_COLLECTED_BUCKETS),
                 new TypeToken<List<Bucket>>(){});
 
-        return BucketListFragment.newInstance(isEditMode, chosenBuckets, null, "");
+        return BucketListFragment.newInstance(BucketListFragment.LIST_TYPE_EDIT_BUCKET, isEditMode, chosenBuckets, null, "");
     }
 
     @Override

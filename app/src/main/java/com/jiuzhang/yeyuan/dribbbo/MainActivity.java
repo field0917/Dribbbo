@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_FEATURED, -1, "", "");
                 break;
             case R.id.drawer_item_buckets:
-                fragment = BucketListFragment.newInstance(false, null, null, "");
+                fragment = BucketListFragment.newInstance(BucketListFragment.LIST_TYPE_ALL_BUCKET,false, null, null, "");
                 break;
         }
 

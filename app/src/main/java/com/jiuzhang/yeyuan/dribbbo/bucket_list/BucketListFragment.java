@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
@@ -41,16 +43,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.app.Activity.RESULT_OK;
+import static com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment.KEY_LIST_TYPE;
 import static com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment.KEY_QUERY;
 
 public class BucketListFragment extends Fragment {
     private int currentPage = 1;
     private static final int VERTICAL_SPACE_HEIGHT = 20;
 
-    private static final int LIST_TYPE_ALL_BUCKET = 0;
-    private static final int LIST_TYPE_USER_BUCKET = 1;
-    private static final int LIST_TYPE_EDIT_BUCKET = 2;
-    private static final int LIST_TYPE_SEARCH_BUCKET = 3;
+    public static final int LIST_TYPE_ALL_BUCKET = 0;
+    public static final int LIST_TYPE_USER_BUCKET = 1;
+    public static final int LIST_TYPE_EDIT_BUCKET = 2;
+    public static final int LIST_TYPE_SEARCH_BUCKET = 3;
 
     public static final int REQ_NEW_BUCKET = 106;
 
@@ -61,6 +64,7 @@ public class BucketListFragment extends Fragment {
     public static final String KEY_BUCKET_ID = "bucket_id";
     public static final String KEY_USER_NAME = "username";
 
+    @BindView(R.id.swipe_refresh_container) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.bucket_list_recycler_view) EmptyRecyclerView recyclerView;
     @BindView(R.id.bucket_fab) FloatingActionButton fab;
     @BindView(R.id.empty_view) TextView emptyView;
@@ -74,16 +78,19 @@ public class BucketListFragment extends Fragment {
     public Set<Integer> chosenBucketIdsSet;
     public String username;
     public String query;
+    public int listType;
 
     public BucketListFragment() {
         // Required empty public constructor
     }
 
-    public static BucketListFragment newInstance(boolean isEditMode,
+    public static BucketListFragment newInstance(int listType,
+                                                 boolean isEditMode,
                                                  List<Bucket> chosenBuckets,
                                                  String username,
                                                  String query) {
         Bundle args = new Bundle();
+        args.putInt(KEY_LIST_TYPE, listType);
         args.putBoolean(KEY_EDIT_MODE, isEditMode);
         args.putString(KEY_COLLECTED_BUCKETS,
                 ModelUtils.toString(chosenBuckets, new TypeToken<List<Bucket>>(){}));
@@ -101,6 +108,7 @@ public class BucketListFragment extends Fragment {
         isEditMode = args.getBoolean(KEY_EDIT_MODE);
         username = args.getString(KEY_USER_NAME);
         query = args.getString(KEY_QUERY);
+        listType = args.getInt(KEY_LIST_TYPE);
 
         if (isEditMode) {
             List<Bucket> chosenBuckets = ModelUtils.toObject(args.getString(KEY_COLLECTED_BUCKETS),
@@ -114,7 +122,7 @@ public class BucketListFragment extends Fragment {
         if (isEditMode) {setHasOptionsMenu(true);}
 
         if (!isLoading) {
-            LoadBucketsTask task = new LoadBucketsTask(currentPage);
+            LoadBucketsTask task = new LoadBucketsTask(false, currentPage);
             task.execute();
         }
 
@@ -132,10 +140,22 @@ public class BucketListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        swipeRefreshLayout.setEnabled(false); // During the first loading, disable swipe to refresh
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                currentPage = 1;
+                swipeRefreshLayout.setRefreshing(true); // Enable the refresh icon
+                LoadBucketsTask task = new LoadBucketsTask(true, currentPage);
+                task.execute();
+            }
+        });
+
         linearLayoutManager = new LinearLayoutManager(view.getContext());
 
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
+        setEmptyViewText();
         recyclerView.setEmptyView(emptyView);
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_SPACE_HEIGHT));
 
@@ -143,7 +163,7 @@ public class BucketListFragment extends Fragment {
             @Override
             public void onLoadMore() {
                 if (!isLoading) {
-                    LoadBucketsTask task = new LoadBucketsTask(currentPage);
+                    LoadBucketsTask task = new LoadBucketsTask(false, currentPage);
                     task.execute();
                 }
             }
@@ -174,6 +194,23 @@ public class BucketListFragment extends Fragment {
             });
         } else {
             fab.setVisibility(View.GONE);
+        }
+    }
+
+    private void setEmptyViewText() {
+        switch (listType) {
+            case LIST_TYPE_USER_BUCKET:
+                emptyView.setText(getString(R.string.user_no_bucket));
+                break;
+            case LIST_TYPE_EDIT_BUCKET:
+                emptyView.setText(getString(R.string.current_user_no_bucket));
+                break;
+            case LIST_TYPE_SEARCH_BUCKET:
+                emptyView.setText(getString(R.string.no_search_result));
+                break;
+            default:
+                emptyView.setText(getString(R.string.error));
+
         }
     }
 
@@ -218,23 +255,13 @@ public class BucketListFragment extends Fragment {
         }
     }
 
-    private int getListType () {
-        if (!query.equals("")) {
-            return LIST_TYPE_SEARCH_BUCKET;
-        }
-        if (username == null) {
-            return isEditMode ?  LIST_TYPE_EDIT_BUCKET : LIST_TYPE_ALL_BUCKET;
-        } else {
-            return LIST_TYPE_USER_BUCKET;
-        }
-    }
-
     private class LoadBucketsTask extends WendoTask<Void, Void, List<Bucket>> {
 
+        boolean refresh;
         int page;
-        int listType = getListType();
 
-        private LoadBucketsTask (int page) {
+        private LoadBucketsTask (boolean refresh, int page) {
+            this.refresh = refresh;
             this.page = page;
         }
 
@@ -264,7 +291,14 @@ public class BucketListFragment extends Fragment {
         public void onSuccess(List<Bucket> buckets) {
 
             if (buckets != null) {
-                adapter.append(buckets);
+                if (refresh) {
+                    adapter.setData(buckets);
+                    swipeRefreshLayout.setRefreshing(false);
+                    Toast.makeText(getContext(), "Collections refreshed!", Toast.LENGTH_SHORT).show();
+                } else {
+                    adapter.append(buckets);
+                }
+                swipeRefreshLayout.setEnabled(true);
                 if (isEditMode) {
                     // check if the shot has been stored in any bucket, if true, set the isChosen true
                     // then add buckets to adapter
@@ -276,9 +310,10 @@ public class BucketListFragment extends Fragment {
                 }
                 currentPage += 1;
                 isLoading = !isLoading;
-            } else {
-                Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
             }
+//             else {
+//                Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
+//            }
 
             adapter.setShowLoading(isLoading);
         }
@@ -311,7 +346,8 @@ public class BucketListFragment extends Fragment {
         public void onSuccess(Bucket bucket) {
             if (bucket != null) {
                 adapter.prepend(bucket);
-            } else {
+            }
+            else {
                 Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
             }
         }

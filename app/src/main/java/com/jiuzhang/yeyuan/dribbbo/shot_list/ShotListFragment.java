@@ -115,7 +115,6 @@ public class ShotListFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(true); // Enable the refresh icon
                 LoadShotsTask task = new LoadShotsTask(true, currentPage);
                 task.execute();
-//                Log.i("Ye Refresh", currentPage + "");
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -124,7 +123,7 @@ public class ShotListFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
-        setEmptyViewText(listType);
+        setEmptyViewText();
 
         recyclerView.setEmptyView(emptyView);
 
@@ -133,14 +132,13 @@ public class ShotListFragment extends Fragment {
             public void onLoadMore() {
                 if (!isLoading) {
                     new LoadShotsTask(false, currentPage).execute();
-//                    Log.i("Ye OnScroll", currentPage + "");
                 }
             }
         });
 
     }
 
-    private void setEmptyViewText(int listType) {
+    private void setEmptyViewText() {
         switch (listType) {
             case LIST_TYPE_BUCKETED:
                 emptyView.setText(getString(R.string.bucket_no_photo));
@@ -216,11 +214,7 @@ public class ShotListFragment extends Fragment {
                     return Wendo.getUserLikes(username, page);
                 case LIST_TYPE_SEARCH_PHOTOS:
                     query = getArguments().getString(KEY_QUERY);
-                    if (!query.equals("")) {
-                        return Wendo.getSearchedShots(query, page);
-                    } else {
-                        return null;
-                    }
+                    return Wendo.getSearchedShots(query, page);
                 default:
                     return null;
             }
@@ -232,15 +226,17 @@ public class ShotListFragment extends Fragment {
                 if (refresh) {
                     adapter.setData(shots);
                     swipeRefreshLayout.setRefreshing(false);
+                    Toast.makeText(getContext(), "Photos refreshed!", Toast.LENGTH_SHORT).show();
                 } else {
                     adapter.append(shots);
                 }
                 swipeRefreshLayout.setEnabled(true);
                 currentPage += 1;
                 isLoading = !isLoading;
-            } else {
-                Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
             }
+//            else {
+//                Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
+//            }
             adapter.setShowLoading(isLoading);
         }
 

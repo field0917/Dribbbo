@@ -135,6 +135,7 @@ public class UserListFragment extends Fragment {
                 if (refresh) {
                     adapter.setData(users);
                     swipeRefreshLayout.setRefreshing(false);
+                    Toast.makeText(getContext(), "Users refreshed!", Toast.LENGTH_SHORT).show();
                 } else {
                     adapter.append(users);
                 }

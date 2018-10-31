@@ -35,5 +35,8 @@
     <string name="user_no_photo">This user has not upload any photo yet...</string>
     <string name="user_no_like">This user has not like any photo yet...</string>
     <string name="bucket_no_photo">This collection doesn\'t contain any photo.</string>
+    <string name="error">Error!</string>
+    <string name="user_no_bucket">The user has not create any collection yet...</string>
+    <string name="current_user_no_bucket">You haven\'t create any collection.</string>
 
 </resources>
