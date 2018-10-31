@@ -1,6 +1,8 @@
 package com.jiuzhang.yeyuan.dribbbo.user_list;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,11 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
+import com.jiuzhang.yeyuan.dribbbo.UserActivity;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.utils.ImageUtils;
+import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 
 import java.util.List;
+
+import static com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment.KEY_USER;
 
 public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -47,7 +54,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         int viewType = getItemViewType(position);
         if (viewType == VIEW_TYPE_USER) {
             UserListViewHolder userListViewHolder = (UserListViewHolder) holder;
-            User user = users.get(position);
+            final User user = users.get(position);
             final Context context = holder.itemView.getContext();
             ImageUtils.loadCircleUserImage(context, user.getProfileImageURL(), userListViewHolder.userImage);
             userListViewHolder.name.setText(user.name);
@@ -55,7 +62,9 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             userListViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "Clicked!", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(context, UserActivity.class);
+                    intent.putExtra(KEY_USER, ModelUtils.toString(user, new TypeToken<User>(){}));
+                    context.startActivity(intent);
                 }
             });
         }
