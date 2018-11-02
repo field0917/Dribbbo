@@ -38,5 +38,6 @@
     <string name="error">Error!</string>
     <string name="user_no_bucket">The user has not create any collection yet...</string>
     <string name="current_user_no_bucket">You haven\'t create any collection.</string>
+    <string name="drawer_menu_new">New</string>
 
 </resources>

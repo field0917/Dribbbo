@@ -31,16 +31,17 @@
 
     <style name="AppTheme.TextView.Clickable.1" parent="AppTheme.TextView.Clickable">
         <item name="android:textSize">15sp</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
+
     </style>
 
-    <style name="AppTheme.TextVIew.Clickable.1.White" parent="AppTheme.TextView.Clickable.1">
-        <item name="android:textColor">@color/colorPrimaryText</item>
+    <style name="AppTheme.TextView.Clickable.1.White" parent="AppTheme.TextView.Clickable.1">
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.TextView.Clickable.2" parent="AppTheme.TextView.Clickable">
         <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="AppTheme.TextView.Clickable.2.White" parent="AppTheme.TextView.Clickable.2">

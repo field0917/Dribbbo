@@ -23,7 +23,7 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,18 +31,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:theme="@style/AppTheme">
         </activity>
         <!-- <activity android:name=".base.BaseActivity" /> -->
         <activity android:name=".shot_detail.ShotDetailActivity" />
-        <activity android:name=".AuthActivity" />
+        <activity android:name=".wendo.OAuth.AuthActivity" />
         <activity android:name=".bucket_list.EditBucketActivity" />
         <activity android:name=".bucket_list.BucketShotListActivity" />
-        <activity android:name=".UserActivity" />
+        <activity android:name=".activities.UserActivity" />
         <activity
             android:name=".activities.SearchActivity"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

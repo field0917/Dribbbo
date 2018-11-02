@@ -7,9 +7,10 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/drawer_item_home"
-            android:icon="@drawable/ic_home_black_18dp"
-            android:title="@string/drawer_menu_home" />
+            android:id="@+id/drawer_item_new"
+            android:icon="@drawable/ic_timeline_black_18dp"
+            android:title="@string/drawer_menu_new"
+            android:checked="true"/>
 
         <item
             android:id="@+id/drawer_item_featured"

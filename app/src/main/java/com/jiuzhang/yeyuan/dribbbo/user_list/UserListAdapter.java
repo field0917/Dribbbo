@@ -1,6 +1,5 @@
 package com.jiuzhang.yeyuan.dribbbo.user_list;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -8,11 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
-import com.jiuzhang.yeyuan.dribbbo.UserActivity;
+import com.jiuzhang.yeyuan.dribbbo.activities.UserActivity;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.utils.ImageUtils;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;

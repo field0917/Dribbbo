@@ -37,9 +37,8 @@ public class Shot {
         if (urls == null) {
             return "";
         }
-        String url = urls.get(IMAGE_FULL) == null ?
-                urls.get(IMAGE_REGULAR) : urls.get(IMAGE_FULL);
-        return url == null ? urls.get(IMAGE_SMALL) : url;
+
+        return urls.get(IMAGE_REGULAR);
     }
 
     public String getHtmlUrl () {

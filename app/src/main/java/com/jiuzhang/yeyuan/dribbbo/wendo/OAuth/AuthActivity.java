@@ -1,4 +1,4 @@
-package com.jiuzhang.yeyuan.dribbbo;
+package com.jiuzhang.yeyuan.dribbbo.wendo.OAuth;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.wendo.OAuth.Auth;
 
 import butterknife.BindView;

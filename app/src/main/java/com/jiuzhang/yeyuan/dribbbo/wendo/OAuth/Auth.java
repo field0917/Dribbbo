@@ -1,11 +1,8 @@
 package com.jiuzhang.yeyuan.dribbbo.wendo.OAuth;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-
-import com.jiuzhang.yeyuan.dribbbo.AuthActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

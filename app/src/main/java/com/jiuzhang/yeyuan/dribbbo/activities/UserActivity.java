@@ -1,4 +1,4 @@
-package com.jiuzhang.yeyuan.dribbbo;
+package com.jiuzhang.yeyuan.dribbbo.activities;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.reflect.TypeToken;
+import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment;
 import com.jiuzhang.yeyuan.dribbbo.model.User;

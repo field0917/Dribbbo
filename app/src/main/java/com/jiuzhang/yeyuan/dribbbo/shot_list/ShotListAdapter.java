@@ -2,7 +2,6 @@ package com.jiuzhang.yeyuan.dribbbo.shot_list;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -10,13 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
-import com.jiuzhang.yeyuan.dribbbo.UserActivity;
-import com.jiuzhang.yeyuan.dribbbo.base.WendoException;
+import com.jiuzhang.yeyuan.dribbbo.activities.UserActivity;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.utils.ImageUtils;
@@ -26,7 +21,6 @@ import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailActivity;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 
-import java.io.IOException;
 import java.util.List;
 
 import static com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment.KEY_USER;

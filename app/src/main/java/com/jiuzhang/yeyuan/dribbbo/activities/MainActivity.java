@@ -1,22 +1,21 @@
-package com.jiuzhang.yeyuan.dribbbo;
+package com.jiuzhang.yeyuan.dribbbo.activities;
 
-import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +26,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.reflect.TypeToken;
-import com.jiuzhang.yeyuan.dribbbo.activities.SearchActivity;
+import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment;
@@ -36,14 +35,23 @@ import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment;
 import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final static String NEW = "New";
+    private final static String FEATURED = "Featured";
+    private final static String COLLECTIONS = "Collections";
+
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
     @BindView(R.id.nav_view) NavigationView navigationView;
+    @BindView(R.id.tab) TabLayout tabLayout;
+    @BindView(R.id.view_pager) ViewPager viewPager;
 
     private ActionBarDrawerToggle drawerToggle;
 
@@ -54,26 +62,31 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        setTitle(getString(R.string.app_name));
+        toolbar.setElevation(0);
         setupHamburgerIcon();
         setupDrawerContent();
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container,
-                        ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1, "", ""))
-                .commit();
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1, "", ""));
+        fragments.add(ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_FEATURED, -1, "", ""));
+        fragments.add(BucketListFragment.newInstance(BucketListFragment.LIST_TYPE_ALL_BUCKET,false, null, null, ""));
+
+        List<String> titles = new ArrayList<>();
+        titles.add(NEW);
+        titles.add(FEATURED);
+        titles.add(COLLECTIONS);
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments, titles);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.appbar_menu, menu);
-
-//        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        // Can be replaced with getComponentName() if this SearchableActivity is current activity
-//        ComponentName componentName = new ComponentName(this, SearchActivity.class);
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
         return true;
     }
 
@@ -158,19 +171,19 @@ public class MainActivity extends AppCompatActivity {
                 }
                 // set item as selected to persist highlight
                 item.setChecked(true);
-                // change the title in tool bar
                 setTitle(item.getTitle());
-                selectDrawerItem(item);
+//                selectDrawerItem(item);
                 drawerLayout.closeDrawers();
                 return true;
             }
         });
     }
 
+    // TODO: change drawer item to current user's private options
     private void selectDrawerItem(MenuItem item) {
         Fragment fragment = null;
         switch (item.getItemId()) {
-            case R.id.drawer_item_home:
+            case R.id.drawer_item_new:
                 fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1, "", "");
                 break;
             case R.id.drawer_item_featured:
@@ -187,8 +200,6 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container, fragment)
                     .commit();
         }
-
-
     }
 
     private class LoadCurrentUserTask extends WendoTask<Void, Void, User> {
@@ -211,5 +222,35 @@ public class MainActivity extends AppCompatActivity {
             Snackbar.make(findViewById(android.R.id.content), "Load current user failed!",
                     Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    private class ViewPagerAdapter extends FragmentStatePagerAdapter {
+        private List<Fragment> fragments;
+        private List<String> titles;
+
+        public ViewPagerAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+            super(fm);
+            this.fragments = fragments;
+            this.titles = titles;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles.get(position);
+        }
+
+
+
     }
 }
