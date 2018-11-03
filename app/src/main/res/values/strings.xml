@@ -41,5 +41,6 @@
     <string name="drawer_menu_new">New</string>
     <string name="drawer_menu_settings">Settings</string>
     <string name="drawer_menu_profile">My Profile</string>
+    <string name="upload">Upload a photo</string>
 
 </resources>

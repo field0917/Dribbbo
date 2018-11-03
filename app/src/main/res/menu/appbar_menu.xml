@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_search_white_24dp"
         android:title="@string/search"
         app:showAsAction="collapseActionView|ifRoom" />
+    <item
+        android:id="@+id/action_upload"
+        android:icon="@drawable/ic_file_upload_white_24dp"
+        android:title="@string/upload"
+        app:showAsAction="collapseActionView|ifRoom"/>
 </menu>

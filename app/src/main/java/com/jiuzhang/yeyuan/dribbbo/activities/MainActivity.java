@@ -2,6 +2,7 @@ package com.jiuzhang.yeyuan.dribbbo.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -164,8 +166,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_search:
                 startActivity(new Intent(this, SearchActivity.class));
                 return true;
+            case R.id.action_upload:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://unsplash.com/submit"));
+                startActivity(browserIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+
     }
 
     private void setupDrawerContent() {
