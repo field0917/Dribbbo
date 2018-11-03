@@ -10,11 +10,11 @@
             android:id="@+id/drawer_item_new"
             android:icon="@drawable/ic_timeline_black_18dp"
             android:title="@string/drawer_menu_new"
-            android:checked="true"/>
+            android:checked="true" />
 
         <item
             android:id="@+id/drawer_item_featured"
-            android:icon="@drawable/ic_star_black_18dp"
+            android:icon="@drawable/ic_star_border_black_18dp"
             android:title="@string/drawer_menu_curated"/>
 
         <item

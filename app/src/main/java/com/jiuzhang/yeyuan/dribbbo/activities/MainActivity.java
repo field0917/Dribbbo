@@ -82,6 +82,45 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Menu menu = navigationView.getMenu();
+                switch (position) {
+                    case 0:
+                        menu.findItem(R.id.drawer_item_new).setChecked(true);
+                        break;
+                    case 1:
+                        menu.findItem(R.id.drawer_item_featured).setChecked(true);
+                        break;
+                    case 2:
+                        menu.findItem(R.id.drawer_item_buckets).setChecked(true);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Menu menu = navigationView.getMenu();
+                switch (position) {
+                    case 0:
+                        menu.findItem(R.id.drawer_item_new).setChecked(true);
+                        break;
+                    case 1:
+                        menu.findItem(R.id.drawer_item_featured).setChecked(true);
+                        break;
+                    case 2:
+                        menu.findItem(R.id.drawer_item_buckets).setChecked(true);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 
     @Override
@@ -171,8 +210,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 // set item as selected to persist highlight
                 item.setChecked(true);
-                setTitle(item.getTitle());
-//                selectDrawerItem(item);
+//                setTitle(item.getTitle());
+                selectDrawerItem(item);
                 drawerLayout.closeDrawers();
                 return true;
             }
@@ -181,25 +220,18 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO: change drawer item to current user's private options
     private void selectDrawerItem(MenuItem item) {
-        Fragment fragment = null;
         switch (item.getItemId()) {
             case R.id.drawer_item_new:
-                fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_POPULAR, -1, "", "");
+                viewPager.setCurrentItem(0);
                 break;
             case R.id.drawer_item_featured:
-                fragment = ShotListFragment.newInstance(ShotListFragment.LIST_TYPE_FEATURED, -1, "", "");
+                viewPager.setCurrentItem(1);
                 break;
             case R.id.drawer_item_buckets:
-                fragment = BucketListFragment.newInstance(BucketListFragment.LIST_TYPE_ALL_BUCKET,false, null, null, "");
+                viewPager.setCurrentItem(2);
                 break;
         }
 
-        if (fragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .commit();
-        }
     }
 
     private class LoadCurrentUserTask extends WendoTask<Void, Void, User> {
@@ -249,8 +281,5 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return titles.get(position);
         }
-
-
-
     }
 }

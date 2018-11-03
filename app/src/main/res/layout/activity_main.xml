@@ -54,6 +54,7 @@
         app:menu="@menu/drawer_menu"
         app:itemIconTint="@color/drawer_item"
         app:itemTextColor="@color/drawer_item"
-        app:itemBackground="@android:color/transparent"/>
+        app:itemBackground="?attr/selectableItemBackground"/>
+        <!--app:itemBackground="@android:color/transparent"-->
 
 </android.support.v4.widget.DrawerLayout>
