@@ -44,27 +44,8 @@ public class EditProfileActivity extends AppCompatActivity {
     @BindView(R.id.location) ClearableEditText location;
     @BindView(R.id.bio) ClearableEditText bio;
     @BindView(R.id.instagram) ClearableEditText instagram;
-//    @BindView(R.id.first_name) EditText firstName;
-//    @BindView(R.id.delete_first_name) Button deleteFirstName;
-//    @BindView(R.id.last_name) EditText lastName;
-//    @BindView(R.id.delete_last_name) Button deleteLastName;
-//    @BindView(R.id.username) EditText username;
-//    @BindView(R.id.delete_username) Button deleteUsername;
-//    @BindView(R.id.email) EditText email;
-//    @BindView(R.id.delete_email) Button deleteEmail;
-//    @BindView(R.id.portfolio_url) EditText portfolio_url;
-//    @BindView(R.id.delete_portfolio) Button deletePortfolio;
-//    @BindView(R.id.location) EditText location;
-//    @BindView(R.id.delete_location) Button deleteLocation;
-//    @BindView(R.id.bio) EditText bio;
-//    @BindView(R.id.delete_bio) Button deleteBio;
-//    @BindView(R.id.instagram) EditText instagram;
-//    @BindView(R.id.delete_instagram) Button deleteInstagram;
-
 
     User user;
-//    Map<EditText, Button> mMap = new HashMap<>();
-//    EditText[] editList = {firstName, lastName, username, email, portfolio_url, location, bio, instagram};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,57 +58,9 @@ public class EditProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         user = ModelUtils.toObject(getIntent().getStringExtra(KEY_CURRENT_USER), USER_TYPE);
-//        mMap.put(firstName, deleteFirstName);
-//        mMap.put(lastName, deleteLastName);
-//        mMap.put(username, deleteUsername);
-//        mMap.put(email, deleteEmail);
-//        mMap.put(portfolio_url, deletePortfolio);
-//        mMap.put(location, deleteLocation);
-//        mMap.put(bio, deleteBio);
-//        mMap.put(instagram, deleteInstagram);
 
         setupContentView(user);
-
-//        for (final EditText editText : editList) {
-////            final Button button = mMap.get(editText);
-//            editText.setOnTouchListener(this);
-////            editText.setOnTouchListener(new View.OnTouchListener() {
-////                @Override
-////                public boolean onTouch(View view, MotionEvent motionEvent) {
-////                    button.setVisibility(View.VISIBLE);
-////                    button.setOnClickListener(new View.OnClickListener() {
-////                        @Override
-////                        public void onClick(View view) {
-////                            editText.setText("");
-////                        }
-////                    });
-////                    return true;
-////                }
-////            });
-//        }
     }
-
-//    @Override
-//    public void onFocusChange(View view, boolean b) {
-//
-//    }
-//
-//    @Override
-//    public boolean onTouch(final View view, MotionEvent motionEvent) {
-//        if (view instanceof EditText) {
-//            final EditText editTextView = (EditText)view;
-//            editTextView.setOnFocusChangeListener(this);
-//            Button button = mMap.get(editTextView);
-//            button.setVisibility(View.VISIBLE);
-//            button.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    editTextView.setText("");
-//                }
-//            });
-//        }
-//        return false;
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -255,23 +255,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // re-check the menu item according to viewpager
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.drawer_item_profile).setChecked(false);
+        int position = viewPager.getCurrentItem();
+        switch (position) {
+            case 0:
+                menu.findItem(R.id.drawer_item_new).setChecked(true);
+                break;
+            case 1:
+                menu.findItem(R.id.drawer_item_featured).setChecked(true);
+                break;
+            case 2:
+                menu.findItem(R.id.drawer_item_buckets).setChecked(true);
+                break;
+        }
+
         if (resultCode == RESULT_OK && requestCode == REQ_UPDATE_PROFILE) {
             Toast.makeText(this, "new profile get", Toast.LENGTH_SHORT).show();
             // After going back to main activity, reset the check status of navigation items
-            Menu menu = navigationView.getMenu();
-            menu.findItem(R.id.drawer_item_profile).setChecked(false);
-            int position = viewPager.getCurrentItem();
-            switch (position) {
-                case 0:
-                    menu.findItem(R.id.drawer_item_new).setChecked(true);
-                    break;
-                case 1:
-                    menu.findItem(R.id.drawer_item_featured).setChecked(true);
-                    break;
-                case 2:
-                    menu.findItem(R.id.drawer_item_buckets).setChecked(true);
-                    break;
-            }
+
         }
     }
 
