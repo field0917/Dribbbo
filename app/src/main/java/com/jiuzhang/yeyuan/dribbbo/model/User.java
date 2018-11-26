@@ -7,6 +7,9 @@ public class User {
 
     public String username;
     public String name;
+    public String first_name;
+    public String last_name;
+    public String email;
     public String bio;
     public String twitter_username;
     public String instagram_username;

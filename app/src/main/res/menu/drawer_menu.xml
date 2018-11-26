@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/general"
+        android:checkableBehavior="single">
 
         <item
             android:id="@+id/drawer_item_new"
@@ -21,6 +23,22 @@
             android:id="@+id/drawer_item_buckets"
             android:icon="@drawable/ic_inbox_black_18dp"
             android:title="@string/drawer_menu_buckets"/>
+
+    </group>
+
+    <group
+        android:id="@+id/personal"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/drawer_item_profile"
+            android:icon="@drawable/ic_person_outline_black_18dp"
+            android:title="@string/drawer_menu_profile"/>
+
+        <item
+            android:id="@+id/drawer_item_setting"
+            android:icon="@drawable/ic_settings_black_18dp"
+            android:title="@string/drawer_menu_settings"/>
 
     </group>
 

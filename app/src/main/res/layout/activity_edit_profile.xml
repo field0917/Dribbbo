@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.EditProfileActivity"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/light_background"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:id="@+id/user_image"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:src="@drawable/user_picture_placeholder"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"/>
+        <TextView
+            android:id="@+id/change_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/change_profile_photo"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="10dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+        <TextView
+            android:layout_width="@dimen/line_title_width"
+            android:layout_height="wrap_content"
+            android:text="First name"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/edit_profile_margin"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"/>
+        <com.jiuzhang.yeyuan.dribbbo.custom_class.ClearableEditText
+            android:id="@+id/first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/colorPrimaryDark"
+            tools:text="Ye"
+            android:textSize="16sp" />
+        <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+            <!--<EditText-->
+                <!--android:id="@+id/first_name"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:inputType="text"-->
+                <!--android:textColor="@color/colorPrimaryDark"-->
+                <!--tools:text="Ye"-->
+                <!--android:textSize="16sp" />-->
+            <!--<Button-->
+                <!--android:id="@+id/delete_first_name"-->
+                <!--android:layout_width="18dp"-->
+                <!--android:layout_height="18dp"-->
+                <!--android:layout_gravity="end|center_vertical"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:background="@drawable/ic_highlight_off_black_18dp"-->
+                <!--android:visibility="gone"/>-->
+        <!--</FrameLayout>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+        <TextView
+            android:layout_width="@dimen/line_title_width"
+            android:layout_height="wrap_content"
+            android:text="Last name"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/edit_profile_margin"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"/>
+        <com.jiuzhang.yeyuan.dribbbo.custom_class.ClearableEditText
+            android:id="@+id/last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/colorPrimaryDark"
+            tools:text="Yuan"
+            android:textSize="16sp"/>
+        <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+            <!--<EditText-->
+                <!--android:id="@+id/last_name"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:inputType="text"-->
+                <!--android:textColor="@color/colorPrimaryDark"-->
+                <!--tools:text="Yuan"-->
+                <!--android:textSize="16sp"/>-->
+            <!--<Button-->
+                <!--android:id="@+id/delete_last_name"-->
+                <!--android:layout_width="18dp"-->
+                <!--android:layout_height="18dp"-->
+                <!--android:layout_gravity="end|center_vertical"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:background="@drawable/ic_highlight_off_black_18dp"-->
+                <!--android:visibility="gone"/>-->
+        <!--</FrameLayout>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+        <TextView
+            android:layout_width="@dimen/line_title_width"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/edit_profile_margin"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark" />
+        <com.jiuzhang.yeyuan.dribbbo.custom_class.ClearableEditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            tools:text="ye_yuan" />
+        <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/username"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:inputType="text"-->
+                <!--android:textColor="@color/colorPrimaryDark"-->
+                <!--android:textSize="16sp"-->
+                <!--tools:text="ye_yuan" />-->
+            <!--<Button-->
+                <!--android:id="@+id/delete_username"-->
+                <!--android:layout_width="18dp"-->
+                <!--android:layout_height="18dp"-->
+                <!--android:layout_gravity="end|center_vertical"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:background="@drawable/ic_highlight_off_black_18dp"-->
+                <!--android:visibility="gone"/>-->
+        <!--</FrameLayout>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+        <TextView
+            android:layout_width="@dimen/line_title_width"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/edit_profile_margin"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark" />
+        <com.jiuzhang.yeyuan.dribbbo.custom_class.ClearableEditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            tools:text="yeyuan@gmail.com" />
+        <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/email"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:inputType="textEmailAddress"-->
+                <!--android:textColor="@color/colorPrimaryDark"-->
+                <!--android:textSize="16sp"-->
+                <!--tools:text="yeyuan@gmail.com" />-->
+            <!--<Button-->
+                <!--android:id="@+id/delete_email"-->
+                <!--android:layout_width="18dp"-->
+                <!--android:layout_height="18dp"-->
+                <!--android:layout_gravity="end|center_vertical"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:background="@drawable/ic_highlight_off_black_18dp"-->
+                <!--android:visibility="gone"/>-->
+        <!--</FrameLayout>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+        <TextView
+            android:layout_width="@dimen/line_title_width"
+            android:layout_height="wrap_content"
+            android:text="Portfolio"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/edit_profile_margin"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark" />
+        <com.jiuzhang.yeyuan.dribbbo.custom_class.ClearableEditText
+            android:id="@+id/portfolio_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textUri"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            tools:text="www.yeyuan.com" />
+        <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/portfolio_url"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:inputType="textUri"-->
+                <!--android:textColor="@color/colorPrimaryDark"-->
+                <!--android:textSize="16sp"-->
+                <!--tools:text="www.yeyuan.com" />-->
+            <!--<Button-->
+                <!--android:id="@+id/delete_portfolio"-->
+                <!--android:layout_width="18dp"-->
+                <!--android:layout_height="18dp"-->
+                <!--android:layout_gravity="end|center_vertical"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:background="@drawable/ic_highlight_off_black_18dp"-->
+                <!--android:visibility="gone"/>-->
+        <!--</FrameLayout>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+        <TextView
+            android:layout_width="@dimen/line_title_width"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/edit_profile_margin"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark" />
+        <com.jiuzhang.yeyuan.dribbbo.custom_class.ClearableEditText
+            android:id="@+id/location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            tools:text="Los Angeles, CA" />
+        <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/location"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:inputType="text"-->
+                <!--android:textColor="@color/colorPrimaryDark"-->
+                <!--android:textSize="16sp"-->
+                <!--tools:text="Los Angeles, CA" />-->
+            <!--<Button-->
+                <!--android:id="@+id/delete_location"-->
+                <!--android:layout_width="18dp"-->
+                <!--android:layout_height="18dp"-->
+                <!--android:layout_gravity="end|center_vertical"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:background="@drawable/ic_highlight_off_black_18dp"-->
+                <!--android:visibility="gone"/>-->
+        <!--</FrameLayout>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+        <TextView
+            android:layout_width="@dimen/line_title_width"
+            android:layout_height="wrap_content"
+            android:text="Bio"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/edit_profile_margin"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark" />
+        <com.jiuzhang.yeyuan.dribbbo.custom_class.ClearableEditText
+            android:id="@+id/bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            tools:text="I am an Android developer."
+            android:scrollbars="vertical"
+            android:maxLength="250"/>
+<!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/bio"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:inputType="textMultiLine"-->
+                <!--android:textColor="@color/colorPrimaryDark"-->
+                <!--android:textSize="16sp"-->
+                <!--tools:text="I am an Android developer."-->
+                <!--android:scrollbars="vertical"-->
+                <!--android:maxLength="250"/>-->
+            <!--<Button-->
+                <!--android:id="@+id/delete_bio"-->
+                <!--android:layout_width="18dp"-->
+                <!--android:layout_height="18dp"-->
+                <!--android:layout_gravity="end|center_vertical"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:background="@drawable/ic_highlight_off_black_18dp"-->
+                <!--android:visibility="gone"/>-->
+        <!--</FrameLayout>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+        <TextView
+            android:layout_width="@dimen/line_title_width"
+            android:layout_height="wrap_content"
+            android:text="Instagram"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/edit_profile_margin"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark" />
+        <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/instagram"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:inputType="text"-->
+                <!--android:textColor="@color/colorPrimaryDark"-->
+                <!--android:textSize="16sp"-->
+                <!--tools:text="/@yeyuan917" />-->
+            <!--<Button-->
+                <!--android:id="@+id/delete_instagram"-->
+                <!--android:layout_width="18dp"-->
+                <!--android:layout_height="18dp"-->
+                <!--android:layout_gravity="end|center_vertical"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:background="@drawable/ic_highlight_off_black_18dp"-->
+                <!--android:visibility="gone"/>-->
+        <!--</FrameLayout>-->
+        <com.jiuzhang.yeyuan.dribbbo.custom_class.ClearableEditText
+            android:id="@+id/instagram"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            tools:text="/@yeyuan917"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

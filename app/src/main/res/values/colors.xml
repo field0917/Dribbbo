@@ -16,4 +16,5 @@
     <color name="colorDivider">#BDBDBD</color>
 
     <color name="place_holder_bg">#33000000</color>
+    <color name="light_background">#edeeef</color>
 </resources>

@@ -36,6 +36,15 @@ public class Wendo {
     public static final String KEY_SHOT_ID = "photo_id";
     public static final String KEY_BUCKET_ID = "collection_id";
     public static final String KEY_ID = "id";
+    private static final String KEY_FIRST_NAME = "first_name";
+    private static final String KEY_LAST_NAME = "last_name";
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PORTFOLIO = "url";
+    private static final String KEY_LOCATION = "location";
+    private static final String KEY_BIO = "bio";
+    private static final String KEY_INSTAGRAM = "instagram_username";
+
 
     private static final String API_URL = "https://api.unsplash.com/";
     private static final String CURRENT_USER_END_POINT = API_URL + "me";
@@ -49,18 +58,16 @@ public class Wendo {
 
 
     public static final TypeToken<User> USER_TYPE = new TypeToken<User>(){};
-    private static final TypeToken<List<Shot>> SHOT_LIST_TYPE = new TypeToken<List<Shot>>(){};
-    private static final TypeToken<List<Bucket>> BUCKET_LIST_TYPE = new TypeToken<List<Bucket>>(){};
-    private static final TypeToken<Bucket> BUCKET_TYPE = new TypeToken<Bucket>(){};
-    private static final TypeToken<Shot> SHOT_TYPE = new TypeToken<Shot>(){};
+    public static final TypeToken<List<Shot>> SHOT_LIST_TYPE = new TypeToken<List<Shot>>(){};
+    public static final TypeToken<List<Bucket>> BUCKET_LIST_TYPE = new TypeToken<List<Bucket>>(){};
+    public static final TypeToken<Bucket> BUCKET_TYPE = new TypeToken<Bucket>(){};
+    public static final TypeToken<Shot> SHOT_TYPE = new TypeToken<Shot>(){};
     private static final TypeToken<SearchPhotoResult> SEARCH_SHOT_LIST_TYPE = new TypeToken<SearchPhotoResult>(){};
     private static final TypeToken<SearchUserResult> SEARCH_USER_LIST_TYPE = new TypeToken<SearchUserResult>(){};
     private static final TypeToken<SearchBucketResult> SEARCH_BUCKET_LIST_TYPE = new TypeToken<SearchBucketResult>(){};
 
     public static final String DOWNLOAD_PHOTO_FORMAT = ".jpg";
     public static final String DOWNLOAD_PATH = "/Pictures/Wendo/";
-
-
 
     private static String accessToken;
     private static User user;
@@ -155,6 +162,13 @@ public class Wendo {
     private static Response makeDeleteRequest (String url, RequestBody requestBody) throws IOException {
         Request request = authRequestBuilder(url)
                 .delete(requestBody)
+                .build();
+        return getResponseFromRequest(request);
+    }
+
+    private static Response makePutRequest (String url, RequestBody requestBody) throws IOException {
+        Request request = authRequestBuilder(url)
+                .put(requestBody)
                 .build();
         return getResponseFromRequest(request);
     }
@@ -282,5 +296,17 @@ public class Wendo {
         String url = SEARCH_BUCKET_END_POINT + query + "&page=" + page;
         SearchBucketResult result = parseResponse(makeGetRequest(url), SEARCH_BUCKET_LIST_TYPE);
         return result.results;
+    }
+
+    public static User updateCurrentUserProfile (String[] info) throws IOException {
+        String[] keys = {KEY_FIRST_NAME, KEY_LAST_NAME, KEY_USERNAME, KEY_EMAIL, KEY_PORTFOLIO, KEY_LOCATION, KEY_BIO, KEY_INSTAGRAM};
+        FormBody.Builder builder = new FormBody.Builder();
+        for (int i = 0; i < info.length; i++) {
+          if (info[i] != null && !info[i].equals("")) {
+              builder.add(keys[i], info[i]);
+          }
+        }
+        RequestBody requestBody = builder.build();
+        return parseResponse(makePutRequest(CURRENT_USER_END_POINT, requestBody), USER_TYPE);
     }
 }

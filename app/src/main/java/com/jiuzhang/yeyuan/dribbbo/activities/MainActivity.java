@@ -43,11 +43,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.jiuzhang.yeyuan.dribbbo.wendo.Wendo.USER_TYPE;
+
 public class MainActivity extends AppCompatActivity {
 
     private final static String NEW = "New";
     private final static String FEATURED = "Featured";
     private final static String COLLECTIONS = "Collections";
+    public static final String KEY_CURRENT_USER = "current_user";
+    public static final int REQ_UPDATE_PROFILE = 100;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
@@ -212,10 +216,10 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.isChecked()) {
-                    drawerLayout.closeDrawers();
-                    return true;
-                }
+//                if (item.isChecked()) {
+//                    drawerLayout.closeDrawers();
+//                    return true;
+//                }
                 // set item as selected to persist highlight
                 item.setChecked(true);
 //                setTitle(item.getTitle());
@@ -226,7 +230,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // TODO: change drawer item to current user's private options
     private void selectDrawerItem(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.drawer_item_new:
@@ -238,8 +241,38 @@ public class MainActivity extends AppCompatActivity {
             case R.id.drawer_item_buckets:
                 viewPager.setCurrentItem(2);
                 break;
+            case R.id.drawer_item_profile:
+                Intent intent = new Intent(this, EditProfileActivity.class);
+                intent.putExtra(KEY_CURRENT_USER, ModelUtils.toString(Wendo.getCurrentUser(), USER_TYPE));
+                startActivityForResult(intent, REQ_UPDATE_PROFILE);
+                break;
+            case R.id.drawer_item_setting:
+                break;
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REQ_UPDATE_PROFILE) {
+            Toast.makeText(this, "new profile get", Toast.LENGTH_SHORT).show();
+            // After going back to main activity, reset the check status of navigation items
+            Menu menu = navigationView.getMenu();
+            menu.findItem(R.id.drawer_item_profile).setChecked(false);
+            int position = viewPager.getCurrentItem();
+            switch (position) {
+                case 0:
+                    menu.findItem(R.id.drawer_item_new).setChecked(true);
+                    break;
+                case 1:
+                    menu.findItem(R.id.drawer_item_featured).setChecked(true);
+                    break;
+                case 2:
+                    menu.findItem(R.id.drawer_item_buckets).setChecked(true);
+                    break;
+            }
+        }
     }
 
     private class LoadCurrentUserTask extends WendoTask<Void, Void, User> {

@@ -45,6 +45,7 @@ import butterknife.ButterKnife;
 import static android.app.Activity.RESULT_OK;
 import static com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment.KEY_LIST_TYPE;
 import static com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment.KEY_QUERY;
+import static com.jiuzhang.yeyuan.dribbbo.wendo.Wendo.BUCKET_LIST_TYPE;
 
 public class BucketListFragment extends Fragment {
     private int currentPage = 1;
@@ -235,7 +236,7 @@ public class BucketListFragment extends Fragment {
             List<Bucket> currentChosenBuckets = adapter.getCurrentSelectedBuckets();
             Intent result = new Intent();
             result.putExtra(KEY_CHOSEN_BUCKETS, ModelUtils.toString(currentChosenBuckets,
-                    new TypeToken<List<Bucket>>(){}));
+                    BUCKET_LIST_TYPE));
             getActivity().setResult(RESULT_OK, result);
             getActivity().finish();
         }
