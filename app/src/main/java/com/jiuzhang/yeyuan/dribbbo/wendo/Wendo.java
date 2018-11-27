@@ -93,9 +93,6 @@ public class Wendo {
     }
 
     public static void logout (Context context) {
-//        storeAccessToken(context, null);
-//        storeUser(context, null);
-
         accessToken = null;
         user = null;
 
@@ -109,7 +106,7 @@ public class Wendo {
         sp.edit().putString(KEY_ACCESS_TOKEN, token).apply();
     }
 
-    private static void storeUser (Context context, User user) {
+    public static void storeUser (Context context, User user) {
         ModelUtils.save(context, KEY_USER, user);
     }
 
@@ -307,6 +304,7 @@ public class Wendo {
           }
         }
         RequestBody requestBody = builder.build();
-        return parseResponse(makePutRequest(CURRENT_USER_END_POINT, requestBody), USER_TYPE);
+        user = parseResponse(makePutRequest(CURRENT_USER_END_POINT, requestBody), USER_TYPE);
+        return user;
     }
 }

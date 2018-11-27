@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // re-check the menu item according to viewpager
+        // After going back to main activity, reset the check status of navigation items
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.drawer_item_profile).setChecked(false);
         int position = viewPager.getCurrentItem();
@@ -272,9 +272,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (resultCode == RESULT_OK && requestCode == REQ_UPDATE_PROFILE) {
-            Toast.makeText(this, "new profile get", Toast.LENGTH_SHORT).show();
-            // After going back to main activity, reset the check status of navigation items
-
+            Toast.makeText(this, "Profile updated!", Toast.LENGTH_SHORT).show();
+            setupDrawerContent();
         }
     }
 

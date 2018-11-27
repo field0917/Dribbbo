@@ -17,10 +17,12 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
+import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.custom_class.ClearableEditText;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.utils.ImageUtils;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
+import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +48,7 @@ public class EditProfileActivity extends AppCompatActivity {
     @BindView(R.id.instagram) ClearableEditText instagram;
 
     User user;
+    String[] info = new String[8];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,11 +105,40 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void save() {
-        Intent intent = new Intent();
-        intent.putExtra(KEY_CURRENT_USER, ModelUtils.toString(user, USER_TYPE));
-        setResult(RESULT_OK, intent);
-        finish();
+        info[0] = firstName.getText().toString();
+        info[1] = lastName.getText().toString();
+        info[2] = username.getText().toString();
+        info[3] = email.getText().toString();
+        info[4] = portfolio_url.getText().toString();
+        info[5] = location.getText().toString();
+        info[6] = bio.getText().toString();
+        info[7] = instagram.getText().toString();
+
+        UpdateCurrentUserTask task = new UpdateCurrentUserTask();
+        task.execute();
     }
 
+    private class UpdateCurrentUserTask extends WendoTask<Void, Void, User> {
+
+        @Override
+        public User doOnNewThread(Void... voids) throws Exception {
+            user = Wendo.updateCurrentUserProfile(info);
+            return user;
+        }
+
+        @Override
+        public void onSuccess(User user) {
+//            Wendo.storeUser();
+            Intent intent = new Intent();
+            intent.putExtra(KEY_CURRENT_USER, ModelUtils.toString(user, USER_TYPE));
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+
+        @Override
+        public void onFailed(Exception e) {
+            Toast.makeText(EditProfileActivity.this, "Something went wrong when you update user profile", Toast.LENGTH_LONG).show();
+        }
+    }
 
 }
