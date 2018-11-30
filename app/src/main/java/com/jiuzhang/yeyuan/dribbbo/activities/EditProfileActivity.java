@@ -122,13 +122,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
         @Override
         public User doOnNewThread(Void... voids) throws Exception {
-            user = Wendo.updateCurrentUserProfile(info);
+            user = Wendo.updateCurrentUserProfile(EditProfileActivity.this, info);
             return user;
         }
 
         @Override
         public void onSuccess(User user) {
-//            Wendo.storeUser();
             Intent intent = new Intent();
             intent.putExtra(KEY_CURRENT_USER, ModelUtils.toString(user, USER_TYPE));
             setResult(RESULT_OK, intent);

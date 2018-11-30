@@ -295,7 +295,7 @@ public class Wendo {
         return result.results;
     }
 
-    public static User updateCurrentUserProfile (String[] info) throws IOException {
+    public static User updateCurrentUserProfile (Context context, String[] info) throws IOException {
         String[] keys = {KEY_FIRST_NAME, KEY_LAST_NAME, KEY_USERNAME, KEY_EMAIL, KEY_PORTFOLIO, KEY_LOCATION, KEY_BIO, KEY_INSTAGRAM};
         FormBody.Builder builder = new FormBody.Builder();
         for (int i = 0; i < info.length; i++) {
@@ -305,6 +305,7 @@ public class Wendo {
         }
         RequestBody requestBody = builder.build();
         user = parseResponse(makePutRequest(CURRENT_USER_END_POINT, requestBody), USER_TYPE);
+        storeUser(context, user);
         return user;
     }
 }

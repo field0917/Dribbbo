@@ -32,7 +32,7 @@
         </activity>
         <activity
             android:name=".activities.MainActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <!-- <activity android:name=".base.BaseActivity" /> -->
         <activity android:name=".shot_detail.ShotDetailActivity" />
         <activity android:name=".wendo.OAuth.AuthActivity" />
@@ -56,7 +56,8 @@
         </activity>
         <activity
             android:name=".activities.EditProfileActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activities.SettingsActivity"></activity>
     </application>
 
 </manifest>

@@ -247,6 +247,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQ_UPDATE_PROFILE);
                 break;
             case R.id.drawer_item_setting:
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
                 break;
         }
 
