@@ -42,5 +42,10 @@
     <string name="upload">Upload a photo</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="change_profile_photo">Change Profile Photo</string>
+    <string name="clear_cache">Clear cache</string>
+    <string name="general">General</string>
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
+    <string name="cache_size">Cache size:</string>
 
 </resources>
