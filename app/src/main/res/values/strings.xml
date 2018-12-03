@@ -46,6 +46,14 @@
     <string name="general">General</string>
     <string name="language">Language</string>
     <string name="theme">Theme</string>
-    <string name="cache_size">Cache size:</string>
+    <string name="cache_size">Cache size: </string>
+    <string name="quality">Quality</string>
+    <string name="load_quality">Load quality</string>
+    <string name="load_quality_description">Choose the quality of photos that are loaded</string>
+    <string name="download_quality">Download quality</string>
+    <string name="download_quality_description">Choose the quality of photos you want to download to your phone</string>
+    <string name="layout">Layout</string>
+    <string name="display_layout">Display layout</string>
+    <string name="display_layout_description">Choose the way photos are displayed</string>
 
 </resources>

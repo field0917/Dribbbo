@@ -248,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.drawer_item_setting:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                //TODO: MainActivity needs to receive data came back from SettingsActivity
                 startActivity(settingsIntent);
                 break;
         }

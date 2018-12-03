@@ -13,21 +13,23 @@
         style="@style/AppTheme.TextView.Settings.Title"
         android:text="@string/general" />
 
-    <include layout="@layout/divider_horizontal" />
 
     <TextView
+        android:id="@+id/language"
         style="@style/AppTheme.TextView.Settings.Content"
         android:text="@string/language" />
 
     <include layout="@layout/divider_horizontal" />
 
     <TextView
+        android:id="@+id/theme"
         style="@style/AppTheme.TextView.Settings.Content"
         android:text="@string/theme" />
 
     <include layout="@layout/divider_horizontal" />
 
     <LinearLayout
+        android:id="@+id/clear_cache"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -44,9 +46,100 @@
             android:text="@string/clear_cache" />
 
         <TextView
+            android:id="@+id/cache_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/cache_size"
+            tools:text="@string/cache_size"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_horizontal" />
+
+
+    <TextView
+        style="@style/AppTheme.TextView.Settings.Title"
+        android:text="@string/quality" />
+
+    <LinearLayout
+        android:id="@+id/load_quality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp"
+            android:text="@string/load_quality" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/load_quality_description"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_horizontal" />
+
+    <LinearLayout
+        android:id="@+id/download_quality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp"
+            android:text="@string/download_quality" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/download_quality_description"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_horizontal" />
+
+    <TextView
+        style="@style/AppTheme.TextView.Settings.Title"
+        android:text="@string/layout" />
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp"
+            android:text="@string/display_layout" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/display_layout_description"
             android:textSize="12sp"/>
 
     </LinearLayout>
