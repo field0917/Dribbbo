@@ -1,6 +1,8 @@
 package com.jiuzhang.yeyuan.dribbbo.activities;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,17 +21,25 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements ItemPickerDialogFragment.OnItemSelectedListener{
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.clear_cache) LinearLayout clearCache;
     @BindView(R.id.cache_size) TextView cacheSize;
+    @BindView(R.id.download_quality) LinearLayout downloadQuality;
+
+    private static final String[] QUALITIES = {"raw", "full", "regular", "small", "thumb"};
+    public static final String SP_SETTINGS = "settings";
+    public static final String KEY_DOWNLOAD_QUALITY = "download_quality";
+
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
+        sp = this.getSharedPreferences(SP_SETTINGS, MODE_PRIVATE);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -60,7 +70,21 @@ public class SettingsActivity extends AppCompatActivity {
                 cacheSize.setText(getString(R.string.cache_size) + " " + cacheSizeConverter());
             }
         });
+
+        downloadQuality.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int selectedIndex = sp.getInt(KEY_DOWNLOAD_QUALITY, 2);
+                ItemPickerDialogFragment dialogFragment = ItemPickerDialogFragment.newInstance(
+                                                    getString(R.string.download_quality),
+                                                    QUALITIES,
+                                                   selectedIndex);
+                dialogFragment.show(getSupportFragmentManager(), ItemPickerDialogFragment.TAG);
+            }
+        });
     }
+
+
 
     private long getCacheSize() {
         long size = 0;
@@ -104,6 +128,12 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void onItemSelected(ItemPickerDialogFragment fragment, String item, int index) {
+        Toast.makeText(this, item + " at position " + index + " is selected.", Toast.LENGTH_LONG).show();
+        sp.edit().putInt(KEY_DOWNLOAD_QUALITY, index).apply();
     }
 }
 

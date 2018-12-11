@@ -56,4 +56,14 @@
     <string name="display_layout">Display layout</string>
     <string name="display_layout_description">Choose the way photos are displayed</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="raw">Raw</string>
+    <string name="full">Full</string>
+    <string name="regular">Regular</string>
+    <string name="small">Small</string>
+    <string name="thumb">Thumb</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
 </resources>

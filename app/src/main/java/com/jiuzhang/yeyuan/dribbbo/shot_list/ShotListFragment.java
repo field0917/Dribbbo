@@ -138,6 +138,12 @@ public class ShotListFragment extends Fragment {
 
     }
 
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        adapter.enableCardViewClickability();
+//    }
+
     private void setEmptyViewText() {
         switch (listType) {
             case LIST_TYPE_BUCKETED:

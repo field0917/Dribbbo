@@ -34,7 +34,10 @@
             android:name=".activities.MainActivity"
             android:theme="@style/AppTheme" />
         <!-- <activity android:name=".base.BaseActivity" /> -->
-        <activity android:name=".shot_detail.ShotDetailActivity" />
+        <activity
+            android:name=".shot_detail.ShotDetailActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:launchMode="singleTop"/>
         <activity android:name=".wendo.OAuth.AuthActivity" />
         <activity android:name=".bucket_list.EditBucketActivity" />
         <activity android:name=".bucket_list.BucketShotListActivity" />

@@ -35,6 +35,7 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private ShotListFragment shotListFragment;
     private List<Shot> shotList;
     private boolean showLoading = false;
+    private ShotListViewHolder shotListViewHolder;
 
     public ShotListAdapter (ShotListFragment shotListFragment,
                             List<Shot> shotList) {
@@ -70,7 +71,7 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             final Shot shot = shotList.get(position);
             final Context context = holder.itemView.getContext();
 
-            final ShotListViewHolder shotListViewHolder = (ShotListViewHolder) holder;
+            shotListViewHolder = (ShotListViewHolder) holder;
 
             shotListViewHolder.shotAuthorName.setText(shot.user.name);
 
@@ -82,6 +83,7 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             shotListViewHolder.shotCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+//                    disableCardViewClickability();
                     LoadFullShotDetailTask task = new LoadFullShotDetailTask();
                     task.execute(shot.id);
                 }
@@ -98,6 +100,14 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
         }
     }
+
+//    public void disableCardViewClickability() {
+//        shotListViewHolder.shotCardView.setEnabled(false);
+//    }
+//
+//    public void enableCardViewClickability() {
+//        shotListViewHolder.shotCardView.setEnabled(true);
+//    }
 
     @Override
     public int getItemCount () {
