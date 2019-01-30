@@ -25,6 +25,7 @@ import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment;
 import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment;
 import com.jiuzhang.yeyuan.dribbbo.user_list.UserListFragment;
+import com.jiuzhang.yeyuan.dribbbo.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,7 +68,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent (Intent intent) {
         super.onNewIntent(intent);
-        if (intent.getAction().equals(Intent.ACTION_SEARCH)) {
+        if (intent.getAction().equals(Intent.ACTION_SEARCH) && Utils.isConnectedToInternet(this)) {
             query = intent.getStringExtra(SearchManager.QUERY);
             viewPagerAdapter.notifyDataSetChanged();
         }

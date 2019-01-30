@@ -28,6 +28,7 @@ import com.jiuzhang.yeyuan.dribbbo.base.EmptyRecyclerView;
 import com.jiuzhang.yeyuan.dribbbo.base.EndlessRecyclerViewScrollListener;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoException;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
+import com.jiuzhang.yeyuan.dribbbo.utils.Utils;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
@@ -55,6 +56,7 @@ public class BucketListFragment extends Fragment {
     public static final int LIST_TYPE_USER_BUCKET = 1;
     public static final int LIST_TYPE_EDIT_BUCKET = 2;
     public static final int LIST_TYPE_SEARCH_BUCKET = 3;
+    public static final int NO_INTERNET_CONNECTION = 4;
 
     public static final int REQ_NEW_BUCKET = 106;
 
@@ -109,7 +111,12 @@ public class BucketListFragment extends Fragment {
         isEditMode = args.getBoolean(KEY_EDIT_MODE);
         username = args.getString(KEY_USER_NAME);
         query = args.getString(KEY_QUERY);
-        listType = args.getInt(KEY_LIST_TYPE);
+
+        if (!Utils.isConnectedToInternet(getContext())) {
+            listType = NO_INTERNET_CONNECTION;
+        } else {
+            listType = args.getInt(KEY_LIST_TYPE);
+        }
 
         if (isEditMode) {
             List<Bucket> chosenBuckets = ModelUtils.toObject(args.getString(KEY_COLLECTED_BUCKETS),
@@ -123,8 +130,10 @@ public class BucketListFragment extends Fragment {
         if (isEditMode) {setHasOptionsMenu(true);}
 
         if (!isLoading) {
-            LoadBucketsTask task = new LoadBucketsTask(false, currentPage);
-            task.execute();
+            if (Utils.isConnectedToInternet(getContext())) {
+                LoadBucketsTask task = new LoadBucketsTask(false, currentPage);
+                task.execute();
+            }
         }
 
     }
@@ -201,16 +210,16 @@ public class BucketListFragment extends Fragment {
     private void setEmptyViewText() {
         switch (listType) {
             case LIST_TYPE_USER_BUCKET:
-                emptyView.setText(getString(R.string.user_no_bucket));
+                emptyView.setText(R.string.user_no_bucket);
                 break;
             case LIST_TYPE_EDIT_BUCKET:
-                emptyView.setText(getString(R.string.current_user_no_bucket));
+                emptyView.setText(R.string.current_user_no_bucket);
                 break;
             case LIST_TYPE_SEARCH_BUCKET:
-                emptyView.setText(getString(R.string.no_search_result));
+                emptyView.setText(R.string.no_search_result);
                 break;
-            default:
-                emptyView.setText(getString(R.string.error));
+            case NO_INTERNET_CONNECTION:
+                emptyView.setText(getString(R.string.no_internet));
 
         }
     }
@@ -322,7 +331,6 @@ public class BucketListFragment extends Fragment {
         @Override
         public void onFailed(Exception e) {
             adapter.setShowLoading(false);
-            Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG).show();
         }
 
 

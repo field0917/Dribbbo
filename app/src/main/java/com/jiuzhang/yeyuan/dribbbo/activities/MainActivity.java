@@ -33,6 +33,7 @@ import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
+import com.jiuzhang.yeyuan.dribbbo.utils.Utils;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment;
 import com.jiuzhang.yeyuan.dribbbo.shot_list.ShotListFragment;
@@ -201,7 +202,12 @@ public class MainActivity extends AppCompatActivity {
         userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new LoadCurrentUserTask().execute();
+                if (Utils.isConnectedToInternet(MainActivity.this)) {
+                    new LoadCurrentUserTask().execute();
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.no_internet, Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 

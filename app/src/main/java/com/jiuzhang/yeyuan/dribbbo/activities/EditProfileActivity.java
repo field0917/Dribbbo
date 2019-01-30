@@ -22,6 +22,7 @@ import com.jiuzhang.yeyuan.dribbbo.custom_class.ClearableEditText;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.utils.ImageUtils;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
+import com.jiuzhang.yeyuan.dribbbo.utils.Utils;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 
 import java.util.HashMap;
@@ -114,8 +115,12 @@ public class EditProfileActivity extends AppCompatActivity {
         info[6] = bio.getText().toString();
         info[7] = instagram.getText().toString();
 
-        UpdateCurrentUserTask task = new UpdateCurrentUserTask();
-        task.execute();
+        if (Utils.isConnectedToInternet(this)) {
+            UpdateCurrentUserTask task = new UpdateCurrentUserTask();
+            task.execute();
+        } else {
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private class UpdateCurrentUserTask extends WendoTask<Void, Void, User> {

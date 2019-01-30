@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
@@ -21,6 +22,7 @@ import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.BucketListFragment;
 import com.jiuzhang.yeyuan.dribbbo.bucket_list.EditBucketActivity;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
+import com.jiuzhang.yeyuan.dribbbo.utils.Utils;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.model.Bucket;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
@@ -120,19 +122,28 @@ public class ShotDetailFragment extends Fragment {
     }
 
     public void like (boolean currentLiked) {
-        LikeOrUnlikeTheShotTask task = new LikeOrUnlikeTheShotTask();
-        task.execute(currentLiked);
+        if (Utils.isConnectedToInternet(getContext())) {
+            LikeOrUnlikeTheShotTask task = new LikeOrUnlikeTheShotTask();
+            task.execute(currentLiked);
+        } else {
+            Toast.makeText(getContext(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void bucket (Context context) {
-        if (collectedBuckets == null) {
-            Snackbar.make(getView(), R.string.shot_detail_loading_buckets, Snackbar.LENGTH_LONG).show();
+        if (Utils.isConnectedToInternet(getContext())) {
+            if (collectedBuckets == null) {
+                Snackbar.make(getView(), R.string.shot_detail_loading_buckets, Snackbar.LENGTH_LONG).show();
+            } else {
+                Intent intent = new Intent(context, EditBucketActivity.class);
+                intent.putExtra(BucketListFragment.KEY_EDIT_MODE, true);
+                intent.putExtra(BucketListFragment.KEY_COLLECTED_BUCKETS,
+                        ModelUtils.toString(collectedBuckets, new TypeToken<List<Bucket>>() {
+                        }));//give the selectedBuckets to EditBucketActivity
+                startActivityForResult(intent, ShotDetailFragment.REQ_CHOSEN_BUCKET);
+            }
         } else {
-            Intent intent = new Intent(context, EditBucketActivity.class);
-            intent.putExtra(BucketListFragment.KEY_EDIT_MODE, true);
-            intent.putExtra(BucketListFragment.KEY_COLLECTED_BUCKETS,
-                    ModelUtils.toString(collectedBuckets, new TypeToken<List<Bucket>>(){}));//give the selectedBuckets to EditBucketActivity
-            startActivityForResult(intent, ShotDetailFragment.REQ_CHOSEN_BUCKET);
+            Toast.makeText(getContext(), R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
 
     }

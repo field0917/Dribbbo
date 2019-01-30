@@ -20,6 +20,7 @@ import com.jiuzhang.yeyuan.dribbbo.base.EmptyRecyclerView;
 import com.jiuzhang.yeyuan.dribbbo.base.EndlessRecyclerViewScrollListener;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
+import com.jiuzhang.yeyuan.dribbbo.utils.Utils;
 import com.jiuzhang.yeyuan.dribbbo.utils.VerticalSpaceItemDecoration;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 
@@ -34,6 +35,9 @@ public class UserListFragment extends Fragment {
     private static final String KEY_QUERY = "query";
     private static final int VERTICAL_SPACE_HEIGHT = 20;
 
+    private static final int NO_INTERNET_CONNECTION = 0;
+    private static final int LIST_TYPE_SEARCH_USER = 1;
+
     @BindView(R.id.shot_list_recycler_view) EmptyRecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_container) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.empty_view) TextView emptyView;
@@ -42,6 +46,7 @@ public class UserListFragment extends Fragment {
     private List<User> users = new ArrayList<>();
     private int currentPage = 1;
     private boolean isLoading = false;
+    private int listType;
 
     public UserListFragment() {
         // Required empty public constructor
@@ -59,6 +64,11 @@ public class UserListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new UserListAdapter(users);
+        if (!Utils.isConnectedToInternet(getContext())) {
+            listType = NO_INTERNET_CONNECTION;
+        } else {
+            listType = LIST_TYPE_SEARCH_USER;
+        }
         if (!isLoading) {
             SearchUserTask task = new SearchUserTask (false, currentPage);
             task.execute();
@@ -92,7 +102,7 @@ public class UserListFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
-        emptyView.setText(getString(R.string.no_search_result));
+        setEmptyViewText(listType);
 
         recyclerView.setEmptyView(emptyView);
 
@@ -104,6 +114,16 @@ public class UserListFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void setEmptyViewText(int listType) {
+        switch (listType) {
+            case LIST_TYPE_SEARCH_USER:
+                emptyView.setText(R.string.no_search_result);
+                break;
+            case NO_INTERNET_CONNECTION:
+                emptyView.setText(R.string.no_internet);
+        }
     }
 
     private class SearchUserTask extends WendoTask<Void, Void, List<User>> {

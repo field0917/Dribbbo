@@ -25,6 +25,7 @@ import com.jiuzhang.yeyuan.dribbbo.R;
 import com.jiuzhang.yeyuan.dribbbo.base.EmptyRecyclerView;
 import com.jiuzhang.yeyuan.dribbbo.base.EndlessRecyclerViewScrollListener;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
+import com.jiuzhang.yeyuan.dribbbo.utils.Utils;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
@@ -56,6 +57,7 @@ public class ShotListFragment extends Fragment {
     public static final int LIST_TYPE_USER_PHOTOS = 3;
     public static final int LIST_TYPE_USER_LIKES = 4;
     public static final int LIST_TYPE_SEARCH_PHOTOS = 5;
+    public static final int NO_INTERNET_CONNECTION = 6;
 
     private List<Shot> shotList = new ArrayList<>();
     private ShotListAdapter adapter;
@@ -86,10 +88,16 @@ public class ShotListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        listType = getArguments().getInt(KEY_LIST_TYPE);
+        if (!Utils.isConnectedToInternet(getContext())) {
+            listType = NO_INTERNET_CONNECTION;
+        } else {
+            listType = getArguments().getInt(KEY_LIST_TYPE);
+        }
         adapter = new ShotListAdapter(this, shotList);
         if (!isLoading) {
-            new LoadShotsTask(false, currentPage).execute();
+            if (Utils.isConnectedToInternet(getContext())) {
+                new LoadShotsTask(false, currentPage).execute();
+            }
         }
     }
 
@@ -114,7 +122,9 @@ public class ShotListFragment extends Fragment {
                 currentPage = 1;
                 swipeRefreshLayout.setRefreshing(true); // Enable the refresh icon
                 LoadShotsTask task = new LoadShotsTask(true, currentPage);
-                task.execute();
+                if (Utils.isConnectedToInternet(getContext())) {
+                    task.execute();
+                }
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -131,7 +141,9 @@ public class ShotListFragment extends Fragment {
             @Override
             public void onLoadMore() {
                 if (!isLoading) {
-                    new LoadShotsTask(false, currentPage).execute();
+                    if (Utils.isConnectedToInternet(getContext())) {
+                        new LoadShotsTask(false, currentPage).execute();
+                    }
                 }
             }
         });
@@ -147,16 +159,19 @@ public class ShotListFragment extends Fragment {
     private void setEmptyViewText() {
         switch (listType) {
             case LIST_TYPE_BUCKETED:
-                emptyView.setText(getString(R.string.bucket_no_photo));
+                emptyView.setText(R.string.bucket_no_photo);
                 break;
             case LIST_TYPE_USER_PHOTOS:
-                emptyView.setText(getString(R.string.user_no_photo));
+                emptyView.setText(R.string.user_no_photo);
                 break;
             case LIST_TYPE_USER_LIKES:
-                emptyView.setText(getString(R.string.user_no_like));
+                emptyView.setText(R.string.user_no_like);
                 break;
             case LIST_TYPE_SEARCH_PHOTOS:
-                emptyView.setText(getString(R.string.no_search_result));
+                emptyView.setText(R.string.no_search_result);
+                break;
+            case NO_INTERNET_CONNECTION:
+                emptyView.setText(R.string.no_internet);
                 break;
         }
     }
@@ -248,15 +263,15 @@ public class ShotListFragment extends Fragment {
 
         @Override
         public void onFailed (Exception e) {
-            Snackbar.make(getView(), "Something went wrong with the server", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Try again", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            // TODO:reload what did not load
-                            Toast.makeText(getContext(), "reload!", Toast.LENGTH_LONG).show();
-                        }
-                    })
-                    .show();
+//            Snackbar.make(getView(), "Something went wrong with the server", Snackbar.LENGTH_INDEFINITE)
+//                    .setAction("Try again", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            // TODO:reload what did not load
+//                            Toast.makeText(getContext(), "reload!", Toast.LENGTH_LONG).show();
+//                        }
+//                    })
+//                    .show();
             adapter.setShowLoading(false);
         }
     }

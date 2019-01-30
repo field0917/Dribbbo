@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiuzhang.yeyuan.dribbbo.R;
@@ -15,6 +16,7 @@ import com.jiuzhang.yeyuan.dribbbo.activities.UserActivity;
 import com.jiuzhang.yeyuan.dribbbo.base.WendoTask;
 import com.jiuzhang.yeyuan.dribbbo.model.User;
 import com.jiuzhang.yeyuan.dribbbo.utils.ImageUtils;
+import com.jiuzhang.yeyuan.dribbbo.utils.Utils;
 import com.jiuzhang.yeyuan.dribbbo.wendo.Wendo;
 import com.jiuzhang.yeyuan.dribbbo.model.Shot;
 import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailActivity;
@@ -22,6 +24,8 @@ import com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment;
 import com.jiuzhang.yeyuan.dribbbo.utils.ModelUtils;
 
 import java.util.List;
+
+import okhttp3.internal.Util;
 
 import static com.jiuzhang.yeyuan.dribbbo.shot_detail.ShotDetailFragment.KEY_USER;
 
@@ -84,8 +88,12 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View view) {
 //                    disableCardViewClickability();
-                    LoadFullShotDetailTask task = new LoadFullShotDetailTask();
-                    task.execute(shot.id);
+                    if (Utils.isConnectedToInternet(shotListFragment.getContext())) {
+                        LoadFullShotDetailTask task = new LoadFullShotDetailTask();
+                        task.execute(shot.id);
+                    } else {
+                        Toast.makeText(shotListFragment.getContext(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 

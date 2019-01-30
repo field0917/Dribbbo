@@ -66,4 +66,6 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
+    <string name="no_internet">No Internet Connection...</string>
+
 </resources>
