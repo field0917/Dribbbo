@@ -282,6 +282,13 @@ public class BucketListFragment extends Fragment {
         }
 
         @Override
+        public void checkInternetConnection() {
+            if(!Utils.isConnectedToInternet(getContext())) {
+                Toast.makeText(getContext(), "No Internet Test", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
         public List<Bucket> doOnNewThread(Void... voids) throws Exception {
             switch (listType) {
                 case LIST_TYPE_ALL_BUCKET:
@@ -344,6 +351,13 @@ public class BucketListFragment extends Fragment {
         public NewBucketsTask (String bucketName, String bucketDes) {
             this.bucketName = bucketName;
             this.bucketDes = bucketDes;
+        }
+
+        @Override
+        public void checkInternetConnection() {
+            if(!Utils.isConnectedToInternet(getContext())) {
+                Toast.makeText(getContext(), "No Internet Test", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override

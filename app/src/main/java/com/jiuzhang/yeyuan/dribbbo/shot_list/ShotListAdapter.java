@@ -88,12 +88,12 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View view) {
 //                    disableCardViewClickability();
-                    if (Utils.isConnectedToInternet(shotListFragment.getContext())) {
+//                    if (Utils.isConnectedToInternet(shotListFragment.getContext())) {
                         LoadFullShotDetailTask task = new LoadFullShotDetailTask();
                         task.execute(shot.id);
-                    } else {
-                        Toast.makeText(shotListFragment.getContext(), R.string.no_internet, Toast.LENGTH_SHORT).show();
-                    }
+//                    } else {
+//                        Toast.makeText(shotListFragment.getContext(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+//                    }
                 }
             });
 
@@ -149,6 +149,13 @@ public class ShotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class LoadFullShotDetailTask extends WendoTask<String, Void, Shot> {
+
+        @Override
+        public void checkInternetConnection() {
+            if (!Utils.isConnectedToInternet(shotListFragment.getContext())) {
+                Toast.makeText(shotListFragment.getContext(), "No Internet Test", Toast.LENGTH_SHORT).show();
+            }
+        }
 
         @Override
         public Shot doOnNewThread(String... strings) throws Exception {

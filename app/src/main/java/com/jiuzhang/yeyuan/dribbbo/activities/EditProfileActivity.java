@@ -126,6 +126,13 @@ public class EditProfileActivity extends AppCompatActivity {
     private class UpdateCurrentUserTask extends WendoTask<Void, Void, User> {
 
         @Override
+        public void checkInternetConnection() {
+            if (!Utils.isConnectedToInternet(getApplicationContext())) {
+                Toast.makeText(getApplicationContext(), "No Internet Test", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
         public User doOnNewThread(Void... voids) throws Exception {
             user = Wendo.updateCurrentUserProfile(EditProfileActivity.this, info);
             return user;

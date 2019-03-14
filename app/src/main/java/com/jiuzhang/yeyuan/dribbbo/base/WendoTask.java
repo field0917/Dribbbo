@@ -1,6 +1,10 @@
 package com.jiuzhang.yeyuan.dribbbo.base;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
+
+import com.jiuzhang.yeyuan.dribbbo.utils.Utils;
 
 import java.io.IOException;
 
@@ -9,11 +13,19 @@ public abstract class WendoTask<Params, Progress, Result>
 
     private Exception e;
 
+    public abstract void checkInternetConnection ();
+
     public abstract Result doOnNewThread (Params... params) throws Exception;
 
     public abstract void onSuccess (Result result);
 
     public abstract void onFailed (Exception e);
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        checkInternetConnection();
+    }
 
     @Override
     protected Result doInBackground(Params... params) {

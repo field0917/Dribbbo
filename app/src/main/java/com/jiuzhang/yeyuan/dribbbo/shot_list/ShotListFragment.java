@@ -206,8 +206,16 @@ public class ShotListFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
+            super.onPreExecute();
             isLoading = !isLoading;
             adapter.setShowLoading(isLoading);
+        }
+
+        @Override
+        public void checkInternetConnection() {
+            if (!Utils.isConnectedToInternet(getContext())) {
+                Toast.makeText(getContext(), "No Internet Test", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override

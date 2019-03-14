@@ -144,6 +144,13 @@ public class UserListFragment extends Fragment {
         }
 
         @Override
+        public void checkInternetConnection() {
+            if(!Utils.isConnectedToInternet(getContext())) {
+                Toast.makeText(getContext(), "No Internet Test", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
         public List<User> doOnNewThread(Void... voids) throws Exception {
             query = getArguments().getString(KEY_QUERY);
             return Wendo.getSearchedUsers(query, page);

@@ -294,6 +294,13 @@ public class MainActivity extends AppCompatActivity {
     private class LoadCurrentUserTask extends WendoTask<Void, Void, User> {
 
         @Override
+        public void checkInternetConnection() {
+            if (!Utils.isConnectedToInternet(getApplicationContext())) {
+                Toast.makeText(getApplicationContext(), "No Internet Test", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
         public User doOnNewThread(Void... voids) throws Exception {
             return Wendo.getUser();
         }

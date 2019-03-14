@@ -122,16 +122,16 @@ public class ShotDetailFragment extends Fragment {
     }
 
     public void like (boolean currentLiked) {
-        if (Utils.isConnectedToInternet(getContext())) {
+//        if (Utils.isConnectedToInternet(getContext())) {
             LikeOrUnlikeTheShotTask task = new LikeOrUnlikeTheShotTask();
             task.execute(currentLiked);
-        } else {
-            Toast.makeText(getContext(), R.string.no_internet, Toast.LENGTH_SHORT).show();
-        }
+//        } else {
+//            Toast.makeText(getContext(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+//        }
     }
 
     public void bucket (Context context) {
-        if (Utils.isConnectedToInternet(getContext())) {
+//        if (Utils.isConnectedToInternet(getContext())) {
             if (collectedBuckets == null) {
                 Snackbar.make(getView(), R.string.shot_detail_loading_buckets, Snackbar.LENGTH_LONG).show();
             } else {
@@ -142,9 +142,9 @@ public class ShotDetailFragment extends Fragment {
                         }));//give the selectedBuckets to EditBucketActivity
                 startActivityForResult(intent, ShotDetailFragment.REQ_CHOSEN_BUCKET);
             }
-        } else {
-            Toast.makeText(getContext(), R.string.no_internet, Toast.LENGTH_SHORT).show();
-        }
+//        } else {
+//            Toast.makeText(getContext(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+//        }
 
     }
 
@@ -166,6 +166,13 @@ public class ShotDetailFragment extends Fragment {
 
         private List<Bucket> addedBuckets;
         private List<Bucket> removedBuckets;
+
+        @Override
+        public void checkInternetConnection() {
+            if (!Utils.isConnectedToInternet(getContext())) {
+                Toast.makeText(getContext(), "No Internet Test", Toast.LENGTH_SHORT).show();
+            }
+        }
 
         @Override
         public Shot doOnNewThread(List<Bucket>... lists) throws Exception {
@@ -220,6 +227,13 @@ public class ShotDetailFragment extends Fragment {
     private class LikeOrUnlikeTheShotTask extends WendoTask<Boolean, Void, Void> {
 
         boolean currentLiked;
+
+        @Override
+        public void checkInternetConnection() {
+            if (!Utils.isConnectedToInternet(getContext())) {
+                Toast.makeText(getContext(), "No Internet Test", Toast.LENGTH_SHORT).show();
+            }
+        }
 
         @Override
         public Void doOnNewThread(Boolean... booleans) throws Exception {
