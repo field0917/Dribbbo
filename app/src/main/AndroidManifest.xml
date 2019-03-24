@@ -32,7 +32,8 @@
         </activity>
         <activity
             android:name=".activities.MainActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:configChanges = "orientation|screenSize"/>
         <!-- <activity android:name=".base.BaseActivity" /> -->
         <activity
             android:name=".shot_detail.ShotDetailActivity"
