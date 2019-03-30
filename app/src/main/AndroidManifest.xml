@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.jiuzhang.yeyuan.dribbbo">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,7 +13,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.jiuzhang.yeyuan.dribbbo.fileprovider"
@@ -37,9 +39,8 @@
         <!-- <activity android:name=".base.BaseActivity" /> -->
         <activity
             android:name=".shot_detail.ShotDetailActivity"
-            android:parentActivityName=".activities.MainActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".wendo.OAuth.AuthActivity" />
+            android:parentActivityName=".activities.MainActivity" />
+        <activity android:name=".wendo$OAuth.AuthActivity" />
         <activity android:name=".bucket_list.EditBucketActivity" />
         <activity android:name=".bucket_list.BucketShotListActivity" />
         <activity android:name=".activities.UserActivity" />
@@ -61,7 +62,7 @@
         <activity
             android:name=".activities.EditProfileActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".activities.SettingsActivity"></activity>
+        <activity android:name=".activities.SettingsActivity"/>
     </application>
 
 </manifest>

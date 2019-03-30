@@ -75,10 +75,10 @@ public class ShotDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         shot = ModelUtils.toObject(intent.getStringExtra(ShotDetailFragment.KEY_SHOT),
-                                                         new TypeToken<Shot>(){});
+                new TypeToken<Shot>(){});
     }
 
-//    @Override
+    //    @Override
 //    protected void onResume(){
 //        super.onResume();
 //        registerReceiver(broadcastReceiver, filter);

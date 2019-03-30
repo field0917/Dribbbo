@@ -22,7 +22,6 @@ public class ClearableEditText extends AppCompatEditText implements View.OnTouch
     private Drawable mClearTextIcon;
     private OnFocusChangeListener mOnFocusChangeListener;
     private OnTouchListener mOnTouchListener;
-
     public ClearableEditText(Context context) {
         super(context);
         init(context);

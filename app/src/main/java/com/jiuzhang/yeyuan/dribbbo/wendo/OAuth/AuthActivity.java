@@ -37,7 +37,6 @@ public class AuthActivity extends AppCompatActivity {
         toolbar.setTitle("Log into Wendo");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        setTitle("Log into Wendo");
 
         progressBar.setMax(100);
 
